@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "captureAt": "2026-11-23T10:06:16.050Z",
+  "seuils": {
+    "articlesPublies": 10,
+    "hebergeursLabo": 8,
+    "lignesUptime": 24,
+    "lignesLatence": 24,
+    "lignesPrix": 8
+  },
+  "note": "Seuils plancher des fonctionnalités protégées — mise à jour UNIQUEMENT via `bun run baseline:update`, après décision de force majeure documentée dans GUARDRAILS.md."
+}

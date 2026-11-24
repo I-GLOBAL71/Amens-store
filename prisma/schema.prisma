@@ -1,0 +1,159 @@
+// Prisma schema — amens.store (Blue Ocean)
+// Plateforme d'affiliation hébergement web, 10 angles, pipeline éditorial à 7 skills.
+// SQLite (contrainte sandbox) — les listes sont stockées en JSON string.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ── Registre des skills du pipeline éditorial ────────────────────────────────
+// Tout futur contenu DOIT passer par ces skills (pipeline-amens orchestre).
+model Skill {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  role        String // orchestrateur | keyword_research | squelette | seo_audit | geo_score | humanisation | traces | verification
+  mission     String
+  description String
+  version     String   @default("1.0")
+  ordre       Int // position dans le pipeline
+  gate        Boolean  @default(false) // étape bloquante
+  active      Boolean  @default(true)
+  skillPath   String // chemin du SKILL.md enregistré dans le projet
+  scriptPath  String // script principal exécuté par le pipeline
+  reference   String   @default("") // référence open-source / source primaire
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ── Programmes d'affiliation (cahier des charges §7.1) ──────────────────────
+model AffiliateProgram {
+  id             String  @id @default(cuid())
+  slug           String  @unique
+  name           String
+  commissionType String // CPA one-time | CPA fixe | Récurrent | Hybride | Bundlé | Partenariat
+  commissionValue String
+  cookieDays     Int     @default(30)
+  payoutThreshold String  @default("")
+  affiliateUrl   String
+  geoTarget      String  @default("global") // global | africa | fr
+  context        String  @default("vps_ia") // vps_ia | mutualise | domaine | email | agence | afrique | migration | promo
+  priorityScore  Int     @default(50)
+  anglePrincipal Int     @default(1)
+  active         Boolean @default(true)
+}
+
+// ── Articles du blog (contenus passés par le pipeline) ──────────────────────
+model Article {
+  id                    String    @id @default(cuid())
+  slug                  String    @unique
+  silo                  String
+  angle                 Int
+  title                String
+  metaTitle            String
+  metaDescription      String
+  excerpt              String
+  content              String // markdown gabarit §4.2
+  faqJson              String    @default("[]")
+  primaryProgram       String    @default("")
+  secondaryProgramsJson String   @default("[]")
+  difficulty           String    @default("débutant")
+  timeEstimate         String    @default("")
+  costEstimate         String    @default("")
+  status               String    @default("draft") // draft | published
+  seoScore             Int       @default(0)
+  geoScore             Int       @default(0)
+  humanScore           Int       @default(0)
+  verificationPassed   Boolean   @default(false)
+  laboDataJson         String    @default("[]")
+  author               String    @default("equipe-amens")
+  views                Int       @default(0)
+  publishedAt          DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+}
+
+// ── Historique des exécutions du pipeline (traçabilité des gates) ────────────
+model PipelineRun {
+  id             String   @id @default(cuid())
+  runType        String   @default("analyze") // analyze | publish
+  status         String   @default("en_cours") // passed | blocked | error
+  angle          Int      @default(1)
+  requete        String   @default("")
+  title          String   @default("")
+  slug           String   @default("")
+  stepsJson      String   @default("[]") // résultats détaillés par skill
+  blockingIssues Int      @default(0)
+  warnings       Int      @default(0)
+  overallScore   Int      @default(0)
+  articleId      String?
+  createdAt      DateTime @default(now())
+  finishedAt     DateTime @updatedAt
+}
+
+// ── Recherche de mots-clés Blue Ocean (blueocean-keywords) ──────────────────
+model KeywordResearch {
+  id            String   @id @default(cuid())
+  graine        String
+  requete       String
+  angle         Int      @default(0)
+  classeVolume  String   @default("basse") // basse | moyenne | elevee
+  difficulte    Int      @default(50)
+  resistanceAio String   @default("moyen") // fort | moyen | faible
+  potentiel     String   @default("moyen") // fort | moyen | faible
+  verdict       String   @default("SURVEILLER") // CIBLER | SURVEILLER | IGNORER
+  source        String   @default("expansion-locale") // autocomplete | expansion-locale
+  createdAt     DateTime @default(now())
+}
+
+// ── Labo : données propriétaires (fossé défensif) ───────────────────────────
+model LaboUptime {
+  id           String   @id @default(cuid())
+  host         String
+  region       String // europe | afrique-ouest | amerique-nord
+  uptime       Float    @default(99.9)
+  incidents30j Int      @default(0)
+  lastCheckAt  DateTime @default(now())
+}
+
+model LaboLatence {
+  id        String  @id @default(cuid())
+  host      String
+  region    String // douala | abidjan | dakar
+  latenceMs Int     @default(200)
+  period    String  @default("2026-11")
+}
+
+model PriceHistory {
+  id                 String   @id @default(cuid())
+  host               String
+  plan               String
+  prixPromo          Float
+  prixRenouvellement Float
+  devise             String   @default("EUR")
+  captureAt          DateTime @default(now())
+}
+
+model AiCitation {
+  id         String   @id @default(cuid())
+  plateforme String // chatgpt | perplexity | gemini | ai-overviews
+  requete    String
+  cite       Boolean  @default(false)
+  checkedAt  DateTime @default(now())
+}
+
+// ── Leads conversion (newsletter deals / packs WhatsApp) ─────────────────────
+model Lead {
+  id        String   @id @default(cuid())
+  type      String // newsletter | whatsapp
+  contact   String
+  angle     Int      @default(0)
+  message   String   @default("")
+  status    String   @default("nouveau")
+  createdAt DateTime @default(now())
+}

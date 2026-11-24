@@ -1,0 +1,444 @@
+{
+  "at": "2026-11-24T08:01:06.947Z",
+  "baseUrl": "http://127.0.0.1:3000",
+  "resultat": "PASS",
+  "total": 62,
+  "erreurs": 0,
+  "alertes": 0,
+  "verdicts": [
+    {
+      "groupe": "qualité",
+      "nom": "lint eslint",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "serveur",
+      "nom": "GET / (HTML SSR)",
+      "ok": true,
+      "detail": "230338 caractères",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "GET /api/labo",
+      "ok": true,
+      "detail": "200",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "GET /api/articles",
+      "ok": true,
+      "detail": "200",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "GET /api/sante",
+      "ok": true,
+      "detail": "200",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "baseline",
+      "nom": "seuil articlesPublies ≥ 10",
+      "ok": true,
+      "detail": "valeur constatée : 10",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "baseline",
+      "nom": "seuil hebergeursLabo ≥ 8",
+      "ok": true,
+      "detail": "valeur constatée : 8",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "baseline",
+      "nom": "seuil lignesUptime ≥ 24",
+      "ok": true,
+      "detail": "valeur constatée : 24",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "baseline",
+      "nom": "seuil lignesLatence ≥ 24",
+      "ok": true,
+      "detail": "valeur constatée : 24",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "baseline",
+      "nom": "seuil lignesPrix ≥ 8",
+      "ok": true,
+      "detail": "valeur constatée : 8",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "labo — KPI uptime cohérents",
+      "ok": true,
+      "detail": "8 hébergeurs, moyennes dans les bornes",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "labo — latences Afrique renseignées",
+      "ok": true,
+      "detail": "8 hébergeurs mesurés",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "labo — méthodologie publique",
+      "ok": true,
+      "detail": "223 caractères",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "articles — uniquement publiés",
+      "ok": true,
+      "detail": "10 articles",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "articles — champs complets",
+      "ok": true,
+      "detail": "slug/titre/extrait/contenu vérifiés sur les 5 premiers",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "articles — silos renseignés",
+      "ok": true,
+      "detail": "10 silos",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "api",
+      "nom": "/api/sante — verdict",
+      "ok": true,
+      "detail": "status ok",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Mets en ligne tes projets IA, tes  »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Guides testés · prix datés · donné »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Assistant — 3 questions, ton héber »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Guides testés en ligne »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Uptime moyen Labo (8 hébergeurs) »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Tarifs d’hébergement suivis »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Latence mesurée depuis Douala »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Orange Money, MTN MoMo, Wave »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "marqueur « Explorer le blog »",
+      "ok": true,
+      "detail": "absent du HTML SSR",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "valeur uptime SSR (99.92 %)",
+      "ok": true,
+      "detail": "la vraie valeur n'est pas dans le HTML — retour du bug « haut de page vide »",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "valeur latence SSR (326 ms)",
+      "ok": true,
+      "detail": "idem latence",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr",
+      "nom": "compteur guides SSR (>10<)",
+      "ok": true,
+      "detail": "compteur non rendu côté serveur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "article — vue rendue en SSR (h1 DOM)",
+      "ok": true,
+      "detail": "le HTML servi n'est pas celui de l'article — régression du SSR par URL (agents IA sans JS)",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "article — hero accueil absent",
+      "ok": true,
+      "detail": "la vue home fuit dans le HTML de l'URL article",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "article — canonical servi",
+      "ok": true,
+      "detail": "pas de <link rel=canonical> pour l'URL article",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "article — og:title servi",
+      "ok": true,
+      "detail": "pas de balise og:title dans le head servi",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "article — <title> dédié",
+      "ok": true,
+      "detail": "<title>Héberger les sites de tes clients sans exploser la</title>",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "article — JSON-LD Article+FAQPage+BreadcrumbList (DOM)",
+      "ok": true,
+      "detail": "JSON-LD de l'article absent du HTML servi (rendu serveur requis)",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "blog — vue rendue en SSR",
+      "ok": true,
+      "detail": "le HTML servi pour ?v=blog n'est pas celui du blog",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "blog silo (agences) — vue filtrée rendue en SSR",
+      "ok": true,
+      "detail": "h1 servi : Agences et freelances B2B",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "ssr-url",
+      "nom": "blog silo (agences) — en-tête d'angle attendu",
+      "ok": true,
+      "detail": "« Agences et freelances B2B » absent du HTML du silo",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "accueil — marqueurs visibles",
+      "ok": true,
+      "detail": "5122 caractères de texte visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "accueil — couverture du 4/5 supérieur",
+      "ok": true,
+      "detail": "sondes centrales : DIV, H1, DIV, LI",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "accueil — hydratation (vraies valeurs rendues)",
+      "ok": true,
+      "detail": "rendues : 99.92 % / 326 ms",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "accueil — invisibilité visiteur",
+      "ok": true,
+      "detail": "aucun terme stratégique visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "accueil — structure header/main/footer",
+      "ok": true,
+      "detail": "{\"entete\":true,\"principal\":true,\"pied\":true}",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "accueil — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue blog — rendu du marqueur protégé",
+      "ok": true,
+      "detail": "5358 caractères rendus",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue blog — invisibilité visiteur",
+      "ok": true,
+      "detail": "aucun terme stratégique visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue blog — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue labo — rendu du marqueur protégé",
+      "ok": true,
+      "detail": "3217 caractères rendus",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue labo — invisibilité visiteur",
+      "ok": true,
+      "detail": "aucun terme stratégique visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue labo — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue outils — rendu du marqueur protégé",
+      "ok": true,
+      "detail": "2647 caractères rendus",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue outils — invisibilité visiteur",
+      "ok": true,
+      "detail": "aucun terme stratégique visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue outils — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue promos — rendu du marqueur protégé",
+      "ok": true,
+      "detail": "2730 caractères rendus",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue promos — invisibilité visiteur",
+      "ok": true,
+      "detail": "aucun terme stratégique visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue promos — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue studio — rendu du marqueur protégé",
+      "ok": true,
+      "detail": "6619 caractères rendus",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue studio — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue article — rendu du marqueur protégé",
+      "ok": true,
+      "detail": "11775 caractères rendus",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue article — invisibilité visiteur",
+      "ok": true,
+      "detail": "aucun terme stratégique visible",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "vue article — erreurs de page",
+      "ok": true,
+      "detail": "0 erreur",
+      "gravite": "erreur"
+    },
+    {
+      "groupe": "navigateur",
+      "nom": "mobile 393px — couverture du haut de page",
+      "ok": true,
+      "detail": "sondes : SPAN, SPAN, P, BUTTON ; marqueurs manquants : 0",
+      "gravite": "erreur"
+    }
+  ]
+}
