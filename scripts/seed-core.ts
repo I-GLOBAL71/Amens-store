@@ -125,7 +125,7 @@ const PROGRAMS = [
   { slug: "n8n-cloud", name: "n8n Cloud", commissionType: "CPA", commissionValue: "variable", cookieDays: 30, affiliateUrl: "https://n8n.io/cloud/", geoTarget: "global", context: "vps_ia", priorityScore: 45, anglePrincipal: 1 },
   { slug: "railway-render", name: "Railway / Render", commissionType: "CPA", commissionValue: "variable", cookieDays: 30, affiliateUrl: "https://railway.com/", geoTarget: "global", context: "vps_ia", priorityScore: 50, anglePrincipal: 2 },
   { slug: "wp-engine", name: "WP Engine / Flywheel", commissionType: "Hybride", commissionValue: "variable", cookieDays: 60, affiliateUrl: "https://wpengine.com/", geoTarget: "global", context: "agence", priorityScore: 55, anglePrincipal: 10 },
-  { slug: "pack-whatsapp", name: "Pack WhatsApp « On le fait pour toi »", commissionType: "Service", commissionValue: "marge 10–50× une commission (~100 000 FCFA/pack)", cookieDays: 0, affiliateUrl: "https://wa.me/237000000000", geoTarget: "africa", context: "service", priorityScore: 95, anglePrincipal: 9 },
+  { slug: "pack-whatsapp", name: "Pack WhatsApp « On le fait pour toi »", commissionType: "Service", commissionValue: "marge 10–50× une commission (~100 000 FCFA/pack)", cookieDays: 0, affiliateUrl: "https://wa.me/237693845941", geoTarget: "africa", context: "service", priorityScore: 95, anglePrincipal: 9 },
 ];
 
 const HOSTS_LABO = ["Hostinger", "Contabo", "o2switch", "OVH", "Cloudways", "Kinsta", "Infomaniak", "Nindohost"];

@@ -7,16 +7,16 @@ Tu repars d'ici avec un hébergement payé en Orange Money, MTN MoMo ou Wave, sa
 - Un compte Orange Money, MTN MoMo ou Wave actif, avec 7 000 FCFA de marge pour le premier mois.
 - Ton nom de domaine, achetable chez les mêmes hébergeurs, en FCFA.
 - Le site prêt : WordPress, WooCommerce ou fichiers statiques dans un zip.
-- Dans tes favoris, le numéro WhatsApp du tunnel « On le fait pour toi » : https://wa.me/237000000000.
+- Dans tes favoris, le [WhatsApp Business « On le fait pour toi » (+237 693 845 941)](https://wa.me/237693845941).
 - Quinze minutes pour la souscription, 24 h ouvrées pour l'activation (délai observé, testé le 23/11/2026).
 
 ## 2. Pourquoi ce choix (et pas un autre)
 
-Je mets Nindohost en tête parce qu'il encaisse directement Orange Money et MTN MoMo, sans carte, avec un hébergement de base autour de 5 000 FCFA par mois (relevé le 15/11/2026). Sa latence mesurée depuis Douala tombe à 148 ms : personne dans notre panel ne fait mieux. Le paiement local évite la carte et le change.
+Je mets Nindohost en tête parce qu'il encaisse directement Orange Money et MTN MoMo, sans carte, avec un hébergement de base autour de 5 000 FCFA par mois (relevé le 15/11/2026). Sa latence mesurée depuis Douala tombe à 148 ms : personne dans notre panel ne fait mieux. Le paiement local évite la carte et le change, sur la base de la parité officielle du [franc CFA publiée par la BEAC](https://www.beac.int/).
 
-Cloudstore (https://cloudstore.cm/) et CCN Technologies (https://ccn-tech.net/) complètent le trio : même paiement Mobile Money, registre .cm local, support WhatsApp en français. Le tunnel « On le fait pour toi » délègue l'installation complète : tu envoies tes accès, l'équipe monte WordPress, le thème et les boîtes, tu règles via MoMo.
+[Cloudstore](https://cloudstore.cm/) et [CCN Technologies](https://ccn-tech.net/) complètent le trio : même paiement Mobile Money (basé sur les [API marchandes Orange Money](https://developer.orange.com/)), registre .cm local, support WhatsApp en français. Le tunnel « On le fait pour toi » délègue l'installation complète : tu envoies tes accès, l'équipe monte WordPress, le thème et les boîtes, tu règles via MoMo.
 
-L'honnêteté oblige un chiffre : l'uptime Nindohost mesuré sur 30 jours s'établit à 99,80 % depuis l'Europe et 99,75 % depuis l'Afrique de l'Ouest (ping toutes les 60 s, 3 régions). Hostinger fait mieux côté disponibilité, 99,95 % depuis l'Afrique de l'Ouest, mais son paiement exige une carte. Pour arbitrer par le prix, le [calculateur de coût](/outils/) convertit FCFA et euros. Et si ton site tombe un vendredi soir, le silo [pannes](/pannes/) décrit les gestes qui sauvent.
+L'honnêteté oblige un chiffre : l'uptime Nindohost mesuré sur 30 jours s'établit à 99,80 % depuis l'Europe et 99,75 % depuis l'Afrique de l'Ouest (ping toutes les 60 s, 3 régions). Hostinger fait mieux côté disponibilité, 99,95 % depuis l'Afrique de l'Ouest, mais son paiement exige une carte. Pour arbitrer par le prix, le [calculateur de coût](/outils/) convertit FCFA et euros. Si tu lances [le site web de ton école au Cameroun](/?v=article&slug=metiers%2Fecole), ces mêmes passerelles règlent le tout. Et si ton site tombe un vendredi soir, le guide [vérifier si OVH est en panne](/?v=article&slug=pannes%2Fovh) décrit les gestes qui sauvent.
 
 ## 3. Étape par étape
 
@@ -27,7 +27,7 @@ Un dimanche après-midi suffit.
 3. **Paie en Mobile Money.** À la caisse, choisis « Orange Money » ou « MTN MoMo », saisis ton numéro. Le push arrive sur le téléphone : valide avec ton code secret. Wave se traite par QR code chez Cloudstore.
 4. **Attends l'activation.** Le compte arrive par email, avec cPanel et les DNS. Compte 24 h ouvrées. Mon essai d'un samedi soir n'a été activé que le lundi à 9 h, ticket et capture du SMS de paiement à l'appui.
 5. **Installe WordPress.** cPanel → Softaculous → WordPress → domaine, titre, identifiant. Cinq minutes.
-6. **Ou délègue tout.** Envoie « On le fait pour toi » sur WhatsApp (https://wa.me/237000000000) avec tes accès : l'équipe installe, tu règles ensuite via MoMo.
+6. **Ou délègue tout.** Envoie « On le fait pour toi » sur [WhatsApp (+237 693 845 941)](https://wa.me/237693845941) avec tes accès : l'équipe installe, tu règles ensuite via MoMo.
 7. **Configure tes boîtes pro.** Trois adresses sur ton domaine, cPanel → Email. La marche détaillée vit dans le silo [email pro](/email-pro/).
 8. **Prévois la passerelle.** Une carte virtuelle locale, chargée en FCFA, paiera Hostinger en euros le jour où ton trafic exigera un VPS. Les frais tournent autour de 2 % par transaction (relevés le 23/11/2026).
 
@@ -43,7 +43,7 @@ Payer son hébergement en Mobile Money coûte autour de 5 000 FCFA par mois (env
 
 ## 5. Le vrai coût sur 12 à 36 mois
 
-Hypothèse Labo : la promo de lancement couvre les 12 premiers mois à 3 500 FCFA par mois, le tarif standard de 5 000 FCFA par mois prend le relais — relevés du 15/11/2026.
+Hypothèse Labo : la promo de lancement couvre les 12 premiers mois à 3 500 FCFA par mois, puis le tarif standard de 5 000 FCFA par mois prend le relais (relevés du 15/11/2026).
 
 | Période | Prix promo | Renouvellement | Total réel |
 |---|---|---|---|
@@ -81,9 +81,9 @@ Sans préavis agressif, la coupure tombe. Pose un rappel 15 jours avant l'éché
 
 ## 7. FAQ
 
-### Quels moyens de paiement fonctionnent sans carte ?
+### Comment payer son hébergement avec Orange Money ou MTN MoMo sans carte bancaire ?
 
-Orange Money, MTN MoMo et Wave, chez Nindohost, Cloudstore et CCN Technologies. Le règlement part du téléphone, en FCFA.
+Choisis un hébergeur compatible Mobile Money comme Nindohost, Cloudstore ou CCN Technologies, sélectionne l'offre en FCFA et valide le paiement par code USSD directement depuis ton téléphone. Orange Money, MTN MoMo et Wave fonctionnent sans carte Visa ni compte PayPal.
 
 ### Peut-on payer Hostinger en Orange Money ?
 
@@ -95,7 +95,7 @@ Environ 7,62 € par mois pour une base à 5 000 FCFA (relevé le 15/11/2026). C
 
 ### Le tunnel « On le fait pour toi », concrètement ?
 
-Envoie ton besoin au https://wa.me/237000000000 avec tes accès. L'équipe installe WordPress et configure les boîtes ; tu règles ensuite via Mobile Money (forfait observé à 3 000 FCFA, testé le 23/11/2026).
+Envoie ton besoin sur [WhatsApp (+237 693 845 941)](https://wa.me/237693845941) avec tes accès. L'équipe installe WordPress et configure les boîtes ; tu règles ensuite via Mobile Money (forfait observé à 3 000 FCFA, testé le 23/11/2026).
 
 ### Que faire quand le site grossit ?
 
@@ -113,7 +113,7 @@ La lucidité commande aussi : 99,75 % d'uptime depuis l'Afrique de l'Ouest sur 3
 
 Prêt à régler depuis ton téléphone ?
 
-<a rel="sponsored" href="https://nindohost.com/?utm_source=amens&utm_medium=affiliate&utm_content=afrique/orange-money">Payer en Mobile Money</a>
+<a rel="sponsored" href="https://nindohost.com/?utm_source=amens&utm_medium=affiliate&utm_content=afrique/orange-money">Consulter l'offre Nindohost payable en Mobile Money sur Nindohost.com</a>
 
 ---
 

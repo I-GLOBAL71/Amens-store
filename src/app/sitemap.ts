@@ -3,8 +3,9 @@
 import type { MetadataRoute } from "next";
 import { db } from "@/lib/db";
 import { ANGLES } from "@/lib/pipeline/types";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://amens.store";
+const BASE = SITE_URL;
 
 export const dynamic = "force-dynamic";
 

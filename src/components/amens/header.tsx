@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useNav } from "@/lib/store";
 import type { ViewName } from "@/lib/pipeline/types";
+import { NavLink } from "./nav-link";
 
 const LINKS: { view: ViewName; label: string }[] = [
   { view: "home", label: "Accueil" },
@@ -17,7 +18,7 @@ const LINKS: { view: ViewName; label: string }[] = [
 ];
 
 export function Header() {
-  const { view, navigate } = useNav();
+  const { view } = useNav();
   const { resolvedTheme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -25,10 +26,10 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between gap-2">
-          <button
-            aria-label="amens.store — accueil"
+          <NavLink
+            target={{ view: "home" }}
+            ariaLabel="amens.store — accueil"
             className="flex items-center gap-2 font-bold tracking-tight text-foreground"
-            onClick={() => navigate({ view: "home" })}
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Ship className="h-5 w-5" aria-hidden />
@@ -36,14 +37,14 @@ export function Header() {
             <span className="text-lg">
               amens<span className="text-primary">.store</span>
             </span>
-          </button>
+          </NavLink>
 
           <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-1">
             {LINKS.map((l) => (
-              <button
+              <NavLink
                 key={l.view}
-                onClick={() => navigate({ view: l.view })}
-                aria-current={view === l.view ? "page" : undefined}
+                target={{ view: l.view }}
+                ariaCurrent={view === l.view ? "page" : undefined}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   view === l.view
                     ? "bg-primary text-primary-foreground"
@@ -51,7 +52,7 @@ export function Header() {
                 }`}
               >
                 {l.label}
-              </button>
+              </NavLink>
             ))}
           </nav>
 
@@ -80,12 +81,10 @@ export function Header() {
           <nav aria-label="Navigation mobile" className="md:hidden pb-3">
             <div className="flex flex-col gap-1">
               {LINKS.map((l) => (
-                <button
+                <NavLink
                   key={l.view}
-                  onClick={() => {
-                    navigate({ view: l.view });
-                    setOpen(false);
-                  }}
+                  target={{ view: l.view }}
+                  onNavigate={() => setOpen(false)}
                   className={`rounded-lg px-3 py-3 text-left text-base font-medium ${
                     view === l.view
                       ? "bg-primary text-primary-foreground"
@@ -93,7 +92,7 @@ export function Header() {
                   }`}
                 >
                   {l.label}
-                </button>
+                </NavLink>
               ))}
             </div>
           </nav>

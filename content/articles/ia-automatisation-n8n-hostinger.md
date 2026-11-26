@@ -32,13 +32,13 @@ ufw allow 5678/tcp
 ufw enable
 ```
 
-3. **Pose Docker** (script officiel, testé le 23/11/2026) :
+3. **Pose Docker** selon la [documentation officielle Docker pour Ubuntu](https://docs.docker.com/engine/install/ubuntu/) (script vérifié le 23/11/2026) :
 
 ```bash
 curl -fsSL https://get.docker.com | sh
 ```
 
-4. **Écris le compose.** Le volume n8n_data est la pièce maîtresse : sans lui, tes workflows meurent avec le conteneur.
+4. **Écris le compose** en suivant la [documentation Docker Compose de n8n](https://docs.n8n.io/hosting/installation/docker/). Le volume n8n_data est la pièce maîtresse : sans lui, tes workflows meurent avec le conteneur.
 
 ```bash
 mkdir n8n && cd n8n
@@ -69,7 +69,7 @@ docker compose up -d
 curl -fsSL https://coollabs.io/install.sh | bash
 ```
 
-Caddy ensuite, si tu préfères dix lignes et rien d'autre :
+[Caddy](https://caddyserver.com/docs/automatic-https) ensuite, si tu préfères dix lignes et rien d'autre :
 
 ```bash
 apt install -y caddy
@@ -97,7 +97,7 @@ Petit aveu utile : le pare-feu Hostinger m'a bloqué le port 5678 pendant vingt 
 | 3 à 8 workflows, PostgreSQL dédié, files d'attente | 8 Go RAM, 2 vCPU | KVM 2 | 5,99 € en promo, puis 13,99 €/mois |
 | 10 workflows et plus, mode queue, deux instances | 16 Go RAM, 4 vCPU | KVM 4 | 9,99 € en promo, puis 21,99 €/mois |
 
-Pour un usage personnel ou une petite agence, le KVM 2 (8 Go de RAM, 2 vCPU) reste le plan le plus rentable testé par le Labo amens.store : 5,99 € par mois en promo, 13,99 € au renouvellement (relevé le 15/11/2026, inchangé le 23/11/2026). Il absorbe n8n, un PostgreSQL dédié et une dizaine de workflows actifs sans swap. Le KVM 1 à 4 Go tient deux workflows légers, guère plus : c'est un piège dès que tu branches trois workflows, parce que le mode file d'attente de n8n consomme 1,5 Go à lui seul lors des pics. Côté réseau, Hostinger affiche 99,98 % d'uptime depuis l'Europe et 312 ms de latence depuis Douala, 296 ms depuis Abidjan, 284 ms depuis Dakar (relevés sur 30 jours, ping toutes les 60 s, 3 régions — [Labo amens.store](/labo/)). Le KVM 4 à 16 Go (9,99 € en promo) ne se justifie qu'au-delà de dix workflows parallèles.
+Pour un usage personnel ou une petite agence, le KVM 2 (8 Go de RAM, 2 vCPU) reste le plan le plus rentable testé par le Labo amens.store : 5,99 € par mois en promo, 13,99 € au renouvellement (relevé le 15/11/2026, inchangé le 23/11/2026). Il absorbe n8n, un PostgreSQL dédié et une dizaine de workflows actifs sans swap. Le KVM 1 à 4 Go tient deux workflows légers, guère plus : c'est un piège dès que tu branches trois workflows, parce que le mode file d'attente de n8n consomme 1,5 Go à lui seul lors des pics. Côté réseau, Hostinger affiche 99,98 % d'uptime depuis l'Europe et 312 ms de latence depuis Douala, 296 ms depuis Abidjan, 284 ms depuis Dakar (relevés sur 30 jours, ping toutes les 60 s, 3 régions dans notre [Labo amens.store](/labo/)). Tu peux aussi [déployer ton app Lovable sur le même serveur](/?v=article&slug=deployer-mon-app%2Flovable%2Fdomaine) via Coolify ou comparer le [vrai coût sur 3 ans](/?v=article&slug=outils%2Fvrai-cout-3-ans) avant de signer. Le KVM 4 à 16 Go (9,99 € en promo) ne se justifie qu'au-delà de dix workflows parallèles.
 
 ## 5. Le vrai coût sur 12 à 36 mois
 
@@ -139,6 +139,10 @@ Avant l'émission, le DNS doit pointer réellement vers ton IP. Vérifie avec `d
 
 ## 7. FAQ
 
+### Comment sauvegarder les workflows ?
+
+Un tar hebdomadaire du volume suffit. La commande exacte est à l'étape 8.
+
 ### Peut-on installer n8n sans Docker ?
 
 Oui, via npm et Node.js. Docker reste la voie la plus propre pour les mises à jour et pour le volume n8n_data. Je déconseille npm en production.
@@ -159,10 +163,6 @@ Non. Tout vit dans le volume n8n_data, sur ton disque. Seuls les nœuds tiers ap
 
 Ça tient, avec 8 Go de RAM. Prévois des conteneurs distincts et un Caddy commun pour dispatcher les noms de domaine.
 
-### Comment sauvegarder les workflows ?
-
-Un tar hebdomadaire du volume suffit. La commande exacte est à l'étape 8.
-
 ## 8. Verdict et liens affiliés
 
 Mon verdict tient en trois chiffres : 5,99 € en promo, 99,98 % d'uptime mesuré depuis l'Europe, 10 minutes d'installation. Si tu automatises plus de deux processus par semaine, l'auto-hébergé sur KVM 2 se rembourse avant le premier renouvellement.
@@ -171,7 +171,7 @@ La faiblesse existe, je la signale : le renouvellement passe à 13,99 € par mo
 
 Prêt à brancher tes premiers workflows ?
 
-<a rel="sponsored" href="https://www.hostinger.fr/vps-hebergement?utm_source=amens&utm_medium=affiliate&utm_content=ia-automatisation/n8n/hostinger">Créer mon VPS Hostinger</a>
+<a rel="sponsored" href="https://www.hostinger.fr/vps-hebergement?utm_source=amens&utm_medium=affiliate&utm_content=ia-automatisation/n8n/hostinger">Consulter les VPS KVM Hostinger pour n8n sur Hostinger.fr</a>
 
 ---
 

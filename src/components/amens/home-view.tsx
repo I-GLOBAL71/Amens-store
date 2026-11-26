@@ -26,6 +26,7 @@ import { useNav } from "@/lib/store";
 import { ANGLES } from "@/lib/pipeline/types";
 import { useArticles, useLabo, usePrograms } from "@/hooks/use-amens";
 import { usePageTitle } from "@/hooks/use-page-title";
+import { NavLink } from "./nav-link";
 
 const ICONES: Record<string, React.ComponentType<{ className?: string }>> = {
   cpu: Cpu,
@@ -236,17 +237,15 @@ function Assistant() {
                     </ul>
                   </div>
                 )}
-                <button
+                <NavLink
+                  target={{
+                    view: "blog",
+                    silo: projet === "ia" ? "ia-automatisation" : projet === "app" ? "deployer-mon-app" : projet === "email" ? "email-pro" : projet === "agence" ? "agences" : "metiers",
+                  }}
                   className="text-sm font-medium text-primary underline"
-                  onClick={() =>
-                    navigate({
-                      view: "blog",
-                      silo: projet === "ia" ? "ia-automatisation" : projet === "app" ? "deployer-mon-app" : projet === "email" ? "email-pro" : projet === "agence" ? "agences" : "metiers",
-                    })
-                  }
                 >
                   Lire nos guides sur ce sujet →
-                </button>
+                </NavLink>
               </div>
             )}
           </div>
@@ -278,7 +277,6 @@ function ANGLE_CTA(contexte: string): string {
 
 /* ── Vue accueil ──────────────────────────────────────────────────────────── */
 export function HomeView() {
-  const { navigate } = useNav();
   usePageTitle(
     "amens.store — mets en ligne tes projets IA, apps et business (même sans carte bancaire)"
   );
@@ -326,11 +324,15 @@ export function HomeView() {
               Money, créer un email pro), tu repars avec une solution opérationnelle.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button size="lg" className="h-12" onClick={() => navigate({ view: "blog" })}>
-                Explorer le blog <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+              <Button size="lg" className="h-12" asChild>
+                <NavLink target={{ view: "blog" }}>
+                  Explorer le blog <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+                </NavLink>
               </Button>
-              <Button size="lg" variant="outline" className="h-12" onClick={() => navigate({ view: "labo" })}>
-                Voir les données du Labo
+              <Button size="lg" variant="outline" className="h-12" asChild>
+                <NavLink target={{ view: "labo" }}>
+                  Voir les données du Labo
+                </NavLink>
               </Button>
             </div>
             <ul className="mt-8 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
@@ -376,37 +378,41 @@ export function HomeView() {
               quartier : chaque sujet a son guide pas-à-pas, testé et daté.
             </p>
           </div>
-          <Button variant="outline" onClick={() => navigate({ view: "blog" })}>
-            Tous les guides <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+          <Button variant="outline" asChild>
+            <NavLink target={{ view: "blog" }}>
+              Tous les guides <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+            </NavLink>
           </Button>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ANGLES.map((a) => {
             const Icone = ICONES[a.icone] ?? Cpu;
             return (
-              <Card
+              <NavLink
                 key={a.id}
-                className="group cursor-pointer transition-shadow hover:shadow-md"
-                onClick={() => navigate({ view: "blog", silo: a.silo })}
+                target={{ view: "blog", silo: a.silo }}
+                className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <CardHeader className="flex-row items-center gap-3 space-y-0 pb-2">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
-                    <Icone className="h-5 w-5 text-primary" />
-                  </span>
-                  <div className="min-w-0">
-                    <CardTitle className="text-base leading-tight">{a.nom}</CardTitle>
-                    <p className="mt-0.5 text-xs font-medium text-muted-foreground">
-                      /{a.silo}/
+                <Card className="h-full cursor-pointer transition-shadow hover:shadow-md">
+                  <CardHeader className="flex-row items-center gap-3 space-y-0 pb-2">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
+                      <Icone className="h-5 w-5 text-primary" />
+                    </span>
+                    <div className="min-w-0">
+                      <CardTitle className="text-base leading-tight">{a.nom}</CardTitle>
+                      <p className="mt-0.5 text-xs font-medium text-muted-foreground">
+                        /{a.silo}/
+                      </p>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pb-4">
+                    <p className="text-sm text-muted-foreground">{a.description}</p>
+                    <p className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:underline">
+                      {a.cta} <ArrowRight className="h-4 w-4" aria-hidden />
                     </p>
-                  </div>
-                </CardHeader>
-                <CardContent className="pb-4">
-                  <p className="text-sm text-muted-foreground">{a.description}</p>
-                  <p className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:underline">
-                    {a.cta} <ArrowRight className="h-4 w-4" aria-hidden />
-                  </p>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </NavLink>
             );
           })}
         </div>
@@ -425,8 +431,10 @@ export function HomeView() {
               publication. Et quand une donnée change, le guide est révisé — la date de mise
               à jour est indiquée sur chaque page.
             </p>
-            <Button className="mt-4 h-11" onClick={() => navigate({ view: "labo" })}>
-              Voir les mesures du Labo <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+            <Button className="mt-4 h-11" asChild>
+              <NavLink target={{ view: "labo" }}>
+                Voir les mesures du Labo <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+              </NavLink>
             </Button>
           </div>
           <div className="rounded-xl border border-border bg-background p-5">

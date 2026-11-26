@@ -5,15 +5,14 @@
 // robots.txt / llms.txt / sitemap.xml restent servis aux chemins standards,
 // sans lien visible (optimisation invisible).
 import { Ship } from "lucide-react";
-import { useNav } from "@/lib/store";
 import { ANGLES, DISCLOSURE } from "@/lib/pipeline/types";
 import { useLead } from "@/hooks/use-amens";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { NavLink } from "./nav-link";
 
 export function Footer() {
-  const { navigate } = useNav();
   const lead = useLead();
   const { toast } = useToast();
 
@@ -74,12 +73,12 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               {ANGLES.map((a) => (
                 <li key={a.id}>
-                  <button
+                  <NavLink
+                    target={{ view: "blog", silo: a.silo }}
                     className="text-muted-foreground hover:text-primary hover:underline"
-                    onClick={() => navigate({ view: "blog", silo: a.silo })}
                   >
                     /{a.silo}/ · {a.nom.split("(")[0]}
-                  </button>
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -89,28 +88,28 @@ export function Footer() {
             <h3 className="mb-3 text-sm font-semibold">Ressources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
+                <NavLink
+                  target={{ view: "labo" }}
                   className="text-muted-foreground hover:text-primary hover:underline"
-                  onClick={() => navigate({ view: "labo" })}
                 >
                   Labo — mesures et méthodologie
-                </button>
+                </NavLink>
               </li>
               <li>
-                <button
+                <NavLink
+                  target={{ view: "outils" }}
                   className="text-muted-foreground hover:text-primary hover:underline"
-                  onClick={() => navigate({ view: "outils" })}
                 >
                   Outils et calculateurs
-                </button>
+                </NavLink>
               </li>
               <li>
-                <button
+                <NavLink
+                  target={{ view: "promos" }}
                   className="text-muted-foreground hover:text-primary hover:underline"
-                  onClick={() => navigate({ view: "promos" })}
                 >
                   Promos Black Friday
-                </button>
+                </NavLink>
               </li>
             </ul>
           </nav>

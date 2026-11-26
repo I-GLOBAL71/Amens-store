@@ -14,9 +14,9 @@ En une semaine tu montes le site de ton école : pages classes, actualités, for
 
 Le pack clé en main gagne pour 95 % des écoles : hébergement, domaine, boîte pro et maintenance réglés en un seul paiement Mobile Money. Le DIY (environ 25 000 FCFA/an) ne se justifie que si ton équipe aime WordPress. Le critère qui tranche n'est pas le prix, c'est qui répare le site le jour des bulletins.
 
-Un site d'école consomme peu de ressources techniques : un mutualisé suffit, avec 5 Go de disque, une base et WordPress. Ce qui fait la différence, c'est la maintenance — les mises à jour, le formulaire spamme, la rentrée de septembre où tout le monde consulte en même temps. Le pack porte cette charge ; le DIY suppose un bénévole disponible.
+Un site d'école consomme peu de ressources techniques : un mutualisé suffit, avec 5 Go de disque, une base et WordPress. Ce qui fait la différence, c'est la maintenance (mises à jour, formulaire anti-spam, pic de la rentrée de septembre où tout le monde consulte en même temps). Le pack porte cette charge ; le DIY suppose un bénévole disponible.
 
-La mesure bonus pour le Cameroun : l'hébergement en France répond en 214 ms depuis Douala chez o2switch, 255 ms chez Infomaniak, 312 ms chez Hostinger — le [panel hébergement Afrique](/afrique/) détaille les latences. Pour la boîte direction@, le [guide email pro](/email-pro/) montre la méthode en 15 minutes. Les parents, eux, écrivent sur WhatsApp : le site sert à les rassurer et à collecter les inscriptions.
+La mesure bonus pour le Cameroun : l'hébergement en France répond en 214 ms depuis Douala chez o2switch, 255 ms chez Infomaniak, 312 ms chez Hostinger. Le [panel hébergement Afrique payable en Orange Money](/?v=article&slug=afrique%2Forange-money) détaille les latences ([panel /afrique/](/afrique/)). Pour la boîte direction@, notre guide complet pour [créer une adresse email pro avec ton nom de domaine](/?v=article&slug=email-pro%2Fcreer) explique la mise en place en 15 minutes ([guide /email-pro/](/email-pro/)). Les parents, eux, écrivent sur WhatsApp : le site sert à les rassurer et à collecter les inscriptions.
 
 ## 3. Étape par étape
 
@@ -26,7 +26,7 @@ La mesure bonus pour le Cameroun : l'hébergement en France répond en 214 ms de
 4. **Pose le thème** : « Apparence » → « Thèmes » → cherche « Education Hub » ou « School » → installe, active. Ces deux thèmes visent les écoles, avec pages de classes et bloc d'inscription prêts.
 5. **Crée les six pages de base** : Accueil, Notre école, Classes, Actualités, Inscriptions, Contact. Puis « Apparence » → « Menus » pour l'ordre.
 6. **Connecte direction@nomdelascole.cm** : le pack la configure ; en DIY, la méthode email pro prend 15 minutes (guide lié plus haut).
-7. **Ajoute le formulaire d'inscription** : extension de formulaire, quatre champs — nom de l'élève, niveau, téléphone du parent, quartier. La notification part vers la boîte direction@.
+7. **Ajoute le formulaire d'inscription** : extension de formulaire avec quatre champs (nom de l'élève, niveau, téléphone du parent, quartier). La notification part vers la boîte direction@.
 8. **Active le paiement Mobile Money** : génère un lien de paiement depuis ton compte marchand MTN MoMo ou Orange Money, pose-le en bouton sur la page Inscriptions.
 9. **Affiche le QR code à l'entrée** : il pointe vers le site. L'an dernier, un scan à la porte valait trois publications Facebook.
 
@@ -62,6 +62,9 @@ Relevé le 15/11/2026 : l'hébergement européen le moins cher (Hostinger Premiu
 
 ## 7. FAQ
 
+### Comment créer un site web d'école payable en Mobile Money sans savoir coder ?
+Choisis soit le pack clé en main à 75 000 FCFA/an (hébergement, domaine `.cm` ou `.com`, WordPress configuré, boîte `direction@` et bouton MTN MoMo / Orange Money gérés en 7 jours), soit l'installation manuelle sur un mutualisé avec les thèmes gratuits Education Hub ou School et un formulaire d'inscription à 4 champs.
+
 ### Combien coûte un site web d'école au Cameroun ?
 Compte 25 000 FCFA/an pour l'hébergement seul, 75 000 FCFA/an tout compris avec le pack (prix relevés le 15/11/2026). Le domaine est quasi inclus la première année en DIY, inclus en continu dans le pack.
 
@@ -81,7 +84,7 @@ La page Facebook loue son audience, le site la possède : référencement, formu
 Oui, avec le domaine. En DIY, la création suit le guide email pro, 15 minutes montre en main.
 
 ### Peut-on publier les résultats des élèves en ligne ?
-Non sans précaution : des résultats nominatifs exposent des données de mineurs. Une zone privée avec code individuel reste la voie sûre.
+Non sans précaution : des résultats nominatifs exposent des données de mineurs (à encadrer selon les principes du [guide Éducation de la CNIL](https://www.cnil.fr/fr/education) et en privilégiant un espace privé sur [WordPress](https://fr.wordpress.org/) ou [Moodle](https://docs.moodle.org/)). Une zone privée avec code individuel reste la voie sûre.
 
 ## 8. Verdict et liens affiliés
 
@@ -91,7 +94,7 @@ Mon opinion est assumée : une école sans site perd ses inscriptions au profit 
 
 Une seule règle pour tenir : un pilote, toujours.
 
-<a rel="sponsored" href="https://wa.me/237000000000?utm_source=amens&utm_medium=affiliate&utm_content=metiers/ecole">Demander le pack clé en main</a>
+<a rel="sponsored" href="https://wa.me/237693845941?utm_source=amens&utm_medium=affiliate&utm_content=metiers/ecole">Demander le pack clé en main site d'école amens.store sur WhatsApp (+237 693 845 941)</a>
 
 ---
 

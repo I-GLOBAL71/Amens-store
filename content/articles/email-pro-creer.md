@@ -22,7 +22,7 @@ J'ai créé ma première boîte pro un dimanche soir. Onze minutes, chrono en ma
 
 ## 3. Étape par étape
 
-En clair, avant les clics : SPF est la carte d'identité de tes serveurs d'envoi. DKIM scelle chaque email comme une bande inviolable ; DMARC dit au destinataire quoi faire des imposteurs. Trois enregistrements DNS, un après-midi de lecture, et tes emails cessent de finir en spam.
+En clair, avant les clics : SPF ([norme IETF RFC 7208](https://datatracker.ietf.org/doc/html/rfc7208)) est la carte d'identité de tes serveurs d'envoi. DKIM ([RFC 6376](https://datatracker.ietf.org/doc/html/rfc6376)) scelle chaque email comme une bande inviolable ; DMARC ([RFC 7489](https://datatracker.ietf.org/doc/html/rfc7489)) dit au destinataire quoi faire des imposteurs, en accord avec les [bonnes pratiques d'authentification Google Workspace / Gmail](https://support.google.com/a/answer/81126). Trois enregistrements DNS, un après-midi de lecture, et tes emails cessent de finir en spam.
 
 1. **Connecte-toi à hPanel**, onglet « Email », puis « Comptes de messagerie ». Sélectionne ton domaine, clique « Créer une boîte ».
 2. **Tape l'adresse** : contact@nomdedomaine.fr. Génère un mot de passe de 16 caractères (bouton dédié), fixe le quota à 10 Go, valide.
@@ -42,7 +42,7 @@ En clair, avant les clics : SPF est la carte d'identité de tes serveurs d'envoi
 | Budget minimal, 1 adresse | 1 boîte, 5 Go, webmail | Zoho Mail (forfait gratuit) | 0 € |
 | Fichiers partagés + Docs | 1 utilisateur, 30 Go, suite bureautique | Google Workspace Starter | 6,60 €/utilisateur/mois |
 
-Compte une boîte par rôle exposé, pas plus : contact@ pour le public et facturation@ pour la compta ; ton prénom@ pour le quotidien. Trois boîtes chez Hostinger Email coûtent 5,97 €/mois au total la première année (1,99 €/boîte/mois, relevé le 23/11/2026), puis 8,97 €/mois dès la deuxième (2,99 €/boîte/mois). J'ai démarré avec une seule boîte à 1,99 €/mois : après 3 mois à fouiller des emails clients et fournisseurs mélangés, j'ai ajouté la deuxième, mon seul regret étant de ne pas l'avoir faite le premier jour. À 10 Go par boîte, un solo archive 3 ans d'historique sans nettoyage. Le forfait gratuit de Zoho Mail convient au budget très serré — webmail seul, pas d'IMAP dans Outlook, 1 boîte. Google Workspace Starter (6,60 €/utilisateur/mois) ne devient rentable que si tu vis dans Docs, Drive et Meet. Ma règle : l'email doit afficher ton domaine, le reste se négocie.
+Compte une boîte par rôle exposé, pas plus : contact@ pour le public et facturation@ pour la compta ; ton prénom@ pour le quotidien. Trois boîtes chez Hostinger Email coûtent 5,97 €/mois au total la première année (1,99 €/boîte/mois, relevé le 23/11/2026), puis 8,97 €/mois dès la deuxième (2,99 €/boîte/mois). J'ai démarré avec une seule boîte à 1,99 €/mois : après 3 mois à fouiller des emails clients et fournisseurs mélangés, j'ai ajouté la deuxième, mon seul regret étant de ne pas l'avoir faite le premier jour. À 10 Go par boîte, un solo archive 3 ans d'historique sans nettoyage. Le forfait gratuit de Zoho Mail convient au budget très serré (webmail seul, pas d'IMAP dans Outlook, 1 boîte). Google Workspace Starter (6,60 €/utilisateur/mois) ne devient rentable que si tu vis dans Docs, Drive et Meet. Ma règle : l'email doit afficher ton domaine, le reste se négocie. Pour optimiser le budget d'ouverture, consulte nos [relevés Black Friday hébergement 2026](/?v=article&slug=promos%2Fblack-friday-2026) et notre guide pour [héberger les sites clients sans rogner ta marge](/?v=article&slug=agences%2Fmarge).
 
 ## 5. Le vrai coût sur 12 à 36 mois
 
@@ -65,8 +65,8 @@ Le comparatif sur trois ans, par boîte, relevé le 15/11/2026. Hostinger Email 
 
 ## 7. FAQ
 
-### Pourquoi ne pas garder un Gmail gratuit pour mon business ?
-Parce que l'adresse est ton premier signal. Le domaine inspire confiance dès le premier message, pour 2 €/mois : le Gmail gratuit ne coûte pas d'euros, il coûte des clients.
+### Comment créer une adresse email pro sur son nom de domaine sans finir en spam ?
+Ouvre une boîte Hostinger Email (Titan) ou Zoho Mail sur ton domaine, ajoute les enregistrements MX, SPF et DKIM fournis dans ta zone DNS, puis publie une règle DMARC (`p=quarantine`) avant de connecter Gmail ou Outlook en IMAP. En 15 minutes, l'adresse `contact@tondomaine.fr` arrive en boîte principale.
 
 ### Hostinger Email fonctionne-t-il avec un domaine hébergé ailleurs ?
 Oui. Pointe les enregistrements MX et SPF de ton registrar vers les valeurs Titan, la boîte fait le reste.
@@ -94,7 +94,7 @@ Zoho convient aux démarrages à budget zéro, Google Workspace aux équipes dé
 
 J'utilise une boîte Titan pour mes envois depuis 14 mois. Zéro message perdu en spam depuis le passage DMARC en quarantine.
 
-<a rel="sponsored" href="https://www.hostinger.fr/email-professionnel?utm_source=amens&utm_medium=affiliate&utm_content=email-pro/creer">Créer mon email pro</a>
+<a rel="sponsored" href="https://www.hostinger.fr/email-professionnel?utm_source=amens&utm_medium=affiliate&utm_content=email-pro/creer">Consulter l'offre Hostinger Email (Titan) sur Hostinger.fr</a>
 
 ---
 

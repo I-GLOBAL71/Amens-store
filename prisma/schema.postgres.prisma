@@ -1,0 +1,151 @@
+// Miroir strict de prisma/schema.prisma (SQLite local) -> PostgreSQL (Neon / Vercel prod)
+// Génération client prod : bunx prisma generate --schema prisma/schema.postgres.prisma
+// Push schéma Neon     : bun run db:push:pg
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Skill {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  role        String
+  mission     String
+  description String
+  version     String   @default("1.0")
+  ordre       Int
+  gate        Boolean  @default(false)
+  active      Boolean  @default(true)
+  skillPath   String
+  scriptPath  String
+  reference   String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AffiliateProgram {
+  id              String  @id @default(cuid())
+  slug            String  @unique
+  name            String
+  commissionType  String
+  commissionValue String
+  cookieDays      Int     @default(30)
+  payoutThreshold String  @default("")
+  affiliateUrl    String
+  geoTarget       String  @default("global")
+  context         String  @default("vps_ia")
+  priorityScore   Int     @default(50)
+  anglePrincipal  Int     @default(1)
+  active          Boolean @default(true)
+}
+
+model Article {
+  id                    String    @id @default(cuid())
+  slug                  String    @unique
+  silo                  String
+  angle                 Int
+  title                 String
+  metaTitle             String
+  metaDescription       String
+  excerpt               String
+  content               String
+  faqJson               String    @default("[]")
+  primaryProgram        String    @default("")
+  secondaryProgramsJson String    @default("[]")
+  difficulty            String    @default("débutant")
+  timeEstimate          String    @default("")
+  costEstimate          String    @default("")
+  status                String    @default("draft")
+  seoScore              Int       @default(0)
+  geoScore              Int       @default(0)
+  humanScore            Int       @default(0)
+  verificationPassed    Boolean   @default(false)
+  laboDataJson          String    @default("[]")
+  author                String    @default("equipe-amens")
+  views                 Int       @default(0)
+  publishedAt           DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model PipelineRun {
+  id             String   @id @default(cuid())
+  runType        String   @default("analyze")
+  status         String   @default("en_cours")
+  angle          Int      @default(1)
+  requete        String   @default("")
+  title          String   @default("")
+  slug           String   @default("")
+  stepsJson      String   @default("[]")
+  blockingIssues Int      @default(0)
+  warnings       Int      @default(0)
+  overallScore   Int      @default(0)
+  articleId      String?
+  createdAt      DateTime @default(now())
+  finishedAt     DateTime @updatedAt
+}
+
+model KeywordResearch {
+  id            String   @id @default(cuid())
+  graine        String
+  requete       String
+  angle         Int      @default(0)
+  classeVolume  String   @default("basse")
+  difficulte    Int      @default(50)
+  resistanceAio String   @default("moyen")
+  potentiel     String   @default("moyen")
+  verdict       String   @default("SURVEILLER")
+  source        String   @default("expansion-locale")
+  createdAt     DateTime @default(now())
+}
+
+model LaboUptime {
+  id           String   @id @default(cuid())
+  host         String
+  region       String
+  uptime       Float    @default(99.9)
+  incidents30j Int      @default(0)
+  lastCheckAt  DateTime @default(now())
+}
+
+model LaboLatence {
+  id        String @id @default(cuid())
+  host      String
+  region    String
+  latenceMs Int    @default(200)
+  period    String @default("2026-11")
+}
+
+model PriceHistory {
+  id                 String   @id @default(cuid())
+  host               String
+  plan               String
+  prixPromo          Float
+  prixRenouvellement Float
+  devise             String   @default("EUR")
+  captureAt          DateTime @default(now())
+}
+
+model AiCitation {
+  id         String   @id @default(cuid())
+  plateforme String
+  requete    String
+  cite       Boolean  @default(false)
+  checkedAt  DateTime @default(now())
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  type      String
+  contact   String
+  angle     Int      @default(0)
+  message   String   @default("")
+  status    String   @default("nouveau")
+  createdAt DateTime @default(now())
+}

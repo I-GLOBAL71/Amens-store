@@ -12,11 +12,11 @@ Tu repars avec la méthode de diagnostic en 5 minutes (OVH en panne ou problème
 
 ## 2. Pourquoi ce choix (et pas un autre)
 
-o2switch gagne le rôle d'alternative parce qu'il cumule les plus basses latences du panel — 214 ms depuis Douala, 196 ms depuis Abidjan, 182 ms depuis Dakar — et 99,99 % de dispo en Europe sur 30 jours (ping toutes les 60 s, 3 régions). Leur équipe prend en charge les migrations WordPress gratuitement.
+o2switch gagne le rôle d'alternative parce qu'il cumule les plus basses latences du panel (214 ms depuis Douala, 196 ms depuis Abidjan, 182 ms depuis Dakar) et 99,99 % de dispo en Europe sur 30 jours (ping toutes les 60 s, 3 régions). Leur équipe prend en charge les migrations WordPress gratuitement.
 
 Sur la même fenêtre, OVH affiche 99,92 % de dispo en Europe, 99,88 % depuis l'Afrique de l'Ouest, 99,90 % depuis l'Amérique du Nord. Rien de dramatique : environ 34 min de coupure par mois en Europe, 52 min vues d'Afrique de l'Ouest. Sauf que le jour où ta boutique est down, ces minutes-là sont des euros.
 
-o2switch Unique coûte 5,00 €/mois la première année, renouvellement 7,00 €/mois (relevé le 15/11/2026). Sur le papier, OVH Perso reste moins cher la première année à 3,60 €/mois. Mon avis : l'économie ne couvre pas les mardis soirs passés à contempler une page de statut. Pour la sortie propre, [migrer ton site](/migrer/) suit une procédure précise, et [les bons outils](/outils/) surveillent ta dispo pendant que tu attends.
+o2switch Unique coûte 5,00 €/mois la première année, renouvellement 7,00 €/mois (relevé le 15/11/2026). Sur le papier, OVH Perso reste moins cher la première année à 3,60 €/mois. Mon avis : l'économie ne couvre pas les mardis soirs passés à contempler une page de statut. Pour la sortie propre, [quitter ton ancien hébergeur sans rien perdre](/?v=article&slug=migrer%2Fhostinger) ([migrer ton site](/migrer/)) suit une procédure précise, et notre [comparateur du coût réel sur 3 ans](/?v=article&slug=outils%2Fvrai-cout-3-ans) ([les bons outils](/outils/)) aide à choisir l'alternative durable.
 
 ## 3. Étape par étape
 
@@ -25,8 +25,8 @@ En mars dernier, j'ai perdu 50 minutes là-dessus. Site injoignable, premier ré
 1. **Recharge en navigation privée** (Ctrl+Shift+N). Toujours rien ? Continue.
 2. **Teste en 4G, Wi-Fi coupé** : si le site charge sur les données mobiles, le problème est ta connexion, ta box ou le cache DNS de ta machine.
 3. **Force le rafraîchissement** : Ctrl+F5 (Windows) ou Cmd+Shift+R (macOS). Un cache fatigué affiche un site « en panne » des heures après la réparation.
-4. **Ouvre la page de statut OVH** : tape « statut OVH » dans ton moteur de recherche, la page officielle liste les incidents datacenter par datacenter (RBX, GRA, SBG). Bandeau rouge : coupable désigné.
-5. **Confirme au terminal** : `ping tondomaine.fr` puis `traceroute tondomaine.fr` (`tracert` sous Windows). Si la trace meurt sur un hop OVH, l'incident est chez eux, pas chez toi.
+4. **Ouvre la [page de statut officielle OVHcloud](https://www.status-ovhcloud.com/)** : elle liste en temps réel les incidents datacenter par datacenter (RBX, GRA, SBG), tout comme le [tableau d'état Cloudflare](https://www.cloudflarestatus.com/) pour les pannes DNS/CDN intermédiaires. Bandeau rouge : coupable désigné.
+5. **Confirme au terminal** : `ping tondomaine.fr` puis `traceroute tondomaine.fr` (`tracert` sous Windows) ou vérifie la signature DNS selon les [référentiels ICANN DNSSEC](https://www.icann.org/resources/pages/dnssec-what-is-it-and-why-is-it-important-9). Si la trace meurt sur un hop OVH, l'incident est chez eux, pas chez toi.
 6. **Croise la courbe des signalements** sur Downdetector : un pic de rapports « OVH » dans l'heure confirme la tendance mieux que trois tweets isolés.
 7. **Exporte tout, tout de suite** : fichiers par FTP, base via phpMyAdmin si ça répond encore. Un incident réseau ne touche pas d'ordinaire aux disques ; ne parie pas dessus.
 8. **Regarde la migration seulement ensuite.** L'équipe o2switch reprend un site WordPress gratuitement ; ton unique tâche reste le switch DNS à la fin.
@@ -94,7 +94,7 @@ Si la dispo d'OVH ne te convient plus, o2switch est l'alternative que les mesure
 
 Entre-temps, je garde le réflexe export, même par temps calme.
 
-<a rel="sponsored" href="https://www.o2switch.fr/?utm_source=amens&utm_medium=affiliate&utm_content=pannes/ovh">Voir l'alternative immédiate</a>
+<a rel="sponsored" href="https://www.o2switch.fr/?utm_source=amens&utm_medium=affiliate&utm_content=pannes/ovh">Consulter l'offre Unique o2switch (alternative OVH France) sur o2switch.fr</a>
 
 ---
 

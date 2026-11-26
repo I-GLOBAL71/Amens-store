@@ -14,9 +14,9 @@ Tu repars d'ici avec un plan de sortie propre : sauvegarde intégrale, migration
 
 Je dirige les déçus de Hostinger vers Cloudways parce que la migration y est gratuite et gérée par leur équipe, et que le panneau reste lisible pour un non-sysadmin. Le DO 1 Go passe de 10,00 € à 14,00 $ au renouvellement (relevé le 15/11/2026) : plus cher qu'un mutualisé, certes. Tu rends la gestion serveur à quelqu'un d'autre.
 
-Les alternatives tiennent en deux phrases. o2switch facture son Unique 5,00 € en promo puis 7,00 € (relevé du 15/11/2026), avec l'uptime le plus haut de notre panel : 99,99 % en Europe, 99,96 % depuis l'Afrique de l'Ouest. Sa latence mesurée depuis Douala tombe à 214 ms, contre 346 ms pour Cloudways — si ton public vit en Afrique de l'Ouest, le calcul change. Kinsta vise l'agence premium, facturation en dollars : budget différent.
+Les alternatives tiennent en deux phrases. o2switch facture son Unique 5,00 € en promo puis 7,00 € (relevé du 15/11/2026), avec l'uptime le plus haut de notre panel : 99,99 % en Europe, 99,96 % depuis l'Afrique de l'Ouest. Sa latence mesurée depuis Douala tombe à 214 ms, contre 346 ms pour Cloudways : si ton public vit en Afrique de l'Ouest, le calcul change. Kinsta vise l'agence premium, facturation en dollars : budget différent.
 
-Pour arbitrer chiffres en main, le [comparateur d'outils](/outils/) trie par renouvellement réel. Si la migration casse quelque chose un samedi soir, le silo [pannes](/pannes/) décrit les restaurations de secours.
+Pour arbitrer chiffres en main, consulte notre [tableau du vrai coût des hébergeurs sur 3 ans](/?v=article&slug=outils%2Fvrai-cout-3-ans) et le [comparateur d'outils](/outils/). Si la migration casse quelque chose un samedi soir, notre guide [OVH ou hébergeur en panne : que faire](/?v=article&slug=pannes%2Fovh) ([silo pannes](/pannes/)) décrit les restaurations de secours.
 
 ## 3. Étape par étape
 
@@ -31,12 +31,12 @@ tar czf site.tar.gz public_html
 ```
 
 3. **Exporte les emails.** Thunderbird en IMAP → glisser les dossiers en local, format .mbox conservé. La recette détaillée vit dans le silo [email pro](/email-pro/).
-4. **Lance la migration Cloudways.** Depuis ton WordPress : plugin « Cloudways Automated Migration » → URL du site, clé API Cloudways → « Start Migration ». Compte 20 minutes pour 2 Go (observé, testé le 23/11/2026).
+4. **Lance la migration Cloudways.** Depuis ton WordPress : plugin « [Cloudways Automated Migration](https://support.cloudways.com/en/) » → URL du site, clé API Cloudways → « Start Migration ». Compte 20 minutes pour 2 Go (observé, testé le 23/11/2026).
 5. **Teste sur l'URL temporaire.** Cloudways en fournit une du type abc123.cloudwaysapps.com : pages, permaliens, formulaires, panier WooCommerce, images. Tout, avant la bascule.
 6. **Baisse le TTL DNS la veille.** 300 s au lieu de 24 h. J'ai appris ça en touchant un TTL long : le site est resté mi-ici mi-là-bas pendant 22 heures, un jeudi. Passe le TTL, puis dors.
-7. **Bascule le DNS.** Enregistrement A vers l'IP Cloudways, « www » en CNAME vers « @ ». Attends la propagation, puis émets le SSL Let's Encrypt depuis Cloudways, en un clic.
+7. **Bascule le DNS.** Enregistrement A vers l'IP Cloudways, « www » en CNAME vers « @ ». Attends la propagation, puis émets le certificat gratuit ([Let's Encrypt](https://letsencrypt.org/fr/getting-started/)) depuis Cloudways, en un clic.
 8. **Observe sept jours.** Uptime, 404 dans Search Console, formulaires qui partent. L'ancien hébergeur reste en ligne, éteint, prêt à servir.
-9. **Résilie enfin.** hPanel → Gérer le compte → Résiliation. Télécharge les archives de sauvegarde avant la date de coupure. Si ton domaine est enregistré chez Hostinger, garde-le gérable ou transfère-le : une fenêtre de 60 jours s'applique après un transfert (règle ICANN usuelle).
+9. **Résilie enfin.** hPanel → Gérer le compte → Résiliation. Télécharge les archives de sauvegarde avant la date de coupure. Si ton domaine est enregistré chez Hostinger, garde-le gérable ou transfère-le selon la [politique de transfert ICANN](https://www.icann.org/resources/pages/transfer-policy-2016-06-01-en) (fenêtre de 60 jours après transfert, ou [procédure AFNIC pour les `.fr`](https://www.afnic.fr/noms-de-domaine/gerer-un-nom-de-domaine/transferer/)).
 
 ## 4. Combien de RAM / de CPU / de boîtes / de sites pour ton usage
 
@@ -89,6 +89,9 @@ Deux adresses cohabitent alors pendant une journée. Baisse le TTL à 300 s la v
 
 ## 7. FAQ
 
+### Comment quitter Hostinger sans coupure ni perte d'emails ou de trafic ?
+Réalise d'abord une sauvegarde complète fichiers + base SQL + boîtes IMAP sous Thunderbird, abaisse le TTL DNS à 300 secondes 24 h avant la bascule, lance la migration vers Cloudways ou o2switch puis teste le nouveau site via le fichier `hosts` avant de couper Hostinger sept jours plus tard.
+
 ### La migration Cloudways coûte combien ?
 
 0 € : le plugin ou l'équipe dédiée s'en chargent, serveur compris dans l'offre (vérifié le 23/11/2026). Tu paies l'hébergement, rien d'autre.
@@ -115,13 +118,13 @@ o2switch si le budget compte (5,00 € puis 7,00 €, relevé du 15/11/2026) et 
 
 ## 8. Verdict et liens affiliés
 
-Mon verdict est calme : si tu quittes Hostinger pour la facture, vérifie d'abord la colonne renouvellement — parfois rester 24 mois en promo coûte moins qu'un départ précipité. Si tu pars pour le service ou la sérénité, Cloudways et sa migration gratuite offrent la sortie la moins risquée du panel testé.
+Mon verdict est calme : si tu quittes Hostinger pour la facture, vérifie d'abord la colonne renouvellement (parfois rester 24 mois en promo coûte moins qu'un départ précipité). Si tu pars pour le service ou la sérénité, Cloudways et sa migration gratuite offrent la sortie la moins risquée du panel testé.
 
 Un principe pour finir, opinion assumée : résilier le jour de la migration, c'est sauter sans parachute. La règle des sept jours ne se négocie pas, et l'ancien compte reste ta meilleure sauvegarde pendant toute la bascule.
 
 Prêt à partir proprement ?
 
-<a rel="sponsored" href="https://www.cloudways.com/?utm_source=amens&utm_medium=affiliate&utm_content=migrer/hostinger">Migrer gratuitement avec Cloudways</a>
+<a rel="sponsored" href="https://www.cloudways.com/?utm_source=amens&utm_medium=affiliate&utm_content=migrer/hostinger">Migrer gratuitement vers Cloudways sans coupure sur Cloudways.com</a>
 
 ---
 

@@ -1,9 +1,32 @@
 // Exécution des vrais scripts Python des skills enregistrés dans /skills.
 // Le pipeline ne simule rien : chaque skill est exécuté via son script réel.
 
-import { spawn } from "child_process";
+import { execFileSync, spawn } from "child_process";
 import { promises as fs } from "fs";
 import path from "path";
+
+let cachedPythonBin: string | null = null;
+
+/** Résout l'exécutable Python disponible (Linux/macOS: python3, Windows: python). */
+export function resolvePythonBin(): string {
+  if (process.env.AMENS_PYTHON_BIN) return process.env.AMENS_PYTHON_BIN;
+  if (cachedPythonBin) return cachedPythonBin;
+  const candidates = process.platform === "win32" ? ["python", "python3"] : ["python3", "python"];
+  for (const bin of candidates) {
+    try {
+      execFileSync(bin, ["-c", "import sys; sys.exit(0)"], {
+        stdio: "ignore",
+        timeout: 5000,
+      });
+      cachedPythonBin = bin;
+      return bin;
+    } catch {
+      // candidat indisponible ou alias Windows Store vide
+    }
+  }
+  cachedPythonBin = candidates[0];
+  return cachedPythonBin;
+}
 
 export const PROJECT_ROOT = process.cwd();
 export const SKILLS_DIR = path.join(PROJECT_ROOT, "skills");
@@ -43,9 +66,9 @@ export async function runPy(
   timeoutMs = 30000
 ): Promise<PyResult> {
   return new Promise((resolve) => {
-    const proc = spawn("python3", [script, ...args], {
+    const proc = spawn(resolvePythonBin(), [script, ...args], {
       cwd: PROJECT_ROOT,
-      env: { ...process.env, PYTHONIOENCODING: "utf-8" },
+      env: { ...process.env, PYTHONIOENCODING: "utf-8", PYTHONUTF8: "1" },
     });
     let stdout = "";
     let stderr = "";

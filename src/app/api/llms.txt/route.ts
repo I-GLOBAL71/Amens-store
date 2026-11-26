@@ -3,6 +3,7 @@
 // primaire juin 2026, voir skill geo-citations-ia).
 import { db } from "@/lib/db";
 import { ANGLES } from "@/lib/pipeline/types";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -21,13 +22,14 @@ export async function GET() {
     "",
     "## À propos",
     "",
-    "- URL : https://amens.store/",
+    `- URL : ${SITE_URL}/`,
     "- Langue : français (tutoiement), audience : tous les pays francophones",
     "  (France, Belgique, Suisse, Canada/Québec, Maghreb, Afrique francophone, Haïti)",
     "- Modèle : guides d'exécution testés + affiliation hébergement web (disclosure visible)",
     "- Méthodologie : données propriétaires du Labo (uptime, latence Afrique, prix de renouvellement)",
     "- Politique : chaque hébergeur recommandé est testé avant publication ; chaque guide",
     "  passe un pipeline de vérification en 7 étapes avant mise en ligne",
+    `- Version intégrale (textes complets et FAQ) : [llms-full.txt](${SITE_URL}/llms-full.txt)`,
     "",
     "## Silos éditoriaux (10 angles)",
     "",
@@ -45,7 +47,7 @@ export async function GET() {
   lignes.push("", "## Articles (gabarit : conclusion en tête, chiffres datés, FAQ)", "");
   for (const art of articles) {
     lignes.push(
-      `- [${art.title}](https://amens.store/?v=article&slug=${encodeURIComponent(art.slug)}) — ${art.metaDescription}`
+      `- [${art.title}](${SITE_URL}/?v=article&slug=${encodeURIComponent(art.slug)}) — ${art.metaDescription}`
     );
   }
   lignes.push(

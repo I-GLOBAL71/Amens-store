@@ -13,6 +13,8 @@ import { useNav } from "@/lib/store";
 import { ANGLES, angleById } from "@/lib/pipeline/types";
 import { useArticles } from "@/hooks/use-amens";
 import { usePageTitle } from "@/hooks/use-page-title";
+import { NavLink } from "./nav-link";
+import { getArticleCoverPath, getArticleCoverProxyPath } from "@/lib/article-image";
 
 export function BlogView() {
   const { silo, navigate } = useNav();
@@ -43,9 +45,9 @@ export function BlogView() {
       {/* En-tête blog */}
       <div className="mb-6">
         <nav aria-label="Fil d'Ariane" className="mb-2 text-xs text-muted-foreground">
-          <button className="hover:text-primary" onClick={() => navigate({ view: "home" })}>
+          <NavLink target={{ view: "home" }} className="hover:text-primary">
             Accueil
-          </button>
+          </NavLink>
           <span className="mx-1">/</span>
           <span aria-current="page">Blog</span>
           {angleSelectionne && (
@@ -67,27 +69,27 @@ export function BlogView() {
 
       {/* Filtres silos */}
       <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Filtrer par sujet">
-        <button
-          onClick={() => navigate({ view: "blog", silo: null })}
-          className={`min-h-[40px] rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
+        <NavLink
+          target={{ view: "blog", silo: null }}
+          className={`inline-flex items-center min-h-[40px] rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
             !silo ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:border-primary/50"
           }`}
         >
           Tous les sujets
-        </button>
+        </NavLink>
         {ANGLES.map((a) => (
-          <button
+          <NavLink
             key={a.id}
-            onClick={() => navigate({ view: "blog", silo: a.silo })}
-            aria-pressed={silo === a.silo}
-            className={`min-h-[40px] rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
+            target={{ view: "blog", silo: a.silo }}
+            ariaPressed={silo === a.silo}
+            className={`inline-flex items-center min-h-[40px] rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
               silo === a.silo
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border text-muted-foreground hover:border-primary/50"
             }`}
           >
             /{a.silo}/
-          </button>
+          </NavLink>
         ))}
       </div>
 
@@ -131,40 +133,61 @@ export function BlogView() {
           {articles.map((a) => {
             const angle = angleById(a.angle);
             return (
-              <Card
+              <NavLink
                 key={a.id}
-                className="group flex cursor-pointer flex-col transition-shadow hover:shadow-md"
-                onClick={() => navigate({ view: "article", slug: a.slug })}
+                target={{ view: "article", slug: a.slug }}
+                className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <CardHeader className="flex-row items-start justify-between gap-2 space-y-0 pb-2">
-                  <Badge variant="outline" className="border-primary/40 text-[11px] text-primary">
-                    /{a.silo}/
-                  </Badge>
-                  <span className="text-[11px] text-muted-foreground">
-                    {a.publishedAt ? new Date(a.publishedAt).toLocaleDateString("fr-FR") : "brouillon"}
-                  </span>
-                </CardHeader>
-                <CardContent className="flex flex-1 flex-col">
-                  <CardTitle className="text-base leading-snug group-hover:text-primary">
-                    {a.title}
-                  </CardTitle>
-                  <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{a.excerpt}</p>
-                  <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                    {a.verificationPassed && (
-                      <span className="inline-flex items-center gap-1 rounded-md bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
-                        <Sparkles className="h-3 w-3" aria-hidden /> relu et vérifié
-                      </span>
-                    )}
+                <Card className="flex h-full cursor-pointer flex-col overflow-hidden transition-shadow hover:shadow-md">
+                  <div className="w-full overflow-hidden border-b border-border bg-slate-950">
+                    <img
+                      src={getArticleCoverPath(a.slug)}
+                      alt={a.title}
+                      width={1200}
+                      height={630}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        const proxy = getArticleCoverProxyPath(a.slug);
+                        if (!img.dataset.fallback) {
+                          img.dataset.fallback = "1";
+                          img.src = proxy;
+                        }
+                      }}
+                      className="aspect-[1200/630] h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>
-                      {angle?.nom.split("(")[0]} · {a.difficulty}
-                      {a.timeEstimate ? ` · ${a.timeEstimate}` : ""}
+                  <CardHeader className="flex-row items-start justify-between gap-2 space-y-0 pb-2">
+                    <Badge variant="outline" className="border-primary/40 text-[11px] text-primary">
+                      /{a.silo}/
+                    </Badge>
+                    <span className="text-[11px] text-muted-foreground">
+                      {a.publishedAt ? new Date(a.publishedAt).toLocaleDateString("fr-FR") : "brouillon"}
                     </span>
-                    <ArrowRight className="h-4 w-4 text-primary" aria-hidden />
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardHeader>
+                  <CardContent className="flex flex-1 flex-col">
+                    <CardTitle className="text-base leading-snug group-hover:text-primary">
+                      {a.title}
+                    </CardTitle>
+                    <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{a.excerpt}</p>
+                    <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                      {a.verificationPassed && (
+                        <span className="inline-flex items-center gap-1 rounded-md bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
+                          <Sparkles className="h-3 w-3" aria-hidden /> relu et vérifié
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                      <span>
+                        {angle?.nom.split("(")[0]} · {a.difficulty}
+                        {a.timeEstimate ? ` · ${a.timeEstimate}` : ""}
+                      </span>
+                      <ArrowRight className="h-4 w-4 text-primary" aria-hidden />
+                    </div>
+                  </CardContent>
+                </Card>
+              </NavLink>
             );
           })}
         </div>

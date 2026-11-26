@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "silo": "ia-automatisation",
+    "nom": "Auto-hébergement IA & automatisation",
+    "programme": "https://www.hostinger.fr/vps-hebergement",
+    "cta": "Créer mon VPS"
+  },
+  {
+    "id": 2,
+    "silo": "deployer-mon-app",
+    "nom": "Vibe coding (déployer une app IA)",
+    "programme": "https://www.hostinger.fr/vps-hebergement",
+    "cta": "Créer mon VPS"
+  },
+  {
+    "id": 3,
+    "silo": "afrique",
+    "nom": "Afrique francophone sans carte bancaire",
+    "programme": "https://nindohost.com/",
+    "cta": "Payer en Mobile Money"
+  },
+  {
+    "id": 4,
+    "silo": "outils",
+    "nom": "Outils et calculateurs gratuits",
+    "programme": "https://www.hostinger.fr/",
+    "cta": "Obtiens le même hébergeur −20 %"
+  },
+  {
+    "id": 5,
+    "silo": "migrer",
+    "nom": "Migrer ou résilier sans frais",
+    "programme": "https://www.cloudways.com/",
+    "cta": "Migrer gratuitement"
+  },
+  {
+    "id": 6,
+    "silo": "promos",
+    "nom": "Black Friday & codes promo datés",
+    "programme": "https://www.hostinger.fr/",
+    "cta": "Code Black Friday"
+  },
+  {
+    "id": 7,
+    "silo": "email-pro",
+    "nom": "Email professionnel",
+    "programme": "https://www.hostinger.fr/email-professionnel",
+    "cta": "Créer mon email pro"
+  },
+  {
+    "id": 8,
+    "silo": "pannes",
+    "nom": "Pannes en temps réel",
+    "programme": "https://www.o2switch.fr/",
+    "cta": "Alternative immédiate"
+  },
+  {
+    "id": 9,
+    "silo": "metiers",
+    "nom": "Hébergement par métier / vertical",
+    "programme": "https://wa.me/237693845941",
+    "cta": "Pack clé en main WhatsApp"
+  },
+  {
+    "id": 10,
+    "silo": "agences",
+    "nom": "Agences et freelances B2B",
+    "programme": "https://www.cloudways.com/",
+    "cta": "Calculer ma marge agence"
+  }
+]

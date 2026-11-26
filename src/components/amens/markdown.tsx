@@ -7,11 +7,22 @@
 // serveur de /?v=… existe pour chacune de ces URL) — le clic normal est
 // intercepté pour rester dans la navigation SPA.
 
+import { isValidElement, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useNav } from "@/lib/store";
 import { useToast } from "@/hooks/use-toast";
+import { buildNavHref, parseInternalHref, slugifyHeading } from "@/lib/nav";
+
+function extractText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join("");
+  if (isValidElement<{ children?: ReactNode }>(node) && node.props?.children !== undefined) {
+    return extractText(node.props.children);
+  }
+  return "";
+}
 
 export function Markdown({ content }: { content: string }) {
   const { navigate } = useNav();
@@ -23,7 +34,29 @@ export function Markdown({ content }: { content: string }) {
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
         components={{
-          a: ({ href, children, ...props }) => {
+          h2: ({ children, ...props }) => (
+            <h2 id={slugifyHeading(extractText(children))} className="scroll-mt-20" {...props}>
+              {children}
+            </h2>
+          ),
+          h3: ({ children, ...props }) => (
+            <h3 id={slugifyHeading(extractText(children))} className="scroll-mt-20" {...props}>
+              {children}
+            </h3>
+          ),
+          table: ({ children, ...props }) => (
+            <div className="my-4 w-full overflow-x-auto touch-pan-x rounded-lg border border-border">
+              <table className="w-full min-w-[480px]" {...props}>
+                {children}
+              </table>
+            </div>
+          ),
+          pre: ({ children, ...props }) => (
+            <pre className="max-w-full overflow-x-auto" {...props}>
+              {children}
+            </pre>
+          ),
+          a: ({ href, children }) => {
             const url = href ?? "";
             const isExternal = url.startsWith("http");
             const isSponsored = url.includes("utm_source=amens");
@@ -54,19 +87,8 @@ export function Markdown({ content }: { content: string }) {
                 </a>
               );
             }
-            // Lien interne → vraie ancre (href réel pour crawlers/IA) + routage SPA au clic
-            const p = url.replace(/^\/|\/$/g, "");
-            const premier = p.split("/")[0];
-            const cible =
-              premier === "labo"
-                ? { view: "labo" as const }
-                : premier === "outils"
-                  ? { view: "outils" as const }
-                  : premier === "promos"
-                    ? { view: "promos" as const }
-                    : { view: "blog" as const, silo: premier || null };
-            const hrefInterne =
-              `/?v=${cible.view}` + (cible.view === "blog" && cible.silo ? `&silo=${cible.silo}` : "");
+            const cible = parseInternalHref(url);
+            const hrefInterne = buildNavHref(cible);
             return (
               <a
                 href={hrefInterne}

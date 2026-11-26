@@ -12,7 +12,7 @@ Tu repars d'ici avec le coût réel de six hébergeurs sur 36 mois, promo et ren
 
 ## 2. Pourquoi ce choix (et pas un autre)
 
-Je publie ces relevés parce que la faille F1 — l'écart entre le prix promo et le renouvellement — peut tripler la facture la deuxième année, et personne ne l'affiche en clair. Notre Labo relève chaque tarif, daté et sourcé. Sur 36 mois, l'écart frôle 16 € entre mutualisés voisins, et dépasse 200 € du mutualisé au cloud géré.
+Je publie ces relevés parce que la faille F1 (l'écart entre le prix promo et le renouvellement) peut tripler la facture la deuxième année, et personne ne l'affiche en clair. Notre Labo relève chaque tarif, daté et sourcé. Sur 36 mois, l'écart frôle 16 € entre mutualisés voisins, et dépasse 200 € du mutualisé au cloud géré. Pour amortir ce coût, surveille les [vraies remises Black Friday 2026](/?v=article&slug=promos%2Fblack-friday-2026).
 
 Six grilles relevées le 15/11/2026, en page tarifs et simulateur de renouvellement :
 
@@ -26,7 +26,7 @@ Six grilles relevées le 15/11/2026, en page tarifs et simulateur de renouvellem
 | Cloudways DO 1 Go | 10,00 €/mois | 14,00 $/mois | ×1,4 |
 | Infomaniak Éco | 3,90 €/mois | 6,90 €/mois | ×1,8 |
 
-Lecture en une seconde : OVH double le tarif et Hostinger le triple sur le mutualisé. o2switch et Contabo restent à ×1,4, les plus stables du panel. Le comparatif se joue ensuite au moment où tu paies : les fenêtres du [Black Friday](/promos/) rouvrent les promos chaque année. Le silo [agences](/agences/) détaille les budgets multi-sites, poste par poste.
+Lecture en une seconde : [OVHcloud](https://www.ovhcloud.com/fr/web-hosting/) double le tarif et Hostinger le triple sur le mutualisé. [o2switch](https://www.o2switch.fr/hebergement-illimite/) et Contabo restent à ×1,4, les plus stables du panel. Le comparatif se joue ensuite au moment où tu paies : les fenêtres du [Black Friday](/promos/) rouvrent les promos chaque année, y compris sur les renouvellements [encadrés par l'ICANN](https://www.icann.org/) pour les domaines. Le silo [agences](/agences/) détaille les budgets multi-sites, poste par poste.
 
 J'ai découvert le mien un 3 janvier, un dimanche à 7 h : une facture Hostinger à 7,99 € alors que je croyais payer 2,49 €. Le café a fini sur le clavier. Vingt minutes de nettoyage, un principe gravé : plus jamais un renouvellement non anticipé.
 
@@ -51,7 +51,7 @@ Prends une feuille.
 | Apps Node, n8n, 2 à 3 services | 8 Go de RAM, 2 vCPU | Hostinger KVM 2 | 5,99 € promo, puis 13,99 €/mois |
 | Client exigeant, support réactif | 1 Go de RAM, cloud géré | Cloudways DO 1 Go | 10,00 € promo, puis 14,00 $/mois |
 
-Pour un blog personnel ou un portfolio, le mutualisé Hostinger Premium à 2,49 € par mois en promo puis 7,99 € au renouvellement (relevé le 15/11/2026, inchangé le 23/11/2026) reste le rapport prix/service le plus net de notre panel. L'uptime mesuré atteint 99,98 % depuis l'Europe sur 30 jours, avec 312 ms de latence depuis Douala ([Labo amens.store](/labo/), ping toutes les 60 s, 3 régions). Une agence gérant dix sites préférera o2switch Unique à 5,00 € puis 7,00 € par mois (relevé du 15/11/2026) : uptime de 99,99 % en Europe, latence de 214 ms depuis Douala, 196 ms depuis Abidjan, 182 ms depuis Dakar. Les usages techniques — apps Node, n8n, bots — viseront le KVM 2 (8 Go) à 5,99 € puis 13,99 € par mois (relevé du 15/11/2026). Les clients exigeant un support réactif paieront Cloudways DO 1 Go, 10,00 € puis 14,00 $ par mois (relevé du 15/11/2026).
+Pour un blog personnel ou un portfolio, le mutualisé Hostinger Premium à 2,49 € par mois en promo puis 7,99 € au renouvellement (relevé le 15/11/2026, inchangé le 23/11/2026) reste le rapport prix/service le plus net de notre panel. L'uptime mesuré atteint 99,98 % depuis l'Europe sur 30 jours, avec 312 ms de latence depuis Douala ([Labo amens.store](/labo/), ping toutes les 60 s, 3 régions). Une agence gérant dix sites préférera o2switch Unique à 5,00 € puis 7,00 € par mois (relevé du 15/11/2026) : uptime de 99,99 % en Europe, latence de 214 ms depuis Douala, 196 ms depuis Abidjan, 182 ms depuis Dakar. Les usages techniques (apps Node, n8n, bots) viseront le KVM 2 (8 Go) à 5,99 € puis 13,99 € par mois (relevé du 15/11/2026). Les clients exigeant un support réactif paieront Cloudways DO 1 Go, 10,00 € puis 14,00 $ par mois (relevé du 15/11/2026).
 
 ## 5. Le vrai coût sur 12 à 36 mois
 
@@ -63,7 +63,7 @@ Hypothèse Labo : la promo couvre les 12 premiers mois, le renouvellement prend 
 | 24 mois | 2,49 €/mois (12 premiers mois) | 7,99 €/mois | 125,76 € |
 | 36 mois | 2,49 €/mois (12 premiers mois) | 7,99 €/mois | 221,64 € |
 
-Relevés du 15/11/2026 : sur 36 mois, Hostinger Premium coûte 221,64 € (2,49 € puis 7,99 € par mois) et Contabo VPS 4 Go 210,00 € (4,50 € puis 6,50 €). Infomaniak Éco affiche 212,40 € (3,90 € puis 6,90 €), OVH Perso 216,00 € (3,60 € puis 7,20 €), o2switch Unique 228,00 € (5,00 € puis 7,00 €). Cloudways DO 1 Go culmine à 456,00 $, soit environ 422 € (taux du relevé : 1 € = 1,08 $). Entre le moins cher et le plus cher, l'écart dépasse 200 € sur trois ans ([Labo amens.store](/labo/)). La faille F1 se cache dans la colonne du milieu : personne ne souscrit en regardant le renouvellement, tout le monde souscrit en regardant la promo. Or la promo ne couvre que 12 mois sur 36. Si ton échéance approche, le silo [migrer](/migrer/) décrit la sortie pas à pas. Chiffre à retenir : 200 € d'écart sur trois ans pour un même usage.
+Relevés du 15/11/2026 : sur 36 mois, Hostinger Premium coûte 221,64 € (2,49 € puis 7,99 € par mois) et Contabo VPS 4 Go 210,00 € (4,50 € puis 6,50 €). Infomaniak Éco affiche 212,40 € (3,90 € puis 6,90 €), OVH Perso 216,00 € (3,60 € puis 7,20 €), o2switch Unique 228,00 € (5,00 € puis 7,00 €). Cloudways DO 1 Go culmine à 456,00 $, soit environ 422 € (taux du relevé : 1 € = 1,08 $). Entre le moins cher et le plus cher, l'écart dépasse 200 € sur trois ans ([Labo amens.store](/labo/)). La faille F1 se cache dans la colonne du milieu : personne ne souscrit en regardant le renouvellement, tout le monde souscrit en regardant la promo. Or la promo ne couvre que 12 mois sur 36. Si ton échéance approche, notre guide pour [quitter Hostinger sans rien perdre](/?v=article&slug=migrer%2Fhostinger) ([silo migrer](/migrer/)) décrit la sortie pas à pas. Chiffre à retenir : 200 € d'écart sur trois ans pour un même usage.
 
 ## 6. Erreurs fréquentes et correctifs
 
@@ -93,6 +93,9 @@ Le prélèvement silencieux court des années. Un audit par an, dix minutes, suf
 
 ## 7. FAQ
 
+### Comment calculer le vrai coût d'un hébergeur web sur 36 mois ?
+Additionne les mois de promo initiale (souvent 12 mois à 2,49 € ou 5,99 €) puis multiplie les mois restants (24 ou 12 selon le terme souscrit) par le tarif standard de renouvellement avant d'ajouter domaine et sauvegardes : sur Hostinger Premium, le total réel atteint 221,64 € sur 3 ans.
+
 ### Pourquoi le renouvellement coûte-t-il si cher ?
 
 La promo est un coût d'acquisition : l'hébergeur t'achète. La deuxième année, il rentabilise. C'est un modèle, pas un accident.
@@ -119,11 +122,11 @@ Si l'écart dépasse 60 € par an, oui. Sinon le risque de migration dépasse l
 
 ## 8. Verdict et liens affiliés
 
-Mon verdict tombe : pour un usage vitrine, Hostinger reste l'entrée la plus cohérente — 2,49 € en promo, 99,98 % d'uptime mesuré en Europe sur 30 jours, 221,64 € sur 36 mois (relevé le 15/11/2026). Souscris en période promo, sur un terme de 24 mois, et pose un rappel au onzième mois.
+Mon verdict tombe : pour un usage vitrine, Hostinger reste l'entrée la plus cohérente (2,49 € en promo, 99,98 % d'uptime mesuré en Europe sur 30 jours, 221,64 € sur 36 mois, relevé le 15/11/2026). Souscris en période promo, sur un terme de 24 mois, et pose un rappel au onzième mois.
 
 Une opinion tenace pour finir : un hébergeur qui cache son prix de renouvellement table sur ton inertie, comme une salle de sport. Nous affichons la deuxième année en gras. Compare, puis décide :
 
-<a rel="sponsored" href="https://www.hostinger.fr/?utm_source=amens&utm_medium=affiliate&utm_content=outils/vrai-cout-3-ans">Voir l'offre testée</a>
+<a rel="sponsored" href="https://www.hostinger.fr/?utm_source=amens&utm_medium=affiliate&utm_content=outils/vrai-cout-3-ans">Consulter les tarifs Hostinger (promo et renouvellement vérifiés) sur Hostinger.fr</a>
 
 ---
 

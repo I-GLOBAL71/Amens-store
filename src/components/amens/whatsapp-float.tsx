@@ -85,6 +85,15 @@ export function WhatsappFloat() {
             <Button type="submit" className="h-11 w-full" disabled={lead.isPending}>
               {lead.isPending ? "Envoi…" : "Être recontacté"}
             </Button>
+            <a
+              href="https://wa.me/237693845941?text=Bonjour%2C%20je%20souhaite%20mettre%20mon%20projet%20en%20ligne"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-3 py-2 text-center text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+            >
+              <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
+              Écrire sur WhatsApp (+237 693 845 941)
+            </a>
           </form>
         </div>
       )}

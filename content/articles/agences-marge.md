@@ -1,4 +1,4 @@
-# Héberger les sites de tes clients sans exploiter ta marge : le guide agence 2026
+# Héberger les sites de tes clients sans exploser ta marge : le guide agence 2026
 
 Tu repars avec le modèle pour héberger et facturer les sites WordPress de tes clients : serveur multi-sites, white-label et marge sur 10 clients. Plan recommandé : Cloudways DO 1 Go à 10,00 €/mois la première année, puis ~14 €/mois. Marge réelle : 2 064 €/an pour 10 clients (calcul du 15/11/2026). La suite vit dans le [guide agences](/agences/).
 
@@ -16,19 +16,19 @@ Cloudways gagne le pari agence sur un chiffre : 10,00 €/mois pour un serveur D
 
 La logique multi-sites change l'économie de l'agence. Un serveur, 5 à 8 clients facturés 20 €/mois : le coût reste sous 15 %, la marge se renouvelle chaque mois, et le churn ne vient presque jamais de l'hébergement. Ma comptabilité, sur 10 clients : deux serveurs à 14 €/mois, 336 € de coûts annuels contre 2 400 € de facturation.
 
-Une migration sans coupure suit une séquence précise : TTL baissé à 300 s 24 h avant, copie du site, test par fichier hosts, bascule DNS. Le [guide migration](/migrer/) la décompose clic par clic. Pour le passage de freelance à agence structurée, le [guide métiers](/metiers/) couvre les tarifs et les dossiers clients.
+Une migration sans coupure suit une séquence précise : TTL baissé à 300 s 24 h avant, copie du site, test par fichier hosts, bascule DNS. Le [guide complet pour quitter Hostinger sans rien perdre](/?v=article&slug=migrer%2Fhostinger) la décompose clic par clic, et notre [tutoriel email professionnel sur domaine](/?v=article&slug=email-pro%2Fcreer) aide à boucler chaque livraison client. Pour le passage de freelance à agence structurée, le [guide métiers](/metiers/) couvre les tarifs et les dossiers clients.
 
-En juin dernier, j'ai migré 11 sites clients sur un week-end. Neuf sont passés sans hoquet. Le dixième, un WooCommerce de 2 Go d'images, m'a pris six heures — et la seule réclamation du client portait sur un favori périmé.
+En juin dernier, j'ai migré 11 sites clients sur un week-end. Neuf sont passés sans hoquet. Le dixième, un WooCommerce de 2 Go d'images, m'a pris six heures, et la seule réclamation du client portait sur un favori périmé.
 
 ## 3. Étape par étape
 
 1. **Crée le compte Cloudways**, choisis « DigitalOcean », serveur 1 Go, datacenter Paris ou Francfort.
 2. **Déploie le premier WordPress** : « Applications » → « Ajouter » → WordPress. Note les identifiants admin, le site répond sur une URL temporaire.
-3. **Héberge 5 à 8 clients par serveur** : une application par client. L'isolation au niveau applicatif limite les dégâts d'un site piraté.
-4. **Migre un client existant** : extension Cloudways Migrator sur le WordPress d'origine, ou copie manuelle (fichiers + base). 24 h avant la bascule, baisse le TTL DNS à 300 s.
+3. **Héberge 5 à 8 clients par serveur** : une application par client (ou une instance dédiée plutôt qu'un [WordPress Multisite](https://developer.wordpress.org/advanced-administration/multisite/) partagé). L'isolation au niveau applicatif limite les dégâts d'un site piraté.
+4. **Migre un client existant** : extension [Cloudways Migrator](https://support.cloudways.com/en/) sur le WordPress d'origine, ou copie manuelle (fichiers + base). 24 h avant la bascule, baisse le TTL DNS à 300 s.
 5. **Teste avant de basculer** : pointe ton fichier hosts vers la nouvelle IP, parcours le site, les formulaires, le paiement. Bascule le DNS seulement ensuite.
 6. **Active le white-label** : dans les réglages du compte, remplace le logo Cloudways et l'expéditeur par ceux de ton agence. Tes clients voient ta marque, pas celle de l'hébergeur.
-7. **Facture 20 €/mois par site** : ligne « Hébergement et maintenance » sur la facture, ou abonnement Stripe. Le client paie un service, pas un serveur.
+7. **Facture 20 €/mois par site** : ligne « Hébergement et maintenance » conforme aux [règles de facturation B2B BOFiP](https://bofip.impots.gouv.fr/), ou abonnement Stripe. Le client paie un service, pas un serveur.
 8. **Ouvre le second serveur au 9e client.** La capacité reste en réserve, les risques se répartissent.
 
 ## 4. Combien de RAM / de boîtes / de sites pour ton usage
@@ -63,8 +63,8 @@ Cloudways DO 1 Go, relevé le 15/11/2026 : 10,00 €/mois la première année, r
 
 ## 7. FAQ
 
-### Combien facturer l'hébergement à un client ?
-La règle courante : le double du coût. Une part de serveur à 14 €/mois se facture autour de 20 €/mois support compris, soit 6 € de marge brute par site.
+### Comment calculer et facturer l'hébergement client sans rogner sa marge d'agence ?
+Regroupe 5 à 8 sites vitrines sur un serveur Cloudways à 14 €/mois et facture 20 €/mois par client (maintenance mineure incluse) : la part serveur tombe sous 2,80 €/site et génère environ 17 € de marge brute mensuelle, soit plus de 2 000 € de revenu récurrent annuel sur 10 clients.
 
 ### Peut-on mettre le logo de ton agence sur le panneau Cloudways ?
 Oui : le white-label remplace la marque de l'hébergeur par la tienne. Tes clients voient ton agence, pas Cloudways.
@@ -92,7 +92,7 @@ Ma règle : la ligne « hébergement » est la première ligne récurrente d'une
 
 Kinsta reste pour les clients e-commerce exigeants, ceux qui appellent le vendredi soir. Pour le reste du parc, Cloudways offre le meilleur rapport marge/risque que j'ai mesuré cette année.
 
-<a rel="sponsored" href="https://www.cloudways.com/?utm_source=amens&utm_medium=affiliate&utm_content=agences/marge">Calculer ma marge d'agence</a>
+<a rel="sponsored" href="https://www.cloudways.com/?utm_source=amens&utm_medium=affiliate&utm_content=agences/marge">Consulter les serveurs agences Cloudways (DigitalOcean / AWS) sur Cloudways.com</a>
 
 ---
 

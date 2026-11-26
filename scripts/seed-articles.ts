@@ -31,7 +31,7 @@ const SPECS: Spec[] = [
     angle: 1,
     requete: "installer n8n",
     title: "Installer n8n sur un VPS Hostinger en 10 minutes (testé en novembre 2026)",
-    metaTitle: "Installer n8n sur VPS Hostinger en 10 minutes (testé 2026)",
+    metaTitle: "Installer n8n sur VPS Hostinger en 10 min (2026)",
     metaDescription:
       "Installer n8n sur un VPS en 10 min : commandes testées, plan KVM 2 à 5,99 €/mois, renouvellement 13,99 €. Uptime 99,98 % mesuré par notre Labo.",
     primaryProgram: "hostinger-vps",
@@ -45,7 +45,7 @@ const SPECS: Spec[] = [
     angle: 2,
     requete: "mettre en ligne ton app lovable",
     title: "Mettre en ligne ton app Lovable avec ton propre nom de domaine (guide testé)",
-    metaTitle: "Mettre en ligne ton app Lovable avec ton domaine (guide 2026)",
+    metaTitle: "Déployer ton app Lovable sur ton domaine (2026)",
     metaDescription:
       "Mettre en ligne ton app Lovable sur ton domaine : guide testé, Coolify sur VPS, coût réel 5,99 €/mois, latence mesurée depuis Douala en nov. 2026.",
     primaryProgram: "hostinger-vps",
@@ -59,7 +59,7 @@ const SPECS: Spec[] = [
     angle: 3,
     requete: "orange money",
     title: "Héberger son site en payant avec Orange Money : le guide 2026 sans carte bancaire",
-    metaTitle: "Héberger son site en payant avec Orange Money (guide 2026)",
+    metaTitle: "Héberger son site en Orange Money (guide 2026)",
     metaDescription:
       "Héberger ton site en payant avec Orange Money : hébergeurs testés qui acceptent Mobile Money, prix en FCFA, pack WhatsApp clé en main sans carte.",
     primaryProgram: "nindohost",
@@ -73,7 +73,7 @@ const SPECS: Spec[] = [
     angle: 4,
     requete: "prix de renouvellement",
     title: "Prix de renouvellement des hébergeurs : le vrai coût sur 3 ans (relevés Labo)",
-    metaTitle: "Prix de renouvellement des hébergeurs : le vrai coût 3 ans",
+    metaTitle: "Prix renouvellement hébergeurs : coût réel 3 ans",
     metaDescription:
       "Prix de renouvellement des hébergeurs : le vrai coût sur 3 ans, relevés Labo du 15/11/2026. Hostinger 2,49 € puis 7,99 € — calcule avant de signer.",
     primaryProgram: "hostinger-vps",
@@ -87,7 +87,7 @@ const SPECS: Spec[] = [
     angle: 5,
     requete: "quitter hostinger",
     title: "Quitter Hostinger sans rien perdre : migration pas à pas (guide testé)",
-    metaTitle: "Quitter Hostinger sans rien perdre : migration pas à pas",
+    metaTitle: "Quitter Hostinger sans rien perdre : migration",
     metaDescription:
       "Quitter Hostinger sans rien perdre : sauvegarde, migration WordPress, DNS — alternatives avec migration gratuite testées, relevés du 15/11/2026.",
     primaryProgram: "cloudways",
@@ -101,7 +101,7 @@ const SPECS: Spec[] = [
     angle: 6,
     requete: "black friday",
     title: "Black Friday 2026 hébergement : les vraies remises, renouvellements inclus",
-    metaTitle: "Black Friday 2026 hébergement : les vraies remises (relevés)",
+    metaTitle: "Black Friday 2026 hébergement : vraies remises",
     metaDescription:
       "Black Friday 2026 hébergement : les vraies remises, renouvellements inclus. Offres suivies par notre Labo, codes diffusés en avant-première.",
     primaryProgram: "hostinger-vps",
@@ -115,7 +115,7 @@ const SPECS: Spec[] = [
     angle: 7,
     requete: "adresse email pro",
     title: "Créer une adresse email pro avec ton nom de domaine en 15 minutes (guide 2026)",
-    metaTitle: "Créer une adresse email pro avec ton domaine (guide 2026)",
+    metaTitle: "Créer une adresse email pro sur domaine (2026)",
     metaDescription:
       "Créer une adresse email pro sur ton domaine en 15 min : Hostinger Email 1,99 €/boîte, SPF/DKIM/DMARC expliqués, config Outlook et Gmail testée.",
     primaryProgram: "hostinger-email",
@@ -129,7 +129,7 @@ const SPECS: Spec[] = [
     angle: 8,
     requete: "ovh en panne",
     title: "OVH en panne : que faire (et comment vérifier que c'est bien ton hébergeur)",
-    metaTitle: "OVH en panne : que faire (vérifier ton hébergeur)",
+    metaTitle: "OVH en panne : vérifier et réagir en 5 min",
     metaDescription:
       "OVH en panne : vérifie en 5 minutes si c'est ton hébergeur (uptime Labo 99,92 %), alternatives immédiates et migration sans perdre tes données.",
     primaryProgram: "o2switch",
@@ -143,7 +143,7 @@ const SPECS: Spec[] = [
     angle: 9,
     requete: "site web de ton école",
     title: "Créer le site web de ton école : guide complet + pack clé en main (2026)",
-    metaTitle: "Créer le site web de ton école : guide + pack clé en main",
+    metaTitle: "Site web pour école : guide + pack clé en main",
     metaDescription:
       "Créer le site web de ton école : modèles prêts, prix en FCFA (pack 75 000 FCFA/an), paiement Mobile Money, email pro direction inclus.",
     primaryProgram: "pack-whatsapp",
@@ -157,7 +157,7 @@ const SPECS: Spec[] = [
     angle: 10,
     requete: "héberger les sites de tes clients",
     title: "Héberger les sites de tes clients sans exploser ta marge : le guide agence 2026",
-    metaTitle: "Héberger les sites de tes clients sans exploser la marge",
+    metaTitle: "Héberger ses clients sans perdre de marge (2026)",
     metaDescription:
       "Héberger les sites de tes clients : Cloudways 10 €/mois revendus 20 €, marge 2 064 €/an sur 10 clients, white-label et facturation prête.",
     primaryProgram: "cloudways",

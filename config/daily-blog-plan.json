@@ -1,0 +1,40 @@
+{
+  "2026-11-26": {
+    "date": "2026-11-26",
+    "slots": [
+      {
+        "slot": 1,
+        "creneau": "08:30 (Matin)",
+        "angle": 7,
+        "silo": "email-pro",
+        "requete": "email pro nom de domaine",
+        "title": "Email pro nom de domaine : guide complet et testé (2026)",
+        "slug": "email-pro/email-pro-nom-de-domaine",
+        "draftPath": "content\\drafts\\2026-11-26\\email-pro-email-pro-nom-de-domaine.md",
+        "status": "planned"
+      },
+      {
+        "slot": 2,
+        "creneau": "13:00 (Midi)",
+        "angle": 10,
+        "silo": "agences",
+        "requete": "hébergement agence web",
+        "title": "Hébergement agence web : guide complet et testé (2026)",
+        "slug": "agences/hebergement-agence-web",
+        "draftPath": "content\\drafts\\2026-11-26\\agences-hebergement-agence-web.md",
+        "status": "planned"
+      },
+      {
+        "slot": 3,
+        "creneau": "18:30 (Soir)",
+        "angle": 3,
+        "silo": "afrique",
+        "requete": "hebergeur web cameroun",
+        "title": "Hebergeur web cameroun : guide complet et testé (2026)",
+        "slug": "afrique/hebergeur-web-cameroun",
+        "draftPath": "content\\drafts\\2026-11-26\\afrique-hebergeur-web-cameroun.md",
+        "status": "planned"
+      }
+    ]
+  }
+}

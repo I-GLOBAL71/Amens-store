@@ -8,11 +8,19 @@
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint .",
     "verify:regression": "bun scripts/regression-check.ts",
+    "verify:splus": "bun scripts/verify-splus.ts",
+    "articles:visuals": "bun run scripts/gen-article-visuals.ts",
+    "articles:verify-skills": "bun run scripts/verify-all-skills.ts",
+    "articles:clean-traces": "bun run scripts/clean-ai-traces.ts",
+    "articles:humanize": "bun run scripts/humanize-article.ts",
+    "articles:daily": "bun run scripts/daily-blog-plan.ts",
     "baseline:update": "bun scripts/regression-check.ts --update-baseline",
     "db:push": "prisma db push --accept-data-loss",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "db:push:pg": "bun run scripts/push-neon-schema.ts",
+    "db:sync:neon": "bun run scripts/sync-neon.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

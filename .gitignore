@@ -50,9 +50,9 @@ test
 prompt
 
 server.log
-# Skills directory
-/skills/
 # artefacts locaux & données dérivées (non versionnés sur GitHub)
+__pycache__/
+*.pyc
 db/*.db
 db/*.db-journal
 .pipeline-tmp/

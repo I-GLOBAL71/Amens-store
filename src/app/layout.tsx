@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://amens.store"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "amens.store — mets en ligne tes projets IA, apps et business (même sans carte bancaire)",
     template: "%s | amens.store",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     title: "amens.store — le guide francophone de la mise en ligne",
     description:
       "Projets IA, apps, sites, email pro — même sans carte bancaire. Chaque hébergeur testé, chaque prix daté.",
-    url: "https://amens.store",
+    url: SITE_URL,
     siteName: "amens.store",
     type: "website",
     locale: "fr_FR",
@@ -58,9 +59,9 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://amens.store/#organisation",
+      "@id": `${SITE_URL}/#organisation`,
       name: "amens.store",
-      url: "https://amens.store",
+      url: SITE_URL,
       description:
         "Guide francophone de mise en ligne : projets IA, apps, sites, email pro — même sans carte bancaire.",
       knowsAbout: [
@@ -74,11 +75,11 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://amens.store/#site",
-      url: "https://amens.store",
+      "@id": `${SITE_URL}/#site`,
+      url: SITE_URL,
       name: "amens.store",
       inLanguage: "fr-FR",
-      publisher: { "@id": "https://amens.store/#organisation" },
+      publisher: { "@id": `${SITE_URL}/#organisation` },
     },
   ],
 };

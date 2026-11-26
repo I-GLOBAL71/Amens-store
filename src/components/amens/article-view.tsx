@@ -23,7 +23,11 @@ import { useNav } from "@/lib/store";
 import { angleById, DISCLOSURE } from "@/lib/pipeline/types";
 import { useArticle } from "@/hooks/use-amens";
 import { usePageTitle } from "@/hooks/use-page-title";
+import { SITE_URL } from "@/lib/site";
+import { slugifyHeading } from "@/lib/nav";
+import { getArticleCoverPath, getArticleCoverProxyPath, getArticleCoverUrl } from "@/lib/article-image";
 import { Markdown } from "./markdown";
+import { NavLink } from "./nav-link";
 
 /* TOC depuis les H2 du markdown */
 function extraireToc(content: string) {
@@ -32,14 +36,7 @@ function extraireToc(content: string) {
     .filter((l) => /^##\s+/.test(l.trim()))
     .map((l) => {
       const titre = l.replace(/^##\s+/, "").trim();
-      const id = titre
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9 ]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-      return { titre, id };
+      return { titre, id: slugifyHeading(titre) };
     });
 }
 
@@ -70,16 +67,46 @@ export function ArticleView() {
   // JavaScript), et automatiquement resynchronisé à chaque navigation SPA.
   const jsonLd = useMemo(() => {
     if (!article) return null;
+    const canonicalUrl = `${SITE_URL}/?v=article&slug=${encodeURIComponent(article.slug)}`;
+    const maillageUrls = [
+      ...(data?.maillage.silo ?? []),
+      ...(data?.maillage.inter ?? []),
+    ]
+      .slice(0, 4)
+      .map((a) => `${SITE_URL}/?v=article&slug=${encodeURIComponent(a.slug)}`);
+    const significantLinks = [
+      ...(data?.primaryProgram?.affiliateUrl ? [data.primaryProgram.affiliateUrl] : []),
+      `${SITE_URL}/?v=labo`,
+      `${SITE_URL}/?v=blog&silo=${encodeURIComponent(article.silo)}`,
+      ...maillageUrls,
+    ];
+    const coverUrl = getArticleCoverUrl(article.slug);
     return [
       {
         "@context": "https://schema.org",
         "@type": "Article",
         headline: article.title,
         description: article.metaDescription,
-        author: { "@type": "Organization", name: "amens.store" },
+        image: {
+          "@type": "ImageObject",
+          url: coverUrl,
+          width: 1200,
+          height: 630,
+        },
+        inLanguage: "fr-FR",
+        isAccessibleForFree: true,
+        url: canonicalUrl,
+        articleSection: angle?.nom ?? `/${article.silo}/`,
+        author: {
+          "@type": "Organization",
+          name: "Équipe amens.store",
+          url: SITE_URL,
+        },
+        publisher: { "@id": `${SITE_URL}/#organisation` },
         datePublished: article.publishedAt,
         dateModified: article.updatedAt,
-        mainEntityOfPage: `https://amens.store/?v=article&slug=${encodeURIComponent(article.slug)}`,
+        mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+        significantLink: significantLinks,
       },
       ...(article.faq.length
         ? [
@@ -98,19 +125,19 @@ export function ArticleView() {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Accueil", item: "https://amens.store/" },
-          { "@type": "ListItem", position: 2, name: "Blog", item: "https://amens.store/?v=blog" },
+          { "@type": "ListItem", position: 1, name: "Accueil", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/?v=blog` },
           {
             "@type": "ListItem",
             position: 3,
             name: `/${article.silo}/`,
-            item: `https://amens.store/?v=blog&silo=${article.silo}`,
+            item: `${SITE_URL}/?v=blog&silo=${article.silo}`,
           },
           { "@type": "ListItem", position: 4, name: article.title },
         ],
       },
     ];
-  }, [article]);
+  }, [article, angle, data]);
 
   if (isLoading) {
     return (
@@ -147,17 +174,17 @@ export function ArticleView() {
 
       {/* Fil d'Ariane */}
       <nav aria-label="Fil d'Ariane" className="mb-4 text-xs text-muted-foreground">
-        <button className="hover:text-primary" onClick={() => navigate({ view: "home" })}>
+        <NavLink target={{ view: "home" }} className="hover:text-primary">
           Accueil
-        </button>
+        </NavLink>
         <span className="mx-1">/</span>
-        <button className="hover:text-primary" onClick={() => navigate({ view: "blog" })}>
+        <NavLink target={{ view: "blog" }} className="hover:text-primary">
           Blog
-        </button>
+        </NavLink>
         <span className="mx-1">/</span>
-        <button className="hover:text-primary" onClick={() => navigate({ view: "blog", silo: article.silo })}>
+        <NavLink target={{ view: "blog", silo: article.silo }} className="hover:text-primary">
           /{article.silo}/
-        </button>
+        </NavLink>
         <span className="mx-1">/</span>
         <span aria-current="page" className="font-medium text-foreground">
           {article.title.slice(0, 40)}…
@@ -198,6 +225,26 @@ export function ArticleView() {
         )}
       </div>
 
+      {/* Couverture éditoriale 1200×630 WebP */}
+      <div className="mb-6 w-full overflow-hidden rounded-xl border border-border bg-slate-950 shadow-sm">
+        <img
+          src={getArticleCoverPath(article.slug)}
+          alt={article.title}
+          width={1200}
+          height={630}
+          loading="eager"
+          onError={(e) => {
+            const img = e.currentTarget;
+            const proxy = getArticleCoverProxyPath(article.slug);
+            if (!img.dataset.fallback) {
+              img.dataset.fallback = "1";
+              img.src = proxy;
+            }
+          }}
+          className="aspect-[1200/630] h-auto w-full object-cover"
+        />
+      </div>
+
       {/* TOC */}
       {toc.length > 0 && (
         <Card className="mb-8">
@@ -208,16 +255,18 @@ export function ArticleView() {
             <ol className="scroll-amens max-h-56 space-y-1 overflow-y-auto text-sm">
               {toc.map((t, i) => (
                 <li key={t.id + i}>
-                  <button
+                  <a
+                    href={`#${t.id}`}
                     className="text-muted-foreground hover:text-primary hover:underline"
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.preventDefault();
                       document
                         .getElementById(t.id)
-                        ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                    }
+                        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
                   >
                     {t.titre}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ol>
@@ -281,19 +330,21 @@ export function ArticleView() {
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {[...(data?.maillage.silo ?? []), ...(data?.maillage.inter ?? [])].slice(0, 4).map((a) => (
-            <Card
+            <NavLink
               key={a.id}
-              className="cursor-pointer transition-shadow hover:shadow-md"
-              onClick={() => navigate({ view: "article", slug: a.slug })}
+              target={{ view: "article", slug: a.slug }}
+              className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <CardContent className="p-4">
-                <Badge variant="outline" className="mb-1 text-[10px]">
-                  /{a.silo}/
-                </Badge>
-                <p className="text-sm font-semibold leading-snug">{a.title}</p>
-                <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{a.excerpt}</p>
-              </CardContent>
-            </Card>
+              <Card className="h-full cursor-pointer transition-shadow hover:shadow-md">
+                <CardContent className="p-4">
+                  <Badge variant="outline" className="mb-1 text-[10px]">
+                    /{a.silo}/
+                  </Badge>
+                  <p className="text-sm font-semibold leading-snug group-hover:text-primary">{a.title}</p>
+                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{a.excerpt}</p>
+                </CardContent>
+              </Card>
+            </NavLink>
           ))}
         </div>
       </section>

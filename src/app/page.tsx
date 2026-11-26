@@ -3,13 +3,16 @@ import { db } from "@/lib/db";
 import { serializeArticle } from "@/lib/serialize";
 import { loadLaboData } from "@/lib/labo-data";
 import { loadArticleDetail } from "@/lib/article-data";
-import type {
-  LaboFull,
-  InitialArticlesPayload,
-  ArticleDetailPayload,
-  ViewName,
+import { SITE_URL } from "@/lib/site";
+import {
+  ANGLES,
+  type LaboFull,
+  type InitialArticlesPayload,
+  type ArticleDetailPayload,
+  type ViewName,
 } from "@/lib/pipeline/types";
 import { AmensApp } from "@/components/amens/amens-app";
+import { getArticleCoverUrl } from "@/lib/article-image";
 
 // Route unique visible : / — application amens.store dont l'état vit dans
 // l'URL (?v=blog, ?v=article&slug=…, &silo=…).
@@ -48,8 +51,8 @@ function parseNav(sp: PageSearchParams) {
   };
 }
 
-// Métadonnées par article : title/description/canonical/OG rendus dans le
-// <head> du HTML servi (côté serveur, lisibles sans JavaScript).
+// Métadonnées par vue et par article : title/description/canonical/OG rendus
+// dans le <head> du HTML servi (côté serveur, lisibles sans JavaScript).
 export async function generateMetadata({
   searchParams,
 }: {
@@ -67,21 +70,37 @@ export async function generateMetadata({
           metaDescription: true,
           excerpt: true,
           slug: true,
+          silo: true,
+          author: true,
+          publishedAt: true,
           updatedAt: true,
         },
       });
       if (a) {
-        const url = `https://amens.store/?v=article&slug=${encodeURIComponent(a.slug)}`;
+        const url = `${SITE_URL}/?v=article&slug=${encodeURIComponent(a.slug)}`;
+        const pageTitle = a.metaTitle || a.title;
+        const pageDesc = a.metaDescription || a.excerpt;
+        const coverUrl = getArticleCoverUrl(a.slug);
         return {
-          title: a.metaTitle || a.title,
-          description: a.metaDescription || a.excerpt,
+          title: pageTitle,
+          description: pageDesc,
+          authors: [{ name: a.author === "equipe-amens" ? "Équipe amens.store" : a.author }],
           alternates: { canonical: url },
           openGraph: {
-            title: a.metaTitle || a.title,
-            description: a.metaDescription || a.excerpt,
+            title: pageTitle,
+            description: pageDesc,
             url,
             type: "article",
+            section: a.silo,
+            publishedTime: a.publishedAt?.toISOString(),
             modifiedTime: a.updatedAt.toISOString(),
+            images: [{ url: coverUrl, width: 1200, height: 630, alt: a.title }],
+          },
+          twitter: {
+            card: "summary_large_image",
+            title: pageTitle,
+            description: pageDesc,
+            images: [coverUrl],
           },
         };
       }
@@ -89,7 +108,68 @@ export async function generateMetadata({
       // base indisponible : les métadonnées du layout s'appliquent
     }
   }
-  return {};
+
+  if (nav.view === "blog") {
+    const angleSel = nav.silo ? ANGLES.find((a) => a.silo === nav.silo) : undefined;
+    const url = angleSel
+      ? `${SITE_URL}/?v=blog&silo=${encodeURIComponent(angleSel.silo)}`
+      : `${SITE_URL}/?v=blog`;
+    const title = angleSel
+      ? `${angleSel.nom} : guides testés`
+      : "Le blog : guides d'exécution testés (hébergement, IA, Mobile Money)";
+    const description = angleSel
+      ? angleSel.description
+      : "Guides pas-à-pas pour héberger n8n, mettre en ligne une app vibe-codée, payer par Orange Money et vérifier les renouvellements. Prix datés et mesures Labo.";
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: { title, description, url, type: "website" },
+    };
+  }
+
+  if (nav.view === "labo") {
+    const url = `${SITE_URL}/?v=labo`;
+    const title = "Le Labo : mesures publiques d'uptime, latence Afrique et prix datés";
+    const description =
+      "Relevés continus de disponibilité, latence depuis Douala, Abidjan et Dakar, et historique réel des prix promo vs renouvellement chez 8 hébergeurs.";
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: { title, description, url, type: "website" },
+    };
+  }
+
+  if (nav.view === "outils") {
+    const url = `${SITE_URL}/?v=outils`;
+    const title = "Outils et calculateurs d'hébergement web (coût 3 ans, VPS, Mobile Money)";
+    const description =
+      "Calcule le vrai coût sur 12 à 36 mois renouvellement compris, estime la RAM pour n8n/Ollama et vérifie les hébergeurs payables sans carte bancaire.";
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: { title, description, url, type: "website" },
+    };
+  }
+
+  if (nav.view === "promos") {
+    const url = `${SITE_URL}/?v=promos`;
+    const title = "Promos et codes vérifiés hébergement web novembre 2026";
+    const description =
+      "Remises réelles et tarifs de renouvellement contrôlés sur les plans mutualisés, VPS, cloud et email professionnel en novembre 2026.";
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: { title, description, url, type: "website" },
+    };
+  }
+
+  return {
+    alternates: { canonical: `${SITE_URL}/` },
+  };
 }
 
 export default async function Page({

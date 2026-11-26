@@ -17,6 +17,7 @@ import { validerRequete } from "./keywords";
 import { checkGabarit, extractFaq } from "./gabarit";
 import { mdToHtml, wrapHtml } from "./md-html";
 import { angleById, DISCLOSURE } from "./types";
+import { SITE_URL } from "@/lib/site";
 import type {
   PipelineInput,
   PipelineResult,
@@ -137,25 +138,47 @@ async function stepSeo(
     input.metaDescription ||
     `${input.title} : guide testé, prix réels et commandes copiables. Mis à jour ${new Date().toLocaleDateString("fr-FR")}.`;
 
+  const articleUrl = `${SITE_URL}/?v=article&slug=${encodeURIComponent(slug)}`;
+  const todayIso = new Date().toISOString().slice(0, 10);
   const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "Article",
-    headline: input.title,
-    description: metaDescription,
-    author: { "@type": "Organization", name: "amens.store" },
-    datePublished: new Date().toISOString().slice(0, 10),
-    dateModified: new Date().toISOString().slice(0, 10),
-    mainEntityOfPage: `https://amens.store/?v=article&slug=${encodeURIComponent(slug)}`,
-    ...(faq.length
-      ? {
-          mainEntity: faq.slice(0, 8).map((f) => ({
-            "@type": "Question",
-            name: f.question,
-            acceptedAnswer: { "@type": "Answer", text: f.answer },
-          })),
-        }
-      : {}),
-    ...(angleDef ? { about: angleDef.nom } : {}),
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: input.title,
+        description: metaDescription,
+        inLanguage: "fr-FR",
+        isAccessibleForFree: true,
+        url: articleUrl,
+        author: { "@type": "Organization", name: "Équipe amens.store", url: SITE_URL },
+        publisher: { "@type": "Organization", name: "amens.store", url: SITE_URL },
+        datePublished: todayIso,
+        dateModified: todayIso,
+        mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
+        significantLink: [`${SITE_URL}/?v=labo`, articleUrl],
+        ...(angleDef ? { about: angleDef.nom, articleSection: angleDef.nom } : {}),
+      },
+      ...(faq.length
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faq.slice(0, 8).map((f) => ({
+                "@type": "Question",
+                name: f.question,
+                acceptedAnswer: { "@type": "Answer", text: f.answer },
+              })),
+            },
+          ]
+        : []),
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Accueil", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/?v=blog` },
+          { "@type": "ListItem", position: 3, name: input.title },
+        ],
+      },
+    ],
   });
 
   const bodyHtml = mdToHtml(input.content);
@@ -490,30 +513,29 @@ async function stepVerification(
 /* ── Orchestration complète ───────────────────────────────────────────────── */
 export async function runPipeline(input: PipelineInput): Promise<PipelineResult> {
   const slug = computeSlug(input);
-  const steps: PipelineStepResult[] = [];
 
-  // 1. blueocean-keywords — validation de la requête
-  steps.push(await stepBlueOcean(input));
+  // Étapes 1 à 6 indépendantes exécutées en parallèle pour diviser la latence
+  // par 3–4 ; l'ordre canonique 1..7 et le chaînage de cleanedContent vers
+  // l'étape 7 (verification-contenu) sont strictement préservés.
+  const [blueOcean, gabarit, seo, geo, humanisation, traces] = await Promise.all([
+    stepBlueOcean(input),
+    stepGabarit(input),
+    stepSeo(input, slug),
+    stepGeo(input),
+    stepHumanisation(input),
+    stepTraces(input),
+  ]);
 
-  // 2. pipeline-amens — gabarit §4.2
-  steps.push(await stepGabarit(input));
-
-  // 3. seo-ultra — audit on-page (HTML wrapper + JSON-LD Article)
-  const seo = await stepSeo(input, slug);
-  steps.push(seo.step);
-
-  // 4. geo-citations-ia — score de citabilité
-  steps.push(await stepGeo(input));
-
-  // 5. humanisation-100 — marqueurs de style IA
-  steps.push(await stepHumanisation(input));
-
-  // 6. suppression-traces-ia — nettoyage Unicode (le contenu nettoyé sert à l'étape 7)
-  const traces = await stepTraces(input);
-  steps.push(traces.step);
-
-  // 7. verification-contenu — gate finale sur le contenu nettoyé
-  steps.push(await stepVerification(traces.cleanedContent));
+  const verification = await stepVerification(traces.cleanedContent);
+  const steps: PipelineStepResult[] = [
+    blueOcean,
+    gabarit,
+    seo.step,
+    geo,
+    humanisation,
+    traces.step,
+    verification,
+  ];
 
   const blockingIssues = steps.reduce(
     (acc, s) => acc + s.issues.filter((i) => i.level === "BLOQUANT").length,
