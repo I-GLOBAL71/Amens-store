@@ -45,14 +45,14 @@ export function Markdown({ content }: { content: string }) {
             </h3>
           ),
           table: ({ children, ...props }) => (
-            <div className="my-4 w-full overflow-x-auto touch-pan-x rounded-lg border border-border">
+            <div className="my-4 w-full max-w-full overflow-x-auto touch-pan-x rounded-lg border border-border">
               <table className="w-full min-w-[480px]" {...props}>
                 {children}
               </table>
             </div>
           ),
           pre: ({ children, ...props }) => (
-            <pre className="max-w-full overflow-x-auto" {...props}>
+            <pre className="w-full max-w-full overflow-x-auto" {...props}>
               {children}
             </pre>
           ),

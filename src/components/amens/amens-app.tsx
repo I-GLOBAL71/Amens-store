@@ -59,7 +59,7 @@ function Views() {
   return (
     <>
       <Header />
-      <main id="contenu" className="flex-1 flex flex-col w-full">
+      <main id="contenu" className="flex-1 flex flex-col w-full min-w-0">
         <ErrorBoundary view={view}>
           <AnimatePresence mode="wait">
             <motion.div
@@ -68,7 +68,7 @@ function Views() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
-              className="w-full"
+              className="w-full min-w-0 flex-1 flex flex-col"
             >
               {view === "home" && <HomeView />}
               {view === "blog" && <BlogView />}
@@ -128,7 +128,7 @@ export function AmensApp({
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
         <NavProvider initial={initialNav}>
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen w-full min-w-0 overflow-x-clip flex flex-col">
             <Views />
           </div>
         </NavProvider>

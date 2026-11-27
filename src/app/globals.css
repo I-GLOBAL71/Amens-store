@@ -117,6 +117,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
   body {
     @apply bg-background text-foreground;
   }
@@ -146,16 +151,23 @@
 .article-body {
   font-size: 1.0625rem;
   line-height: 1.75;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .article-body > p:first-of-type {
   /* conclusion en tête : mise en avant légère */
 }
 .article-body h2 {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 700;
   margin-top: 2.2rem;
   margin-bottom: 0.7rem;
   scroll-margin-top: 6rem;
+}
+@media (min-width: 640px) {
+  .article-body h2 {
+    font-size: 1.4rem;
+  }
 }
 .article-body h3 {
   font-size: 1.12rem;
@@ -183,17 +195,15 @@
 .article-body table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.2rem 0;
-  font-size: 0.95rem;
-  display: block;
-  overflow-x: auto;
-  /* mobile : cellules non repliées + défilement horizontal ; desktop : les
-     cellules se replient pour que les tableaux 4 colonnes tiennent sans coupe
-     (le wrap évite qu'une colonne « Prix (relevé le …) » soit tronquée). */
+  font-size: 0.9rem;
+  /* mobile : cellules non repliées + défilement horizontal dans son conteneur ;
+     desktop : les cellules se replient pour que les tableaux 4 colonnes tiennent
+     sans coupe (le wrap évite qu'une colonne « Prix (relevé le …) » soit tronquée). */
   white-space: nowrap;
 }
 @media (min-width: 768px) {
   .article-body table {
+    font-size: 0.95rem;
     white-space: normal;
   }
 }

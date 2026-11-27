@@ -19,10 +19,10 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-card">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div className="md:col-span-2">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="min-w-0 sm:col-span-2 lg:col-span-2">
             <div className="flex items-center gap-2 font-bold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <Ship className="h-5 w-5" aria-hidden />
               </span>
               amens<span className="text-primary">.store</span>
@@ -36,7 +36,7 @@ export function Footer() {
               {DISCLOSURE}
             </p>
             <form
-              className="mt-4 flex max-w-sm gap-2"
+              className="mt-4 flex w-full max-w-sm flex-col gap-2 min-[380px]:flex-row"
               onSubmit={(e) => {
                 e.preventDefault();
                 const form = e.currentTarget;
@@ -60,22 +60,22 @@ export function Footer() {
                 required
                 placeholder="Newsletter — deals hébergement"
                 aria-label="Email pour la newsletter deals"
-                className="h-11"
+                className="h-11 min-w-0 flex-1"
               />
-              <Button type="submit" className="h-11" disabled={lead.isPending}>
+              <Button type="submit" className="h-11 shrink-0" disabled={lead.isPending}>
                 {lead.isPending ? "…" : "OK"}
               </Button>
             </form>
           </div>
 
-          <nav aria-label="Guides par sujet">
-            <h3 className="mb-3 text-sm font-semibold">Guides par sujet</h3>
-            <ul className="space-y-2 text-sm">
+          <nav aria-label="Guides par sujet" className="min-w-0">
+            <h3 className="mb-2 sm:mb-3 text-sm font-semibold">Guides par sujet</h3>
+            <ul className="space-y-0 sm:space-y-2 text-sm">
               {ANGLES.map((a) => (
                 <li key={a.id}>
                   <NavLink
                     target={{ view: "blog", silo: a.silo }}
-                    className="text-muted-foreground hover:text-primary hover:underline"
+                    className="inline-flex min-h-[44px] sm:min-h-0 items-center py-1 text-muted-foreground hover:text-primary hover:underline"
                   >
                     /{a.silo}/ · {a.nom.split("(")[0]}
                   </NavLink>
@@ -84,13 +84,13 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Ressources">
-            <h3 className="mb-3 text-sm font-semibold">Ressources</h3>
-            <ul className="space-y-2 text-sm">
+          <nav aria-label="Ressources" className="min-w-0">
+            <h3 className="mb-2 sm:mb-3 text-sm font-semibold">Ressources</h3>
+            <ul className="space-y-0 sm:space-y-2 text-sm">
               <li>
                 <NavLink
                   target={{ view: "labo" }}
-                  className="text-muted-foreground hover:text-primary hover:underline"
+                  className="inline-flex min-h-[44px] sm:min-h-0 items-center py-1 text-muted-foreground hover:text-primary hover:underline"
                 >
                   Labo — mesures et méthodologie
                 </NavLink>
@@ -98,7 +98,7 @@ export function Footer() {
               <li>
                 <NavLink
                   target={{ view: "outils" }}
-                  className="text-muted-foreground hover:text-primary hover:underline"
+                  className="inline-flex min-h-[44px] sm:min-h-0 items-center py-1 text-muted-foreground hover:text-primary hover:underline"
                 >
                   Outils et calculateurs
                 </NavLink>
@@ -106,7 +106,7 @@ export function Footer() {
               <li>
                 <NavLink
                   target={{ view: "promos" }}
-                  className="text-muted-foreground hover:text-primary hover:underline"
+                  className="inline-flex min-h-[44px] sm:min-h-0 items-center py-1 text-muted-foreground hover:text-primary hover:underline"
                 >
                   Promos Black Friday
                 </NavLink>

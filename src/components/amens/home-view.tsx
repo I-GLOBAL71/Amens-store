@@ -53,7 +53,7 @@ function Assistant() {
     projet === "ia" || projet === "app" ? "vps_ia" : projet === "email" ? "email" : projet === "agence" ? "agence" : "mutualise";
   const geo = paiement === "mobile" ? "africa" : undefined;
   const { data, isLoading } = usePrograms(
-    step === 3 ? { context: contexte, ...(geo ? { geo } : {}) } : {}
+    step === 3 ? { context: contexte, ...(geo ? { geo } : {}), enabled: true } : { enabled: false }
   );
 
   const reco = useMemo(() => {
@@ -85,14 +85,14 @@ function Assistant() {
   ];
 
   return (
-    <Card className="flex h-full flex-col border-2 border-primary/30 shadow-lg">
+    <Card className="flex h-full min-w-0 flex-col overflow-hidden border-2 border-primary/30 shadow-lg">
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Sparkles className="h-5 w-5 text-primary" aria-hidden />
-          Assistant — 3 questions, ton hébergeur
+        <CardTitle className="flex items-center gap-2 text-lg leading-snug">
+          <Sparkles className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          <span>Assistant — 3 questions, ton hébergeur</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col">
+      <CardContent className="flex flex-1 flex-col min-w-0">
         {step === 0 && (
           <div className="flex flex-1 flex-col">
             <p className="mb-3 text-sm text-muted-foreground">1/3 · Ton projet ?</p>
@@ -100,14 +100,15 @@ function Assistant() {
               {projets.map((p) => (
                 <button
                   key={p.id}
+                  type="button"
                   onClick={() => {
                     setProjet(p.id);
                     setStep(1);
                   }}
-                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-border px-4 py-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-secondary"
+                  className="flex min-h-[44px] items-center justify-between gap-2 rounded-lg border border-border px-4 py-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-secondary"
                 >
-                  {p.label}
-                  <ArrowRight className="h-4 w-4 text-muted-foreground" aria-hidden />
+                  <span className="min-w-0">{p.label}</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
                 </button>
               ))}
             </div>
@@ -125,19 +126,29 @@ function Assistant() {
         )}
         {step === 1 && (
           <div>
-            <p className="mb-3 text-sm text-muted-foreground">2/3 · Comment veux-tu payer ?</p>
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <p className="text-sm text-muted-foreground">2/3 · Comment veux-tu payer ?</p>
+              <button
+                type="button"
+                className="min-h-[36px] px-2 text-xs text-muted-foreground underline hover:text-foreground"
+                onClick={() => setStep(0)}
+              >
+                ← Retour
+              </button>
+            </div>
             <div className="grid gap-2">
               {paiements.map((p) => (
                 <button
                   key={p.id}
+                  type="button"
                   onClick={() => {
                     setPaiement(p.id);
                     setStep(2);
                   }}
-                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-border px-4 py-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-secondary"
+                  className="flex min-h-[44px] items-center justify-between gap-2 rounded-lg border border-border px-4 py-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-secondary"
                 >
-                  {p.label}
-                  <ArrowRight className="h-4 w-4 text-muted-foreground" aria-hidden />
+                  <span className="min-w-0">{p.label}</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
                 </button>
               ))}
             </div>
@@ -145,19 +156,29 @@ function Assistant() {
         )}
         {step === 2 && (
           <div>
-            <p className="mb-3 text-sm text-muted-foreground">3/3 · Ton budget mensuel ?</p>
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <p className="text-sm text-muted-foreground">3/3 · Ton budget mensuel ?</p>
+              <button
+                type="button"
+                className="min-h-[36px] px-2 text-xs text-muted-foreground underline hover:text-foreground"
+                onClick={() => setStep(1)}
+              >
+                ← Retour
+              </button>
+            </div>
             <div className="grid gap-2">
               {budgets.map((b) => (
                 <button
                   key={b.id}
+                  type="button"
                   onClick={() => {
                     setBudget(b.id);
                     setStep(3);
                   }}
-                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-border px-4 py-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-secondary"
+                  className="flex min-h-[44px] items-center justify-between gap-2 rounded-lg border border-border px-4 py-3 text-left text-sm font-medium transition-colors hover:border-primary hover:bg-secondary"
                 >
-                  {b.label}
-                  <ArrowRight className="h-4 w-4 text-muted-foreground" aria-hidden />
+                  <span className="min-w-0">{b.label}</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
                 </button>
               ))}
             </div>
@@ -165,10 +186,11 @@ function Assistant() {
         )}
         {step === 3 && (
           <div className="flex flex-1 flex-col">
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-3 flex items-center justify-between gap-2">
               <p className="text-sm font-semibold">Recommandation</p>
               <button
-                className="text-xs text-muted-underline text-muted-foreground underline"
+                type="button"
+                className="min-h-[36px] px-2 text-xs text-muted-foreground underline hover:text-foreground"
                 onClick={() => {
                   setStep(0);
                   setProjet(null);
@@ -181,13 +203,13 @@ function Assistant() {
             </div>
             {isLoading && <p className="py-6 text-center text-sm text-muted-foreground">Calcul…</p>}
             {!isLoading && !reco && (
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-lg border border-border bg-secondary/50 p-6 text-center">
+              <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-lg border border-border bg-secondary/50 p-5 text-center sm:p-6">
                 <p className="text-sm font-medium">Recommandation momentanément indisponible</p>
                 <p className="text-xs text-muted-foreground">
                   Les données Labo n&apos;ont pas pu être chargées. Recharge la page, ou explore
                   directement les guides du blog.
                 </p>
-                <Button variant="outline" className="h-10" onClick={() => navigate({ view: "blog" })}>
+                <Button variant="outline" className="h-11 w-full sm:w-auto" onClick={() => navigate({ view: "blog" })}>
                   Voir tous les guides
                 </Button>
               </div>
@@ -195,7 +217,7 @@ function Assistant() {
             {reco && (
               <div className="flex flex-col gap-3">
                 <div className="rounded-lg border border-primary/40 bg-secondary p-4">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="font-semibold">{reco.principal.name}</p>
                     <Badge variant="outline" className="border-primary/40 text-primary">
                       testé Labo
@@ -208,11 +230,11 @@ function Assistant() {
                         ? "Email pro sur ton nom de domaine, SPF/DKIM inclus."
                         : "Guide testé dans notre Labo avant recommandation."}
                   </p>
-                  <a href={reco.principal.trackingUrl} rel="sponsored noopener" target="_blank">
-                    <Button className="mt-3 h-11 w-full sm:w-auto">
-                      {ANGLE_CTA(contexte)} <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
-                    </Button>
-                  </a>
+                  <Button asChild className="mt-3 h-auto min-h-11 w-full whitespace-normal py-2.5 sm:w-auto">
+                    <a href={reco.principal.trackingUrl} rel="sponsored noopener" target="_blank">
+                      {ANGLE_CTA(contexte)} <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
+                    </a>
+                  </Button>
                   <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
                     Lien d&apos;affiliation — commission pour nous, sans surcoût pour toi.
                   </p>
@@ -223,12 +245,12 @@ function Assistant() {
                     <ul className="space-y-1">
                       {reco.alt.map((a) => (
                         <li key={a.slug} className="flex items-center justify-between gap-2 text-sm">
-                          <span>{a.name}</span>
+                          <span className="min-w-0 truncate">{a.name}</span>
                           <a
                             href={a.trackingUrl}
                             rel="sponsored noopener"
                             target="_blank"
-                            className="text-xs font-medium text-primary underline"
+                            className="inline-flex min-h-[36px] shrink-0 items-center px-1 text-xs font-medium text-primary underline"
                           >
                             Voir
                           </a>
@@ -242,7 +264,7 @@ function Assistant() {
                     view: "blog",
                     silo: projet === "ia" ? "ia-automatisation" : projet === "app" ? "deployer-mon-app" : projet === "email" ? "email-pro" : projet === "agence" ? "agences" : "metiers",
                   }}
-                  className="text-sm font-medium text-primary underline"
+                  className="inline-flex min-h-[44px] items-center text-sm font-medium text-primary underline"
                 >
                   Lire nos guides sur ce sujet →
                 </NavLink>
@@ -309,33 +331,34 @@ export function HomeView() {
     <div className="w-full">
       {/* Hero */}
       <section className="border-b border-border bg-gradient-to-b from-secondary/70 to-background">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:py-20">
-          <div>
-            <Badge variant="outline" className="mb-4 gap-1.5 border-primary/40 text-primary">
-              <FlaskConical className="h-3.5 w-3.5" aria-hidden /> Guides testés · prix datés · données Labo publiques
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-[1.2fr_1fr] lg:py-20">
+          <div className="min-w-0">
+            <Badge variant="outline" className="mb-4 max-w-full gap-1.5 border-primary/40 py-1 text-primary">
+              <FlaskConical className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>Guides testés · prix datés · données Labo publiques</span>
             </Badge>
-            <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+            <h1 className="break-words text-[1.7rem] font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
               Mets en ligne tes projets IA, tes apps, ton site et ton email pro —{" "}
               <span className="text-primary">même sans carte bancaire.</span>
             </h1>
-            <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
+            <p className="mt-4 max-w-xl text-base text-muted-foreground sm:mt-5 sm:text-lg">
               amens.store n&apos;est pas un comparateur. C&apos;est un guide d&apos;exécution : tu arrives
               avec un projet précis (installer n8n, déployer une app Lovable, payer en Orange
               Money, créer un email pro), tu repars avec une solution opérationnelle.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button size="lg" className="h-12" asChild>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Button size="lg" className="h-12 w-full sm:w-auto" asChild>
                 <NavLink target={{ view: "blog" }}>
-                  Explorer le blog <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+                  Explorer le blog <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
                 </NavLink>
               </Button>
-              <Button size="lg" variant="outline" className="h-12" asChild>
+              <Button size="lg" variant="outline" className="h-12 w-full sm:w-auto" asChild>
                 <NavLink target={{ view: "labo" }}>
                   Voir les données du Labo
                 </NavLink>
               </Button>
             </div>
-            <ul className="mt-8 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+            <ul className="mt-7 grid gap-2.5 text-sm text-muted-foreground sm:mt-8 sm:grid-cols-2">
               {[
                 "Chaque hébergeur testé avant recommandation",
                 "Prix réels sur 12–36 mois (renouvellements inclus)",
@@ -344,7 +367,7 @@ export function HomeView() {
               ].map((t) => (
                 <li key={t} className="flex items-start gap-2">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  {t}
+                  <span className="min-w-0">{t}</span>
                 </li>
               ))}
             </ul>
@@ -355,9 +378,9 @@ export function HomeView() {
 
       {/* Stats Labo */}
       <section aria-label="Indicateurs du Labo" className="border-b border-border bg-card">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 sm:px-6 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-4 py-7 min-[360px]:grid-cols-2 sm:gap-6 sm:px-6 sm:py-8 lg:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.label}>
+            <div key={s.label} className="min-w-0">
               <p className="text-2xl font-bold text-primary sm:text-3xl">{s.value}</p>
               <p className="text-sm font-medium">{s.label}</p>
               <p className="mt-0.5 text-xs text-muted-foreground">{s.sub}</p>
@@ -367,9 +390,9 @@ export function HomeView() {
       </section>
 
       {/* 10 angles */}
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6" aria-labelledby="angles-titre">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-          <div>
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12" aria-labelledby="angles-titre">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+          <div className="min-w-0">
             <h2 id="angles-titre" className="text-2xl font-bold tracking-tight">
               Tous nos guides, par projet
             </h2>
@@ -378,9 +401,9 @@ export function HomeView() {
               quartier : chaque sujet a son guide pas-à-pas, testé et daté.
             </p>
           </div>
-          <Button variant="outline" asChild>
+          <Button variant="outline" className="h-11 w-full sm:w-auto shrink-0" asChild>
             <NavLink target={{ view: "blog" }}>
-              Tous les guides <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+              Tous les guides <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
             </NavLink>
           </Button>
         </div>
@@ -391,14 +414,14 @@ export function HomeView() {
               <NavLink
                 key={a.id}
                 target={{ view: "blog", silo: a.silo }}
-                className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group block h-full min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <Card className="h-full cursor-pointer transition-shadow hover:shadow-md">
-                  <CardHeader className="flex-row items-center gap-3 space-y-0 pb-2">
+                <Card className="h-full min-w-0 cursor-pointer transition-shadow hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center gap-3 space-y-0 pb-2">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
                       <Icone className="h-5 w-5 text-primary" />
                     </span>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <CardTitle className="text-base leading-tight">{a.nom}</CardTitle>
                       <p className="mt-0.5 text-xs font-medium text-muted-foreground">
                         /{a.silo}/
@@ -408,7 +431,7 @@ export function HomeView() {
                   <CardContent className="pb-4">
                     <p className="text-sm text-muted-foreground">{a.description}</p>
                     <p className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:underline">
-                      {a.cta} <ArrowRight className="h-4 w-4" aria-hidden />
+                      {a.cta} <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
                     </p>
                   </CardContent>
                 </Card>
@@ -420,8 +443,8 @@ export function HomeView() {
 
       {/* Confiance & fraîcheur (règles éditoriales appliquées dans le pipeline, invisibles ici) */}
       <section className="border-t border-border bg-card" aria-labelledby="confiance-titre">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2">
-          <div>
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-2">
+          <div className="min-w-0">
             <h2 id="confiance-titre" className="text-2xl font-bold tracking-tight">
               Des guides que tu peux exécuter en confiance
             </h2>
@@ -431,13 +454,13 @@ export function HomeView() {
               publication. Et quand une donnée change, le guide est révisé — la date de mise
               à jour est indiquée sur chaque page.
             </p>
-            <Button className="mt-4 h-11" asChild>
+            <Button className="mt-4 h-11 w-full sm:w-auto" asChild>
               <NavLink target={{ view: "labo" }}>
-                Voir les mesures du Labo <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+                Voir les mesures du Labo <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
               </NavLink>
             </Button>
           </div>
-          <div className="rounded-xl border border-border bg-background p-5">
+          <div className="min-w-0 rounded-xl border border-border bg-background p-4 sm:p-5">
             <ul className="space-y-3">
               {[
                 ["Testé avant d'être recommandé", "chaque hébergeur tourne dans le Labo avant d'apparaître dans un guide"],

@@ -75,10 +75,10 @@ function SkillsRegistry() {
     <div className="space-y-4">
       <Card className="border-primary/25 bg-secondary/30">
         <CardContent className="p-4">
-          <p className="flex flex-wrap items-center gap-2 text-sm">
-            <Lock className="h-4 w-4 text-primary" aria-hidden />
+          <p className="text-sm leading-relaxed">
+            <Lock className="mr-1.5 inline h-4 w-4 align-text-bottom text-primary" aria-hidden />
             <strong>Règle du projet :</strong> l&apos;ajout de tout futur contenu passe par ces
-            skills enregistrés dans <code className="font-mono text-xs">{data.pipelinePath}</code>.
+            skills enregistrés dans <code className="break-words font-mono text-xs">{data.pipelinePath}</code>.
             La publication est <strong>refusée</strong> si une seule gate échoue (jamais de
             contenu non validé).
           </p>
@@ -87,7 +87,7 @@ function SkillsRegistry() {
       <ol className="space-y-3">
         {data.skills.map((s) => (
           <li key={s.id}>
-            <Card>
+            <Card className="min-w-0">
               <CardContent className="p-4">
                 <div className="flex flex-wrap items-start gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
@@ -95,7 +95,7 @@ function SkillsRegistry() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-mono text-sm font-bold">{s.slug}</p>
+                      <p className="font-mono text-sm font-bold break-all">{s.slug}</p>
                       {s.gate && (
                         <Badge variant="outline" className="border-primary/50 text-[10px] text-primary">
                           <ShieldCheck className="mr-1 h-3 w-3" aria-hidden /> GATE
@@ -115,23 +115,23 @@ function SkillsRegistry() {
                     <p className="mt-1 text-sm font-medium">{s.mission}</p>
                     <p className="mt-1 text-sm text-muted-foreground">{s.description}</p>
                     <div className="mt-2 grid gap-1 text-[11px] text-muted-foreground">
-                      <p className="flex items-center gap-1.5">
-                        <FileCode2 className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                        <code className="font-mono">{s.skillPath}</code>
+                      <p className="flex min-w-0 items-start gap-1.5">
+                        <FileCode2 className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+                        <code className="min-w-0 break-all font-mono">{s.skillPath}</code>
                       </p>
-                      <p className="flex items-center gap-1.5">
-                        <Terminal className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                        <code className="font-mono">{s.scriptPath}</code>
+                      <p className="flex min-w-0 items-start gap-1.5">
+                        <Terminal className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+                        <code className="min-w-0 break-all font-mono">{s.scriptPath}</code>
                       </p>
                       {s.reference && (
-                        <p className="flex items-center gap-1.5">
-                          <FlaskConical className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                          {s.reference}
+                        <p className="flex min-w-0 items-start gap-1.5">
+                          <FlaskConical className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+                          <span className="min-w-0 break-words">{s.reference}</span>
                         </p>
                       )}
                     </div>
                   </div>
-                  <div className="flex shrink-0 flex-col items-end gap-1 text-[11px] text-muted-foreground">
+                  <div className="flex w-full shrink-0 flex-row justify-between gap-2 border-t border-border/60 pt-2 text-[11px] text-muted-foreground sm:w-auto sm:flex-col sm:items-end sm:gap-1 sm:border-t-0 sm:pt-0">
                     <span>passées {s.stats.passed}</span>
                     <span>averties {s.stats.warned}</span>
                     <span>bloquées {s.stats.blocked}</span>
@@ -157,14 +157,14 @@ function PipelineReport({ result }: { result: PipelineResult }) {
             : "border-destructive/40 bg-destructive/5"
         }`}
       >
-        <p className="flex items-center gap-2 font-semibold">
+        <p className="flex flex-wrap items-center gap-2 font-semibold">
           {result.canPublish ? (
-            <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" aria-hidden />
           ) : (
-            <XCircle className="h-5 w-5 text-destructive" aria-hidden />
+            <XCircle className="h-5 w-5 shrink-0 text-destructive" aria-hidden />
           )}
-          {result.canPublish ? "Contenu publiable" : "Publication refusée"}
-          <span className="ml-auto text-sm text-muted-foreground">
+          <span>{result.canPublish ? "Contenu publiable" : "Publication refusée"}</span>
+          <span className="text-sm text-muted-foreground sm:ml-auto">
             Score global {result.overallScore}/100 · {result.blockingIssues} bloquant(s) ·{" "}
             {result.warnings} avertissement(s)
           </span>
@@ -327,16 +327,16 @@ function NouvelArticle() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr]">
-      <div className="space-y-4">
-        <Card>
+      <div className="min-w-0 space-y-4">
+        <Card className="min-w-0">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Brief (étape 1 — 5 champs obligatoires)</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-2">
+            <div className="grid min-w-0 gap-2">
               <Label htmlFor="angle">Angle d&apos;attaque (1-10)</Label>
               <Select value={angle} onValueChange={setAngle}>
-                <SelectTrigger id="angle" className="h-11">
+                <SelectTrigger id="angle" className="h-11 w-full min-w-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -369,11 +369,11 @@ function NouvelArticle() {
               />
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" className="h-11" onClick={charger} disabled={squelette.isPending}>
+              <Button variant="outline" className="h-auto min-h-11 w-full whitespace-normal py-2.5 sm:w-auto" onClick={charger} disabled={squelette.isPending}>
                 {squelette.isPending ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
+                  <Loader2 className="mr-2 h-4 w-4 shrink-0 animate-spin" aria-hidden />
                 ) : (
-                  <Wand2 className="mr-2 h-4 w-4" aria-hidden />
+                  <Wand2 className="mr-2 h-4 w-4 shrink-0" aria-hidden />
                 )}
                 Générer le squelette (nouvel_article.py)
               </Button>
@@ -381,7 +381,7 @@ function NouvelArticle() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="min-w-0">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">
               Contenu (markdown — gabarit §4.2 : conclusion 40-60 mots en tête, 8 sections, FAQ 5-8)
@@ -393,19 +393,19 @@ function NouvelArticle() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="# Titre — bénéfice…&#10;&#10;Conclusion 40-60 mots : ce que le lecteur obtient…&#10;&#10;## 1. Ce qu'il te faut (prérequis)…"
-              className="scroll-amens min-h-[420px] font-mono text-[13px] leading-relaxed"
+              className="scroll-amens min-h-[320px] font-mono text-[13px] leading-relaxed sm:min-h-[420px]"
             />
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <Button className="h-11" onClick={() => lancer("publish")} disabled={enCours}>
+              <Button className="h-auto min-h-11 w-full whitespace-normal py-2.5 sm:w-auto" onClick={() => lancer("publish")} disabled={enCours}>
                 {publish.isPending ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
+                  <Loader2 className="mr-2 h-4 w-4 shrink-0 animate-spin" aria-hidden />
                 ) : (
-                  <Play className="mr-2 h-4 w-4" aria-hidden />
+                  <Play className="mr-2 h-4 w-4 shrink-0" aria-hidden />
                 )}
                 Publier via le pipeline (gates obligatoires)
               </Button>
-              <Button variant="outline" className="h-11" onClick={() => lancer("analyze")} disabled={enCours}>
-                <Zap className="mr-2 h-4 w-4" aria-hidden /> Analyser sans publier
+              <Button variant="outline" className="h-auto min-h-11 w-full whitespace-normal py-2.5 sm:w-auto" onClick={() => lancer("analyze")} disabled={enCours}>
+                <Zap className="mr-2 h-4 w-4 shrink-0" aria-hidden /> Analyser sans publier
               </Button>
               <span className="text-xs text-muted-foreground">
                 {content.split(/\s+/).filter(Boolean).length} mots
@@ -415,7 +415,7 @@ function NouvelArticle() {
         </Card>
       </div>
 
-      <div className="space-y-4">
+      <div className="min-w-0 space-y-4">
         {publie && (
           <Card className={publie.ok ? "border-primary/40" : "border-destructive/40"}>
             <CardContent className="p-4 text-sm">{publie.message}</CardContent>
@@ -480,24 +480,24 @@ function MotsCles() {
 
   return (
     <div className="space-y-4">
-      <Card>
+      <Card className="min-w-0">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Search className="h-4 w-4 text-primary" aria-hidden />
-            Skill blueocean-keywords — autocomplete Google réel (sans clé API)
+            <Search className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+            <span>Skill blueocean-keywords — autocomplete Google réel (sans clé API)</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-[2fr_1fr_auto]">
             <Input
-              className="h-11"
-              placeholder="graine (ex. hébergeur cameroun, installer n8n, quitter vercel)"
+              className="h-11 min-w-0"
+              placeholder="graine (ex. hébergeur cameroun, installer n8n…)"
               aria-label="Graine de recherche"
               value={graine}
               onChange={(e) => setGraine(e.target.value)}
             />
             <Select value={angle} onValueChange={setAngle}>
-              <SelectTrigger className="h-11" aria-label="Angle">
+              <SelectTrigger className="h-11 w-full min-w-0" aria-label="Angle">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -508,7 +508,7 @@ function MotsCles() {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="h-11" onClick={lancer} disabled={recherche.isPending}>
+            <Button className="h-11 w-full sm:w-auto" onClick={lancer} disabled={recherche.isPending}>
               {recherche.isPending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : "Collecter"}
             </Button>
           </div>
@@ -519,7 +519,7 @@ function MotsCles() {
       </Card>
 
       {res && (
-        <Card>
+        <Card className="min-w-0 overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base">
               {res.rows.length} requêtes — CIBLER {res.cibler} · SURVEILLER {res.surveiller} · IGNORER{" "}
@@ -530,8 +530,8 @@ function MotsCles() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="scroll-amens max-h-96 overflow-y-auto">
-              <table className="w-full text-xs">
+            <div className="scroll-amens max-h-96 w-full overflow-auto touch-pan-x">
+              <table className="w-full min-w-[480px] text-xs">
                 <thead className="sticky top-0 bg-card">
                   <tr className="border-b text-left">
                     <th className="p-2">Requête</th>
@@ -577,21 +577,21 @@ function MotsCles() {
       )}
 
       {stock && stock.rows.length > 0 && (
-        <Card>
+        <Card className="min-w-0 overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base">
               Requêtes déjà capitalisées pour l&apos;angle {angle} ({stock.rows.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="scroll-amens max-h-96 overflow-y-auto">
-              <table className="w-full text-xs">
+            <div className="scroll-amens max-h-96 w-full overflow-auto touch-pan-x">
+              <table className="w-full min-w-[360px] text-xs">
                 <tbody>
                   {stock.rows.map((r, i) => (
                     <tr key={r.requete + i} className="border-b border-border/60">
                       <td className="p-2 font-medium">{r.requete}</td>
-                      <td className="p-2 text-muted-foreground">KD {r.difficulte}</td>
-                      <td className="p-2">
+                      <td className="p-2 whitespace-nowrap text-muted-foreground">KD {r.difficulte}</td>
+                      <td className="p-2 whitespace-nowrap">
                         <span
                           className={`rounded px-1.5 py-0.5 font-bold ${
                             r.verdict === "CIBLER"
@@ -631,18 +631,18 @@ function Historique() {
   return (
     <div className="space-y-3">
       {data.runs.map((r) => (
-        <Card key={r.id}>
+        <Card key={r.id} className="min-w-0">
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center gap-2">
               <StatusBadge status={r.status === "passed" ? "passed_run" : "blocked_run"} />
               <Badge variant="outline" className="text-[10px]">
                 {r.runType === "publish" ? "publication" : "analyse"}
               </Badge>
-              <p className="text-sm font-medium">
+              <p className="min-w-0 break-words text-sm font-medium">
                 {r.title || r.requete}
                 <span className="ml-2 font-normal text-muted-foreground">angle {r.angle}</span>
               </p>
-              <span className="ml-auto text-[11px] text-muted-foreground">
+              <span className="text-[11px] text-muted-foreground sm:ml-auto">
                 {new Date(r.createdAt).toLocaleString("fr-FR")} · score {r.overallScore}/100
               </span>
             </div>
@@ -671,7 +671,8 @@ function Historique() {
             )}
             {r.slug && (
               <button
-                className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                type="button"
+                className="mt-2 inline-flex min-h-[36px] items-center gap-1 text-xs text-primary hover:underline"
                 onClick={() => navigate({ view: "article", slug: r.slug })}
               >
                 Voir l&apos;article <ChevronRight className="h-3 w-3" aria-hidden />
@@ -688,9 +689,9 @@ function Historique() {
 export function StudioView() {
   const { studioTab } = useNav();
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Studio Pipeline</h1>
+    <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="mb-6 min-w-0">
+        <h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl">Studio Pipeline</h1>
         <p className="mt-2 max-w-3xl text-muted-foreground">
           Les 7 skills éditoriaux sont enregistrés dans le projet (dossier{" "}
           <code className="font-mono text-xs">skills/</code>) : recherche de mots-clés Blue
@@ -700,17 +701,17 @@ export function StudioView() {
         </p>
       </div>
       <Tabs defaultValue={studioTab ?? "registre"}>
-        <TabsList className="mb-4 h-auto flex-wrap">
-          <TabsTrigger value="registre" className="h-10">
+        <TabsList className="mb-4 grid h-auto w-full grid-cols-2 gap-1 sm:inline-flex sm:w-fit sm:flex-wrap">
+          <TabsTrigger value="registre" className="min-h-[44px] whitespace-normal text-center leading-tight">
             Registre des skills
           </TabsTrigger>
-          <TabsTrigger value="nouveau" className="h-10">
+          <TabsTrigger value="nouveau" className="min-h-[44px] whitespace-normal text-center leading-tight">
             Nouvel article
           </TabsTrigger>
-          <TabsTrigger value="keywords" className="h-10">
+          <TabsTrigger value="keywords" className="min-h-[44px] whitespace-normal text-center leading-tight">
             Mots-clés Blue Ocean
           </TabsTrigger>
-          <TabsTrigger value="runs" className="h-10">
+          <TabsTrigger value="runs" className="min-h-[44px] whitespace-normal text-center leading-tight">
             Historique
           </TabsTrigger>
         </TabsList>

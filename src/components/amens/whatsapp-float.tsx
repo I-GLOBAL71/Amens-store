@@ -34,10 +34,10 @@ export function WhatsappFloat() {
         <div
           role="dialog"
           aria-label="Pack WhatsApp — On le fait pour toi"
-          className="fixed bottom-24 right-4 z-50 w-[min(92vw,340px)] rounded-xl border border-border bg-card p-4 shadow-xl"
+          className="fixed bottom-24 left-3 right-3 z-50 max-h-[calc(100dvh-7.5rem)] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-xl sm:left-auto sm:right-4 sm:w-[340px]"
         >
           <div className="flex items-start justify-between gap-2">
-            <div>
+            <div className="min-w-0">
               <p className="font-semibold">On le fait pour toi</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Hébergement + mise en ligne + email pro, payé en Mobile Money
@@ -45,7 +45,12 @@ export function WhatsappFloat() {
                 bancaire demandée.
               </p>
             </div>
-            <button aria-label="Fermer" onClick={() => setOpen(false)} className="text-muted-foreground">
+            <button
+              type="button"
+              aria-label="Fermer"
+              onClick={() => setOpen(false)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            >
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -98,17 +103,18 @@ export function WhatsappFloat() {
         </div>
       )}
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
         aria-label="Pack WhatsApp — On le fait pour toi (Mobile Money)"
         aria-hidden={footerVisible && !open}
-        className={`fixed bottom-5 right-5 z-50 flex h-14 items-center gap-2 rounded-full bg-primary px-4 text-primary-foreground shadow-lg transition-all duration-300 sm:px-5 ${
+        className={`fixed bottom-4 right-4 z-50 flex h-14 items-center gap-2 rounded-full bg-primary px-4 text-primary-foreground shadow-lg transition-all duration-300 sm:bottom-5 sm:right-5 sm:px-5 ${
           footerVisible && !open
             ? "pointer-events-none translate-y-4 opacity-0"
             : "opacity-100 hover:scale-105"
         }`}
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        style={{ marginBottom: "env(safe-area-inset-bottom)" }}
       >
-        <MessageCircle className="h-6 w-6" aria-hidden />
+        <MessageCircle className="h-6 w-6 shrink-0" aria-hidden />
         <span className="hidden text-sm font-semibold sm:inline">On le fait pour toi</span>
       </button>
     </>

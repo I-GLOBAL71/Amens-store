@@ -60,19 +60,19 @@ function CalculateurRam() {
   }, [app, modele]);
 
   return (
-    <Card>
+    <Card className="min-w-0">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <MemoryStick className="h-5 w-5 text-primary" aria-hidden />
-          Quel serveur pour mon projet IA ?
+          <MemoryStick className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          <span>Quel serveur pour mon projet IA ?</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-3 sm:grid-cols-2">
-          <div className="grid gap-2">
+          <div className="grid min-w-0 gap-2">
             <Label>Application à auto-héberger</Label>
             <Select value={app} onValueChange={setApp}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 w-full min-w-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -84,10 +84,10 @@ function CalculateurRam() {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid gap-2">
+          <div className="grid min-w-0 gap-2">
             <Label>Modèle (si LLM local)</Label>
             <Select value={modele} onValueChange={setModele}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 w-full min-w-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -114,15 +114,15 @@ function CalculateurRam() {
             {besoin.docker} Go). {MODELES[modele]?.note}
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-medium">
+            <p className="min-w-0 text-sm font-medium">
               Plan recommandé : <strong>{besoin.plan.nom}</strong> · {besoin.plan.prix}
             </p>
             {reco && (
-              <a href={reco.trackingUrl} rel="sponsored noopener" target="_blank">
-                <Button className="h-11">
-                  Créer mon VPS <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
-                </Button>
-              </a>
+              <Button asChild className="h-11 w-full sm:w-auto">
+                <a href={reco.trackingUrl} rel="sponsored noopener" target="_blank">
+                  Créer mon VPS <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
+                </a>
+              </Button>
             )}
           </div>
           {reco && (
@@ -159,27 +159,27 @@ function VraiCout() {
   }, [promo, renouv, mois]);
 
   return (
-    <Card>
+    <Card className="min-w-0">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <Calculator className="h-5 w-5 text-primary" aria-hidden />
-          Le vrai coût sur 3 ans (renouvellement inclus)
+          <Calculator className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+          <span>Le vrai coût sur 3 ans (renouvellement inclus)</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-3 sm:grid-cols-3">
-          <div className="grid gap-2">
+          <div className="grid min-w-0 gap-2">
             <Label htmlFor="promo">Prix promo (€/mois)</Label>
             <Input id="promo" className="h-11" value={promo} onChange={(e) => setPromo(e.target.value)} inputMode="decimal" />
           </div>
-          <div className="grid gap-2">
+          <div className="grid min-w-0 gap-2">
             <Label htmlFor="renouv">Prix renouvellement (€/mois)</Label>
             <Input id="renouv" className="h-11" value={renouv} onChange={(e) => setRenouv(e.target.value)} inputMode="decimal" />
           </div>
-          <div className="grid gap-2">
+          <div className="grid min-w-0 gap-2">
             <Label htmlFor="mois">Durée (mois)</Label>
             <Select value={mois} onValueChange={setMois}>
-              <SelectTrigger id="mois" className="h-11">
+              <SelectTrigger id="mois" className="h-11 w-full min-w-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -195,7 +195,7 @@ function VraiCout() {
 
         <div className="rounded-lg border border-border bg-secondary/40 p-4">
           <p className="text-sm text-muted-foreground">Coût réel total</p>
-          <p className="mt-1 text-3xl font-bold text-primary">
+          <p className="mt-1 text-3xl font-bold text-primary tabular-nums">
             {total.total.toFixed(2).replace(".", ",")} €
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -214,25 +214,26 @@ function VraiCout() {
 
         {/* Presets Labo */}
         {labo && (
-          <div className="scroll-amens max-h-40 overflow-y-auto">
-            <table className="w-full text-xs">
+          <div className="scroll-amens max-h-48 w-full overflow-auto touch-pan-x rounded-md border border-border/60">
+            <table className="w-full min-w-[380px] text-xs">
               <thead className="sticky top-0 bg-card">
                 <tr className="border-b text-left">
-                  <th className="p-1.5">Hébergeur (relevé 15/11/2026)</th>
-                  <th className="p-1.5">Promo</th>
-                  <th className="p-1.5">Renouv.</th>
-                  <th className="p-1.5" />
+                  <th className="p-2">Hébergeur (relevé 15/11/2026)</th>
+                  <th className="p-2 whitespace-nowrap">Promo</th>
+                  <th className="p-2 whitespace-nowrap">Renouv.</th>
+                  <th className="p-2" />
                 </tr>
               </thead>
               <tbody>
                 {labo.prix.map((p, i) => (
                   <tr key={i} className="border-b border-border/50">
-                    <td className="p-1.5">{p.host} — {p.plan}</td>
-                    <td className="p-1.5">{p.prixPromo.toFixed(2)} €</td>
-                    <td className="p-1.5">{p.prixRenouvellement.toFixed(2)} €</td>
-                    <td className="p-1.5">
+                    <td className="p-2">{p.host} — {p.plan}</td>
+                    <td className="p-2 whitespace-nowrap tabular-nums">{p.prixPromo.toFixed(2)} €</td>
+                    <td className="p-2 whitespace-nowrap tabular-nums">{p.prixRenouvellement.toFixed(2)} €</td>
+                    <td className="p-2 text-right">
                       <button
-                        className="rounded-md bg-secondary px-2 py-1 font-medium text-primary hover:underline"
+                        type="button"
+                        className="inline-flex min-h-[36px] items-center rounded-md bg-secondary px-2.5 py-1 font-medium text-primary hover:underline"
                         onClick={() => {
                           setPromo(String(p.prixPromo));
                           setRenouv(String(p.prixRenouvellement));
@@ -257,12 +258,13 @@ export function OutilsView() {
   const { navigate } = useNav();
   usePageTitle("Outils et calculateurs gratuits | amens.store");
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
-      <div className="mb-6">
-        <Badge variant="outline" className="mb-2 border-primary/40 text-primary">
-          <Cpu className="mr-1 h-3.5 w-3.5" aria-hidden /> Outils gratuits · résultats instantanés
+    <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="mb-6 min-w-0">
+        <Badge variant="outline" className="mb-2 border-primary/40 py-1 text-primary">
+          <Cpu className="mr-1 h-3.5 w-3.5 shrink-0" aria-hidden />
+          <span>Outils gratuits · résultats instantanés</span>
         </Badge>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+        <h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl">
           Les outils qui calculent ce que les comparateurs cachent
         </h1>
         <p className="mt-2 max-w-3xl text-muted-foreground">
@@ -277,15 +279,15 @@ export function OutilsView() {
 
       <Card className="mt-6">
         <CardContent className="flex flex-wrap items-center justify-between gap-3 p-5">
-          <div className="flex items-center gap-3">
-            <Timer className="h-5 w-5 text-primary" aria-hidden />
+          <div className="flex min-w-0 items-center gap-3">
+            <Timer className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             <p className="text-sm font-medium">
               D&apos;autres outils arrivent : « Qui héberge ce site ? », vérificateur DNS/SSL,
               « Mon site est-il en panne ? ».
             </p>
           </div>
-          <Button variant="outline" className="h-11" onClick={() => navigate({ view: "blog" })}>
-            Lire les guides associés <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+          <Button variant="outline" className="h-11 w-full sm:w-auto" onClick={() => navigate({ view: "blog" })}>
+            Lire les guides associés <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
           </Button>
         </CardContent>
       </Card>

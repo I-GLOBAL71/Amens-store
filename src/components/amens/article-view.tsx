@@ -163,7 +163,7 @@ export function ArticleView() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6">
+    <div className="mx-auto w-full min-w-0 max-w-4xl px-4 py-8 sm:px-6">
       {/* JSON-LD rendu côté serveur — lisible sans JavaScript */}
       {jsonLd && (
         <script
@@ -173,38 +173,38 @@ export function ArticleView() {
       )}
 
       {/* Fil d'Ariane */}
-      <nav aria-label="Fil d'Ariane" className="mb-4 text-xs text-muted-foreground">
-        <NavLink target={{ view: "home" }} className="hover:text-primary">
+      <nav aria-label="Fil d'Ariane" className="mb-4 flex flex-wrap items-center gap-x-1 gap-y-1 text-xs text-muted-foreground">
+        <NavLink target={{ view: "home" }} className="inline-flex min-h-[36px] sm:min-h-0 items-center py-1 hover:text-primary">
           Accueil
         </NavLink>
-        <span className="mx-1">/</span>
-        <NavLink target={{ view: "blog" }} className="hover:text-primary">
+        <span>/</span>
+        <NavLink target={{ view: "blog" }} className="inline-flex min-h-[36px] sm:min-h-0 items-center py-1 hover:text-primary">
           Blog
         </NavLink>
-        <span className="mx-1">/</span>
-        <NavLink target={{ view: "blog", silo: article.silo }} className="hover:text-primary">
+        <span>/</span>
+        <NavLink target={{ view: "blog", silo: article.silo }} className="inline-flex min-h-[36px] sm:min-h-0 items-center py-1 hover:text-primary">
           /{article.silo}/
         </NavLink>
-        <span className="mx-1">/</span>
-        <span aria-current="page" className="font-medium text-foreground">
+        <span>/</span>
+        <span aria-current="page" className="min-w-0 font-medium text-foreground break-words">
           {article.title.slice(0, 40)}…
         </span>
       </nav>
 
       {/* En-tête */}
-      <div className="mb-6">
+      <div className="mb-6 min-w-0">
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <Badge className="border-primary/40 text-[11px]" variant="outline">
             {angle ? angle.nom.split("(")[0] : `/${article.silo}/`}
           </Badge>
           <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="h-3.5 w-3.5" aria-hidden />
+            <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden />
             {article.difficulty}
             {article.timeEstimate ? ` · ${article.timeEstimate}` : ""}
             {article.costEstimate ? ` · ${article.costEstimate}` : ""}
           </span>
           <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-            <Pencil className="h-3.5 w-3.5" aria-hidden />
+            <Pencil className="h-3.5 w-3.5 shrink-0" aria-hidden />
             mis à jour{" "}
             {new Date(article.updatedAt).toLocaleDateString("fr-FR", {
               day: "numeric",
@@ -213,13 +213,13 @@ export function ArticleView() {
             })}
           </span>
         </div>
-        <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
+        <h1 className="break-words text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
           {article.title}
         </h1>
         <p className="mt-3 text-muted-foreground">{article.metaDescription}</p>
         {article.verificationPassed && (
-          <p className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-primary/15 px-2.5 py-1 text-[11px] font-semibold text-primary">
-            <BadgeCheck className="h-3.5 w-3.5" aria-hidden /> Guide relu et vérifié —
+          <p className="mt-3 inline-flex max-w-full flex-wrap items-center gap-1.5 rounded-md bg-primary/15 px-2.5 py-1 text-[11px] font-semibold text-primary">
+            <BadgeCheck className="h-3.5 w-3.5 shrink-0" aria-hidden /> Guide relu et vérifié —
             dernière révision en date affichée ci-dessus
           </p>
         )}
@@ -247,17 +247,17 @@ export function ArticleView() {
 
       {/* TOC */}
       {toc.length > 0 && (
-        <Card className="mb-8">
+        <Card className="mb-8 min-w-0">
           <CardContent className="p-4">
             <p className="mb-2 flex items-center gap-2 text-sm font-semibold">
-              <ListTree className="h-4 w-4 text-primary" aria-hidden /> Au programme
+              <ListTree className="h-4 w-4 shrink-0 text-primary" aria-hidden /> Au programme
             </p>
-            <ol className="scroll-amens max-h-56 space-y-1 overflow-y-auto text-sm">
+            <ol className="scroll-amens max-h-56 space-y-0.5 overflow-y-auto text-sm">
               {toc.map((t, i) => (
                 <li key={t.id + i}>
                   <a
                     href={`#${t.id}`}
-                    className="text-muted-foreground hover:text-primary hover:underline"
+                    className="inline-flex min-h-[36px] sm:min-h-0 items-center py-1 leading-snug text-muted-foreground hover:text-primary hover:underline"
                     onClick={(e) => {
                       e.preventDefault();
                       document
@@ -284,11 +284,11 @@ export function ArticleView() {
       <Separator className="my-8" />
 
       {/* CTA affilié (résolu DB §7.3 : primaire + alternatives + UTM) */}
-      <Card className="border-2 border-primary/30 bg-secondary/40">
+      <Card className="min-w-0 border-2 border-primary/30 bg-secondary/40">
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Wallet className="h-5 w-5 text-primary" aria-hidden />
-            {angle?.cta ?? "Passer à l'action"}
+          <CardTitle className="flex items-center gap-2 text-lg leading-snug">
+            <Wallet className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+            <span>{angle?.cta ?? "Passer à l'action"}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -305,11 +305,11 @@ export function ArticleView() {
                 )}
                 .
               </p>
-              <a href={data.primaryProgram.trackingUrl} rel="sponsored noopener" target="_blank">
-                <Button size="lg" className="mt-3 h-12 w-full text-base sm:w-auto">
-                  {angle?.cta ?? "Voir l'offre"} <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
-                </Button>
-              </a>
+              <Button asChild size="lg" className="mt-3 h-auto min-h-12 w-full whitespace-normal py-3 text-base sm:w-auto">
+                <a href={data.primaryProgram.trackingUrl} rel="sponsored noopener" target="_blank">
+                  {angle?.cta ?? "Voir l'offre"} <ArrowRight className="ml-1 h-4 w-4 shrink-0" aria-hidden />
+                </a>
+              </Button>
               <p className="mt-2 text-[11px] text-muted-foreground">
                 {DISCLOSURE}
               </p>
@@ -333,9 +333,9 @@ export function ArticleView() {
             <NavLink
               key={a.id}
               target={{ view: "article", slug: a.slug }}
-              className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="group block h-full min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <Card className="h-full cursor-pointer transition-shadow hover:shadow-md">
+              <Card className="h-full min-w-0 cursor-pointer transition-shadow hover:shadow-md">
                 <CardContent className="p-4">
                   <Badge variant="outline" className="mb-1 text-[10px]">
                     /{a.silo}/
@@ -351,12 +351,13 @@ export function ArticleView() {
 
       {/* Aide contextuelle */}
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-card p-4 text-xs text-muted-foreground">
-        <p className="inline-flex items-center gap-2">
-          <Info className="h-4 w-4 text-primary" aria-hidden />
-          Données Labo citées dans ce guide : méthode publique (ping 60 s, 3 régions, veille mensuelle des prix).
+        <p className="inline-flex min-w-0 items-start gap-2 sm:items-center">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:mt-0" aria-hidden />
+          <span>Données Labo citées dans ce guide : méthode publique (ping 60 s, 3 régions, veille mensuelle des prix).</span>
         </p>
         <button
-          className="inline-flex items-center gap-1 hover:text-primary"
+          type="button"
+          className="inline-flex min-h-[44px] sm:min-h-0 shrink-0 items-center gap-1 px-2 hover:text-primary"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <ArrowUp className="h-4 w-4" aria-hidden /> Haut de page

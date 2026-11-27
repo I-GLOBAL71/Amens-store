@@ -41,23 +41,23 @@ export function BlogView() {
   }, [data, q]);
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
+    <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
       {/* En-tête blog */}
       <div className="mb-6">
-        <nav aria-label="Fil d'Ariane" className="mb-2 text-xs text-muted-foreground">
-          <NavLink target={{ view: "home" }} className="hover:text-primary">
+        <nav aria-label="Fil d'Ariane" className="mb-2 flex flex-wrap items-center gap-x-1 gap-y-1 text-xs text-muted-foreground">
+          <NavLink target={{ view: "home" }} className="inline-flex min-h-[36px] sm:min-h-0 items-center py-1 hover:text-primary">
             Accueil
           </NavLink>
-          <span className="mx-1">/</span>
+          <span>/</span>
           <span aria-current="page">Blog</span>
           {angleSelectionne && (
             <>
-              <span className="mx-1">/</span>
-              <span aria-current="page">/{angleSelectionne.silo}/</span>
+              <span>/</span>
+              <span aria-current="page" className="break-all">/{angleSelectionne.silo}/</span>
             </>
           )}
         </nav>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+        <h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl">
           {angleSelectionne ? angleSelectionne.nom : "Le blog — guides d'exécution testés"}
         </h1>
         <p className="mt-2 max-w-3xl text-muted-foreground">
@@ -68,10 +68,14 @@ export function BlogView() {
       </div>
 
       {/* Filtres silos */}
-      <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Filtrer par sujet">
+      <div
+        className="scroll-amens -mx-4 mb-4 flex flex-nowrap gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
+        role="group"
+        aria-label="Filtrer par sujet"
+      >
         <NavLink
           target={{ view: "blog", silo: null }}
-          className={`inline-flex items-center min-h-[40px] rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
+          className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
             !silo ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:border-primary/50"
           }`}
         >
@@ -82,7 +86,7 @@ export function BlogView() {
             key={a.id}
             target={{ view: "blog", silo: a.silo }}
             ariaPressed={silo === a.silo}
-            className={`inline-flex items-center min-h-[40px] rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
+            className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
               silo === a.silo
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border text-muted-foreground hover:border-primary/50"
@@ -95,12 +99,12 @@ export function BlogView() {
 
       {/* Recherche + requêtes ciblées */}
       <div className="mb-6 grid gap-3 sm:grid-cols-[1fr_auto]">
-        <div className="relative">
+        <div className="relative min-w-0">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
           <Input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Rechercher un guide (n8n, Orange Money, email pro…)"
+            placeholder="Rechercher (n8n, Orange Money, email…)"
             aria-label="Rechercher dans le blog"
             className="h-11 pl-9"
           />
@@ -116,14 +120,14 @@ export function BlogView() {
         </div>
       ) : articles.length === 0 ? (
         <Card>
-          <CardContent className="flex flex-col items-center gap-3 p-10 text-center">
+          <CardContent className="flex flex-col items-center gap-3 p-6 text-center sm:p-10">
             <BookOpen className="h-8 w-8 text-muted-foreground" aria-hidden />
             <p className="font-medium">Aucun guide publié dans ce sujet pour l&apos;instant</p>
             <p className="max-w-md text-sm text-muted-foreground">
               Les guides arrivent au rythme de 3 à 5 par semaine. En attendant, parcoure
               les autres sujets ou pose ta question via le bouton WhatsApp en bas à droite.
             </p>
-            <Button onClick={() => navigate({ view: "blog", silo: null })} variant="outline">
+            <Button onClick={() => navigate({ view: "blog", silo: null })} variant="outline" className="h-11 w-full sm:w-auto">
               Parcourir tous les guides
             </Button>
           </CardContent>
@@ -136,9 +140,9 @@ export function BlogView() {
               <NavLink
                 key={a.id}
                 target={{ view: "article", slug: a.slug }}
-                className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group block h-full min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <Card className="flex h-full cursor-pointer flex-col overflow-hidden transition-shadow hover:shadow-md">
+                <Card className="flex h-full min-w-0 cursor-pointer flex-col overflow-hidden transition-shadow hover:shadow-md">
                   <div className="w-full overflow-hidden border-b border-border bg-slate-950">
                     <img
                       src={getArticleCoverPath(a.slug)}
@@ -158,7 +162,7 @@ export function BlogView() {
                       className="aspect-[1200/630] h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                   </div>
-                  <CardHeader className="flex-row items-start justify-between gap-2 space-y-0 pb-2">
+                  <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2 space-y-0 pb-2">
                     <Badge variant="outline" className="border-primary/40 text-[11px] text-primary">
                       /{a.silo}/
                     </Badge>
@@ -166,7 +170,7 @@ export function BlogView() {
                       {a.publishedAt ? new Date(a.publishedAt).toLocaleDateString("fr-FR") : "brouillon"}
                     </span>
                   </CardHeader>
-                  <CardContent className="flex flex-1 flex-col">
+                  <CardContent className="flex flex-1 flex-col min-w-0">
                     <CardTitle className="text-base leading-snug group-hover:text-primary">
                       {a.title}
                     </CardTitle>
@@ -174,16 +178,16 @@ export function BlogView() {
                     <div className="mt-3 flex flex-wrap items-center gap-1.5">
                       {a.verificationPassed && (
                         <span className="inline-flex items-center gap-1 rounded-md bg-primary/15 px-2 py-0.5 text-[11px] font-semibold text-primary">
-                          <Sparkles className="h-3 w-3" aria-hidden /> relu et vérifié
+                          <Sparkles className="h-3 w-3 shrink-0" aria-hidden /> relu et vérifié
                         </span>
                       )}
                     </div>
-                    <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                      <span>
+                    <div className="mt-auto flex items-center justify-between gap-2 pt-3 text-xs text-muted-foreground">
+                      <span className="min-w-0">
                         {angle?.nom.split("(")[0]} · {a.difficulty}
                         {a.timeEstimate ? ` · ${a.timeEstimate}` : ""}
                       </span>
-                      <ArrowRight className="h-4 w-4 text-primary" aria-hidden />
+                      <ArrowRight className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                     </div>
                   </CardContent>
                 </Card>

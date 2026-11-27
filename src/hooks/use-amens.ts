@@ -59,17 +59,20 @@ export function useSkills() {
   });
 }
 
-export function usePrograms(params: { angle?: number; context?: string; geo?: string } = {}) {
+export function usePrograms(
+  params: { angle?: number; context?: string; geo?: string; enabled?: boolean } = {}
+) {
   const qs = new URLSearchParams();
   if (params.angle) qs.set("angle", String(params.angle));
   if (params.context) qs.set("context", params.context);
   if (params.geo) qs.set("geo", params.geo);
   return useQuery({
-    queryKey: ["programs", params],
+    queryKey: ["programs", { angle: params.angle, context: params.context, geo: params.geo }],
     queryFn: () =>
       j<{ programs: (ProgramDTO & { trackingUrl: string })[] }>(
         `/api/programs${qs.toString() ? "?" + qs.toString() : ""}`
       ),
+    enabled: params.enabled ?? true,
   });
 }
 

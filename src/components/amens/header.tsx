@@ -1,8 +1,8 @@
 "use client";
 
 // En-tête — navigation entre les sections (accès direct aux sujets via Blog)
-import { useState } from "react";
-import { Menu, Moon, Sun, Ship } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, Moon, Sun, Ship, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useNav } from "@/lib/store";
@@ -22,6 +22,15 @@ export function Header() {
   const { resolvedTheme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -29,12 +38,13 @@ export function Header() {
           <NavLink
             target={{ view: "home" }}
             ariaLabel="amens.store — accueil"
-            className="flex items-center gap-2 font-bold tracking-tight text-foreground"
+            onNavigate={() => setOpen(false)}
+            className="flex min-w-0 items-center gap-2 font-bold tracking-tight text-foreground"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Ship className="h-5 w-5" aria-hidden />
             </span>
-            <span className="text-lg">
+            <span className="truncate text-lg">
               amens<span className="text-primary">.store</span>
             </span>
           </NavLink>
@@ -56,10 +66,11 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <Button
               variant="ghost"
               size="icon"
+              className="h-11 w-11 md:h-9 md:w-9"
               aria-label="Basculer entre mode clair et mode sombre"
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             >
@@ -67,28 +78,30 @@ export function Header() {
               <Moon className="hidden h-5 w-5 dark:block" aria-hidden />
             </Button>
             <button
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border"
-              aria-label="Ouvrir le menu"
+              type="button"
+              className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-background text-foreground transition-colors hover:bg-secondary"
+              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={open}
               onClick={() => setOpen((o) => !o)}
             >
-              <Menu className="h-5 w-5" />
+              {open ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
             </button>
           </div>
         </div>
 
         {open && (
-          <nav aria-label="Navigation mobile" className="md:hidden pb-3">
+          <nav aria-label="Navigation mobile" className="md:hidden border-t border-border/60 py-3">
             <div className="flex flex-col gap-1">
               {LINKS.map((l) => (
                 <NavLink
                   key={l.view}
                   target={{ view: l.view }}
+                  ariaCurrent={view === l.view ? "page" : undefined}
                   onNavigate={() => setOpen(false)}
-                  className={`rounded-lg px-3 py-3 text-left text-base font-medium ${
+                  className={`flex min-h-[48px] items-center rounded-lg px-3.5 py-3 text-left text-base font-medium transition-colors ${
                     view === l.view
                       ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-secondary"
+                      : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
                   }`}
                 >
                   {l.label}
