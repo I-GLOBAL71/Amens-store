@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
-    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
+    "postinstall": "node scripts/prisma-generate.mjs",
+    "vercel-build": "node scripts/prisma-generate.mjs --postgres && next build",
+    "build": "node scripts/prisma-generate.mjs && next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint .",
     "verify:regression": "bun scripts/regression-check.ts",

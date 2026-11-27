@@ -10,41 +10,49 @@ import { angleById } from "@/lib/pipeline/types";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const silo = searchParams.get("silo");
-  const angle = searchParams.get("angle");
-  const q = searchParams.get("q")?.toLowerCase();
-  const status = searchParams.get("status") ?? "published";
-  const limit = Math.min(Number(searchParams.get("limit") ?? 100), 200);
+  try {
+    const { searchParams } = new URL(req.url);
+    const silo = searchParams.get("silo");
+    const angle = searchParams.get("angle");
+    const q = searchParams.get("q")?.toLowerCase();
+    const status = searchParams.get("status") ?? "published";
+    const limit = Math.min(Number(searchParams.get("limit") ?? 100), 200);
 
-  const articles = await db.article.findMany({
-    where: {
-      ...(silo ? { silo } : {}),
-      ...(angle ? { angle: Number(angle) } : {}),
-      ...(status === "all" ? {} : { status }),
-      ...(q
-        ? {
-            OR: [
-              { title: { contains: searchParams.get("q") ?? "" } },
-              { content: { contains: searchParams.get("q") ?? "" } },
-            ],
-          }
-        : {}),
-    },
-    orderBy: [{ publishedAt: "desc" }, { updatedAt: "desc" }],
-    take: limit,
-  });
+    const articles = await db.article.findMany({
+      where: {
+        ...(silo ? { silo } : {}),
+        ...(angle ? { angle: Number(angle) } : {}),
+        ...(status === "all" ? {} : { status }),
+        ...(q
+          ? {
+              OR: [
+                { title: { contains: searchParams.get("q") ?? "" } },
+                { content: { contains: searchParams.get("q") ?? "" } },
+              ],
+            }
+          : {}),
+      },
+      orderBy: [{ publishedAt: "desc" }, { updatedAt: "desc" }],
+      take: limit,
+    });
 
-  const siloCounts = await db.article.groupBy({
-    by: ["silo"],
-    where: { status: "published" },
-    _count: { id: true },
-  });
+    const siloCounts = await db.article.groupBy({
+      by: ["silo"],
+      where: { status: "published" },
+      _count: { id: true },
+    });
 
-  return NextResponse.json({
-    articles: articles.map(serializeArticle),
-    siloCounts: siloCounts.map((s) => ({ silo: s.silo, count: s._count.id })),
-  });
+    return NextResponse.json({
+      articles: articles.map(serializeArticle),
+      siloCounts: siloCounts.map((s) => ({ silo: s.silo, count: s._count.id })),
+    });
+  } catch (e) {
+    console.error("[GET /api/articles]", e);
+    return NextResponse.json(
+      { error: `Articles indisponibles : ${e instanceof Error ? e.message : "erreur inconnue"}` },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(req: Request) {
