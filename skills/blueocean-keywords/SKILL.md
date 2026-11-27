@@ -2,10 +2,11 @@
 name: blueocean-keywords
 description: >-
   Recherche de mots-clés Blue Ocean et SGA™ unifiée (amens.store + b2bpro).
-  Collecte l'autocomplete Google/Bing multi-pays (fr, ci, cm, sn), applique le
-  scoring proxy KD sans outil payant, le filtre 2/3 (CIBLER / SURVEILLER / IGNORER),
-  l'ancrage tête commerciale 3-5 mots, la cartographie Query Fan-Out et
-  l'anti-cannibalisation. Déclencher avant toute rédaction ou étude de niche.
+  Collecte l'autocomplete Google/Bing multi-pays francophones mondiaux
+  (fr, be, ch, ca, ma, tn, dz, ci, sn, cm), applique le scoring proxy KD sans
+  outil payant, le filtre 2/3 (CIBLER / SURVEILLER / IGNORER), l'ancrage tête
+  commerciale 3-5 mots, la cartographie Query Fan-Out et l'anti-cannibalisation.
+  Déclencher avant toute rédaction ou étude de niche.
 ---
 
 # Blue Ocean Keywords + Méthode SGA™
@@ -22,9 +23,9 @@ prévention stricte de la cannibalisation.
 
 ## Pipeline d'exécution
 
-1. **Collecte multi-pays (`scripts/suggest.py`)** :
+1. **Collecte multi-pays francophones (`scripts/suggest.py`)** :
    ```bash
-   python skills/blueocean-keywords/scripts/suggest.py --graine "installer n8n" --hl fr --pays fr,ci,cm,sn --profondeur 1 --sortie .pipeline-tmp/kw.json
+   python skills/blueocean-keywords/scripts/suggest.py --graine "installer n8n" --hl fr --pays fr,be,ch,ca,ma,tn,dz,ci,sn,cm --profondeur 1 --sortie .pipeline-tmp/kw.json
    ```
 2. **Scoring Blue Ocean (`scripts/prioriser.py`)** :
    ```bash

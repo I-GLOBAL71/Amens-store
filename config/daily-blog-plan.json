@@ -36,5 +36,43 @@
         "status": "planned"
       }
     ]
+  },
+  "2026-11-27": {
+    "date": "2026-11-27",
+    "slots": [
+      {
+        "slot": 1,
+        "creneau": "08:30 (Matin)",
+        "angle": 8,
+        "silo": "pannes",
+        "requete": "panne ovh en ce moment",
+        "title": "Panne ovh en ce moment : guide complet et testé (2026)",
+        "slug": "pannes/panne-ovh-en-ce-moment",
+        "draftPath": "content\\drafts\\2026-11-27\\pannes-panne-ovh-en-ce-moment.md",
+        "status": "published"
+      },
+      {
+        "slot": 2,
+        "creneau": "13:00 (Midi)",
+        "angle": 1,
+        "silo": "ia-automatisation",
+        "requete": "installer coolify vps auto-héberger ollama",
+        "title": "Installer coolify vps auto-héberger ollama : guide complet et testé (2026)",
+        "slug": "ia-automatisation/installer-coolify-vps-auto-heberger-ollama",
+        "draftPath": "content\\drafts\\2026-11-27\\ia-automatisation-installer-coolify-vps-auto-heberger-ollama.md",
+        "status": "published"
+      },
+      {
+        "slot": 3,
+        "creneau": "18:30 (Soir)",
+        "angle": 4,
+        "silo": "outils",
+        "requete": "comparatif vps moins cher 2026",
+        "title": "Comparatif VPS moins cher 2026 : vrai coût sur 3 ans et latence Labo",
+        "slug": "outils/comparatif-vps-moins-cher-2026",
+        "draftPath": "content\\drafts\\2026-11-27\\outils-comparatif-vps-moins-cher-2026.md",
+        "status": "published"
+      }
+    ]
   }
 }

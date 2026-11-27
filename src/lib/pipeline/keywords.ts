@@ -36,17 +36,17 @@ const MODIFIERS_PAR_ANGLE: Record<number, string[]> = {
   ],
   3: [
     "hébergeur qui accepte orange money",
-    "hébergeur mobile money",
+    "hébergeur mobile money afrique",
     "acheter nom de domaine sans carte bancaire",
-    "prix site web cameroun fcfa",
-    "nom de domaine .cm prix",
-    "nom de domaine .ci démarches",
-    "hébergeur côte d'ivoire mobile money",
-    "payer hostinger sans carte",
-    "créer carte virtuelle cameroun",
+    "hébergeur maroc paiement dirham",
     "hébergeur sénégal wave",
-    "site web abidjan prix",
-    "domaine .sn prix",
+    "hébergeur côte d'ivoire mobile money",
+    "hébergeur algérie baridimob cib",
+    "hébergeur web québec pas cher",
+    "hébergeur suisse belgique rgpd",
+    "payer hostinger sans carte bancaire",
+    "nom de domaine .cm .ci .sn .ma prix",
+    "prix site web fcfa afrique",
   ],
   4: [
     "qui héberge ce site",
@@ -102,16 +102,16 @@ const MODIFIERS_PAR_ANGLE: Record<number, string[]> = {
     "aws panne aujourd'hui",
   ],
   9: [
-    "site web école cameroun",
-    "site web église",
-    "site ong association",
+    "site web école prix",
+    "site web église association",
+    "site ong association prix",
     "site web restaurant prix",
     "site portfolio photographe",
-    "site web avocat prix",
-    "créer site freelance",
-    "site web médecin",
-    "prix site web abidjan",
-    "site boutique en ligne fcfa",
+    "site web avocat tarif",
+    "créer site freelance tarif",
+    "site web médecin cabinet",
+    "prix site vitrine afrique fcfa",
+    "site boutique en ligne paiement mobile money",
   ],
   10: [
     "hébergement pour agence web",
@@ -232,10 +232,10 @@ export async function rechercherMotsCles(
   const res = await runPy(SCRIPTS.blueoceanSuggest, [
     "--graine", graine,
     "--hl", "fr",
-    "--pays", "fr,ci,cm,sn",
+    "--pays", "fr,be,ch,ca,ma,tn,dz,ci,sn,cm",
     "--profondeur", "1",
     "--sortie", path,
-  ], 20000);
+  ], 30000);
   if (res.code === 0) {
     const { readTmp } = await import("./py");
     const raw = await readTmp(outFile);

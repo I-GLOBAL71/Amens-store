@@ -464,16 +464,21 @@ function NouvelArticle() {
 function MotsCles() {
   const { toast } = useToast();
   const [graine, setGraine] = useState("");
-  const [angle, setAngle] = useState("3");
+  const [angle, setAngle] = useState("0");
   const recherche = useKeywordResearch();
+  const targetAngle = Number(angle) > 0 ? Number(angle) : 1;
   const { data: stock } = useKeywords(Number(angle));
 
   const lancer = () => {
     if (!graine.trim()) {
-      toast({ title: "Graine requise", description: "ex. « hébergeur cameroun »", variant: "destructive" });
+      toast({
+        title: "Graine requise",
+        description: "ex. « installer n8n », « alternative vercel », « hébergeur orange money »",
+        variant: "destructive",
+      });
       return;
     }
-    recherche.mutate({ graine: graine.trim(), angle: Number(angle) });
+    recherche.mutate({ graine: graine.trim(), angle: targetAngle });
   };
 
   const res = recherche.data?.result;
@@ -484,14 +489,14 @@ function MotsCles() {
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <Search className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-            <span>Skill blueocean-keywords — autocomplete Google réel (sans clé API)</span>
+            <span>Skill blueocean-keywords — autocomplete Google francophonie mondiale (FR, BE, CH, CA, MA, TN, DZ, CI, SN, CM)</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-[2fr_1fr_auto]">
             <Input
               className="h-11 min-w-0"
-              placeholder="graine (ex. hébergeur cameroun, installer n8n…)"
+              placeholder="graine (ex. installer n8n, alternative vercel, hébergeur orange money…)"
               aria-label="Graine de recherche"
               value={graine}
               onChange={(e) => setGraine(e.target.value)}
@@ -501,6 +506,7 @@ function MotsCles() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="0">Tous les angles (francophonie mondiale)</SelectItem>
                 {ANGLES.map((a) => (
                   <SelectItem key={a.id} value={String(a.id)}>
                     {a.id}. {a.nom.split("(")[0]}
@@ -580,23 +586,40 @@ function MotsCles() {
         <Card className="min-w-0 overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base">
-              Requêtes déjà capitalisées pour l&apos;angle {angle} ({stock.rows.length})
+              {Number(angle) === 0
+                ? `Requêtes capitalisées — francophonie mondiale (${stock.rows.length})`
+                : `Requêtes déjà capitalisées pour l'angle ${angle} (${stock.rows.length})`}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="scroll-amens max-h-96 w-full overflow-auto touch-pan-x">
-              <table className="w-full min-w-[360px] text-xs">
+              <table className="w-full min-w-[460px] text-xs">
+                <thead className="sticky top-0 bg-card">
+                  <tr className="border-b text-left text-muted-foreground">
+                    <th className="p-2">Requête</th>
+                    {Number(angle) === 0 && <th className="p-2 whitespace-nowrap">Angle</th>}
+                    <th className="p-2 whitespace-nowrap">Volume*</th>
+                    <th className="p-2 whitespace-nowrap">KD</th>
+                    <th className="p-2 whitespace-nowrap">Verdict</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {stock.rows.map((r, i) => (
-                    <tr key={r.requete + i} className="border-b border-border/60">
+                    <tr key={r.requete + r.angle + i} className="border-b border-border/60">
                       <td className="p-2 font-medium">{r.requete}</td>
+                      {Number(angle) === 0 && (
+                        <td className="p-2 whitespace-nowrap text-muted-foreground">#{r.angle}</td>
+                      )}
+                      <td className="p-2 whitespace-nowrap text-muted-foreground">{r.classeVolume}</td>
                       <td className="p-2 whitespace-nowrap text-muted-foreground">KD {r.difficulte}</td>
                       <td className="p-2 whitespace-nowrap">
                         <span
                           className={`rounded px-1.5 py-0.5 font-bold ${
                             r.verdict === "CIBLER"
                               ? "bg-primary/15 text-primary"
-                              : "bg-muted text-muted-foreground"
+                              : r.verdict === "SURVEILLER"
+                                ? "bg-accent/50 text-accent-foreground"
+                                : "bg-muted text-muted-foreground"
                           }`}
                         >
                           {r.verdict}

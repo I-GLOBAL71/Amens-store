@@ -68,5 +68,26 @@
     "localPath": "/img/blog/agences-marge.webp",
     "blobUrl": "https://sgfe68tdnhkfunsg.private.blob.vercel-storage.com/blog/agences-marge.webp",
     "bytes": 21116
+  },
+  "ia-automatisation/installer-coolify-vps-auto-heberger-ollama": {
+    "slug": "ia-automatisation/installer-coolify-vps-auto-heberger-ollama",
+    "fileSlug": "ia-automatisation-installer-coolify-vps-auto-heberger-ollama",
+    "localPath": "/img/blog/ia-automatisation-installer-coolify-vps-auto-heberger-ollama.webp",
+    "blobUrl": "https://sgfe68tdnhkfunsg.private.blob.vercel-storage.com/blog/ia-automatisation-installer-coolify-vps-auto-heberger-ollama.webp",
+    "bytes": 25272
+  },
+  "outils/comparatif-vps-moins-cher-2026": {
+    "slug": "outils/comparatif-vps-moins-cher-2026",
+    "fileSlug": "outils-comparatif-vps-moins-cher-2026",
+    "localPath": "/img/blog/outils-comparatif-vps-moins-cher-2026.webp",
+    "blobUrl": "https://sgfe68tdnhkfunsg.private.blob.vercel-storage.com/blog/outils-comparatif-vps-moins-cher-2026.webp",
+    "bytes": 20974
+  },
+  "pannes/panne-ovh-en-ce-moment": {
+    "slug": "pannes/panne-ovh-en-ce-moment",
+    "fileSlug": "pannes-panne-ovh-en-ce-moment",
+    "localPath": "/img/blog/pannes-panne-ovh-en-ce-moment.webp",
+    "blobUrl": "https://sgfe68tdnhkfunsg.private.blob.vercel-storage.com/blog/pannes-panne-ovh-en-ce-moment.webp",
+    "bytes": 22922
   }
 }

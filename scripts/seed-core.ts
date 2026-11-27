@@ -18,7 +18,7 @@ const SKILLS = [
     role: "keyword_research",
     mission: "Requêtes à fort trafic / faible concurrence sans outil payant, via l'endpoint public d'autocomplete Google et le scoring proxy KD.",
     description:
-      "Collecte l'autocomplete Google/Bing (fr, ci, cm, sn), enrichit par modifiers FR, score la difficulté (SERP forums/Reddit, longue traîne, marque+exit, géoloc Afrique, matrice app×hébergeur) et priorise avec le filtre ≥ 2 conditions sur 3. Verdict CIBLER / SURVEILLER / IGNORER. Jamais de volume inventé : des classes uniquement.",
+      "Collecte l'autocomplete Google/Bing sur toute la francophonie mondiale (fr, be, ch, ca, ma, tn, dz, ci, sn, cm), enrichit par modifiers FR, score la difficulté (SERP forums/Reddit, longue traîne, marque+exit, géoloc francophone, matrice app×hébergeur) et priorise avec le filtre ≥ 2 conditions sur 3. Verdict CIBLER / SURVEILLER / IGNORER. Jamais de volume inventé : des classes uniquement.",
     ordre: 1,
     gate: true,
     skillPath: "skills/blueocean-keywords/SKILL.md",
@@ -263,28 +263,69 @@ async function main() {
     }
   }
 
-  console.log("→ Recherche de mots-clés Blue Ocean RÉELLE (scripts du skill)…");
+  console.log("→ Recherche de mots-clés Blue Ocean RÉELLE — francophonie mondiale…");
   const grainesParAngle: { angle: number; graine: string; programme: string }[] = [
+    // Angle 1 — Auto-hébergement IA & automatisation (forte demande mondiale FR)
     { angle: 1, graine: "installer n8n", programme: "Hostinger VPS (40%)" },
+    { angle: 1, graine: "héberger ollama", programme: "Hostinger VPS (40%)" },
+    { angle: 1, graine: "coolify vps", programme: "Hostinger VPS (40%)" },
+    // Angle 2 — Vibe coding (déployer app IA, quitter Vercel)
     { angle: 2, graine: "déployer lovable", programme: "Hostinger VPS (40%)" },
-    { angle: 3, graine: "hébergeur cameroun", programme: "Nindohost (40%)" },
+    { angle: 2, graine: "alternative vercel", programme: "Hostinger VPS (40%)" },
+    { angle: 2, graine: "déployer bolt", programme: "Hostinger VPS (40%)" },
+    // Angle 3 — Francophonie mondiale sans carte bancaire & paiements locaux
+    { angle: 3, graine: "hébergeur orange money", programme: "Nindohost (40%)" },
+    { angle: 3, graine: "hébergeur mobile money", programme: "Nindohost (40%)" },
+    { angle: 3, graine: "hébergeur web maroc", programme: "Nindohost (40%)" },
+    { angle: 3, graine: "hébergeur web sénégal", programme: "Nindohost (40%)" },
+    { angle: 3, graine: "hébergeur web côte d'ivoire", programme: "Nindohost (40%)" },
+    { angle: 3, graine: "hébergeur web algérie", programme: "Nindohost (40%)" },
+    { angle: 3, graine: "hébergeur web québec", programme: "Hostinger VPS (40%)" },
+    { angle: 3, graine: "hébergeur web suisse", programme: "Infomaniak" },
+    { angle: 3, graine: "hébergeur web belgique", programme: "Infomaniak" },
+    { angle: 3, graine: "hébergeur web cameroun", programme: "Nindohost (40%)" },
+    // Angle 4 — Outils & coûts cachés
     { angle: 4, graine: "qui héberge", programme: "" },
+    { angle: 4, graine: "prix renouvellement hébergement", programme: "" },
+    // Angle 5 — Migration / sortie (forte intention)
     { angle: 5, graine: "quitter hostinger", programme: "Cloudways (30$ + 7%)" },
+    { angle: 5, graine: "alternative o2switch", programme: "Hostinger VPS (40%)" },
+    { angle: 5, graine: "quitter ovh", programme: "Cloudways (30$ + 7%)" },
+    // Angle 6 — Promos & Black Friday
     { angle: 6, graine: "black friday hébergement", programme: "Hostinger (40%)" },
+    { angle: 6, graine: "code promo hostinger", programme: "Hostinger (40%)" },
+    // Angle 7 — Email professionnel
     { angle: 7, graine: "email pro nom de domaine", programme: "Hostinger Email (Titan)" },
+    { angle: 7, graine: "alternative google workspace", programme: "Infomaniak" },
+    // Angle 8 — Pannes temps réel
     { angle: 8, graine: "ovh en panne", programme: "" },
+    { angle: 8, graine: "hostinger en panne", programme: "" },
+    // Angle 9 — Métiers / verticaux (francophonie mondiale)
+    { angle: 9, graine: "site web entreprise prix", programme: "Pack WhatsApp" },
+    { angle: 9, graine: "site web restaurant prix", programme: "Pack WhatsApp" },
     { angle: 9, graine: "site web école", programme: "Pack WhatsApp" },
+    // Angle 10 — Agences & freelances B2B
     { angle: 10, graine: "hébergement agence web", programme: "Cloudways (30$ + 7%)" },
+    { angle: 10, graine: "hébergement multi-sites wordpress", programme: "Cloudways (30$ + 7%)" },
   ];
+  const refreshKw = process.argv.includes("--refresh-keywords");
+  if (refreshKw) {
+    await db.keywordResearch.deleteMany({});
+  }
   const nbKw = await db.keywordResearch.count();
   if (nbKw === 0) {
+    const existingRows = await db.keywordResearch.findMany({
+      select: { angle: true, requete: true },
+    });
+    const seen = new Set(existingRows.map((r) => `${r.angle}::${r.requete.toLowerCase()}`));
     for (const g of grainesParAngle) {
       try {
         const res = await rechercherMotsCles(g.graine, g.angle, g.programme);
-        console.log(
-          `   angle ${g.angle} « ${g.graine} » → ${res.rows.length} requêtes (${res.source}) : CIBLER ${res.cibler} / SURVEILLER ${res.surveiller} / IGNORER ${res.ignorer}`
-        );
+        let added = 0;
         for (const r of res.rows.slice(0, 25)) {
+          const key = `${g.angle}::${r.requete.toLowerCase()}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
           await db.keywordResearch.create({
             data: {
               graine: g.graine,
@@ -298,9 +339,13 @@ async function main() {
               source: r.source,
             },
           });
+          added++;
         }
+        console.log(
+          `   angle ${g.angle} « ${g.graine} » → ${res.rows.length} requêtes (${res.source}, +${added} nouvelles) : CIBLER ${res.cibler} / SURVEILLER ${res.surveiller} / IGNORER ${res.ignorer}`
+        );
       } catch (e) {
-        console.log(`   angle ${g.angle} : échec (${String(e).slice(0, 80)})`);
+        console.log(`   angle ${g.angle} « ${g.graine} » : échec (${String(e).slice(0, 80)})`);
       }
     }
   }

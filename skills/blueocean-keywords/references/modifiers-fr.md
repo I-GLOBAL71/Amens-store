@@ -12,8 +12,8 @@
 ## Modifiers d'intention commerciale & transactionnelle
 - prix, tarif, cout reel, renouvellement, promo, code promo, black friday
 - comparatif, vs, alternatif a, avis, test, meilleur
-- orange money, mtn momo, wave, fcfa, sans carte bancaire
-- cameroun, cote d'ivoire, senegal, abidjan, douala, dakar
+- paiement local sans carte : orange money, mtn momo, wave, moov, baridimob, cib, edahabia, carte virtuelle, fcfa, dirham, dinar
+- francophonie mondiale : france, belgique, suisse, canada, quebec, maroc, tunisie, algerie, cote d'ivoire, senegal, cameroun, rdc, benin, togo
 - vps, docker, auto-heberge, agence, multi-sites, white-label
 
 ## Modifiers d'urgence & sortie (forte conversion)

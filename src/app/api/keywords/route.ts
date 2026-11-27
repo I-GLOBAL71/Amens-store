@@ -10,18 +10,26 @@ export const maxDuration = 60;
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const angle = searchParams.get("angle");
+  const angleParam = searchParams.get("angle");
+  const angle = angleParam && Number(angleParam) > 0 ? Number(angleParam) : null;
   const verdict = searchParams.get("verdict");
   const rows = await db.keywordResearch.findMany({
     where: {
-      ...(angle ? { angle: Number(angle) } : {}),
+      ...(angle ? { angle } : {}),
       ...(verdict ? { verdict } : {}),
     },
-    orderBy: [{ verdict: "asc" }, { difficulte: "asc" }],
-    take: 300,
+    take: 500,
   });
+  const verdictRank: Record<string, number> = { CIBLER: 0, SURVEILLER: 1, IGNORER: 2 };
+  const volumeRank: Record<string, number> = { "élevée": 0, elevee: 0, moyenne: 1, basse: 2 };
+  rows.sort(
+    (a, b) =>
+      (verdictRank[a.verdict] ?? 9) - (verdictRank[b.verdict] ?? 9) ||
+      (volumeRank[a.classeVolume] ?? 9) - (volumeRank[b.classeVolume] ?? 9) ||
+      a.difficulte - b.difficulte
+  );
   return NextResponse.json({
-    rows: rows.map((r) => ({
+    rows: rows.slice(0, 300).map((r) => ({
       graine: r.graine,
       requete: r.requete,
       angle: r.angle,
@@ -38,33 +46,38 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
   if (!body || typeof body.graine !== "string" || !body.graine.trim()) {
-    return NextResponse.json({ error: "graine requise (ex. « hébergeur cameroun »)" }, { status: 400 });
+    return NextResponse.json(
+      { error: "graine requise (ex. « installer n8n », « alternative vercel », « hébergeur orange money »)" },
+      { status: 400 }
+    );
   }
   const angle = Number(body.angle) || 1;
   const programme = typeof body.programme === "string" ? body.programme : "";
 
   const result = await rechercherMotsCles(body.graine.trim(), angle, programme);
 
-  // Persistance pour capitaliser la recherche
-  const existing = await db.keywordResearch.findFirst({
-    where: { graine: body.graine.trim(), angle },
+  // Persistance sans doublon par (requete, angle) pour capitaliser la recherche
+  const existingRows = await db.keywordResearch.findMany({
+    where: { angle },
+    select: { requete: true },
   });
-  if (!existing) {
-    for (const r of result.rows.slice(0, 25)) {
-      await db.keywordResearch.create({
-        data: {
-          graine: body.graine.trim(),
-          requete: r.requete,
-          angle,
-          classeVolume: r.classeVolume,
-          difficulte: r.scoreDifficulte,
-          resistanceAio: r.resistanceAio,
-          potentiel: r.potentiel,
-          verdict: r.verdict,
-          source: r.source,
-        },
-      });
-    }
+  const existingSet = new Set(existingRows.map((e) => e.requete.toLowerCase()));
+  for (const r of result.rows.slice(0, 25)) {
+    if (existingSet.has(r.requete.toLowerCase())) continue;
+    existingSet.add(r.requete.toLowerCase());
+    await db.keywordResearch.create({
+      data: {
+        graine: body.graine.trim(),
+        requete: r.requete,
+        angle,
+        classeVolume: r.classeVolume,
+        difficulte: r.scoreDifficulte,
+        resistanceAio: r.resistanceAio,
+        potentiel: r.potentiel,
+        verdict: r.verdict,
+        source: r.source,
+      },
+    });
   }
 
   return NextResponse.json({ result });

@@ -12,25 +12,101 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
-AFRICA_PAYS_TERMS = {
+FRANCOPHONE_PAYS_TERMS = {
+    # Europe & Amérique du Nord francophones
+    "france": "fr",
+    ".fr": "fr",
+    "paris": "fr",
+    "lyon": "fr",
+    "marseille": "fr",
+    "belgique": "be",
+    "bruxelles": "be",
+    "wallonie": "be",
+    ".be": "be",
+    "suisse": "ch",
+    "geneve": "ch",
+    "lausanne": "ch",
+    "romand": "ch",
+    ".ch": "ch",
+    "chf": "ch",
+    "canada": "ca",
+    "quebec": "ca",
+    "montreal": "ca",
+    ".ca": "ca",
+    "cad": "ca",
+    # Maghreb francophone
+    "maroc": "ma",
+    "casablanca": "ma",
+    "rabat": "ma",
+    "marrakech": "ma",
+    ".ma": "ma",
+    "dirham": "ma",
+    "tunisie": "tn",
+    "tunis": "tn",
+    ".tn": "tn",
+    "algerie": "dz",
+    "alger": "dz",
+    ".dz": "dz",
+    "baridimob": "dz",
+    "edahabia": "dz",
+    "cib": "dz",
+    # Afrique subsaharienne francophone
     "cameroun": "cm",
+    "camerounais": "cm",
     "douala": "cm",
     "yaounde": "cm",
     ".cm": "cm",
     "cote d'ivoire": "ci",
+    "ivoirien": "ci",
     "abidjan": "ci",
     ".ci": "ci",
     "senegal": "sn",
+    "senegalais": "sn",
     "dakar": "sn",
     ".sn": "sn",
+    "congo": "cd",
+    "rdc": "cd",
+    "kinshasa": "cd",
+    ".cd": "cd",
+    "benin": "bj",
+    "cotonou": "bj",
+    ".bj": "bj",
+    "togo": "tg",
+    "lome": "tg",
+    ".tg": "tg",
+    "burkina": "bf",
+    "ouagadougou": "bf",
+    ".bf": "bf",
+    "mali": "ml",
+    "bamako": "ml",
+    ".ml": "ml",
+    "guinee": "gn",
+    "conakry": "gn",
+    ".gn": "gn",
+    "gabon": "ga",
+    "libreville": "ga",
+    ".ga": "ga",
+    "madagascar": "mg",
+    "antananarivo": "mg",
+    ".mg": "mg",
+    # Moyens de paiement / devises transverses francophones
     "fcfa": "afrique",
+    "xof": "afrique",
+    "xaf": "afrique",
     "orange money": "afrique",
     "mtn": "afrique",
     "momo": "afrique",
     "wave": "afrique",
+    "moov": "afrique",
+    "airtel money": "afrique",
+    "mpesa": "afrique",
     "mobile money": "afrique",
     "afrique": "afrique",
+    "francophone": "global-fr",
 }
+
+AFRICA_LOW_COMP_CODES = {"cm", "ci", "sn", "cd", "bj", "tg", "bf", "ml", "gn", "ga", "mg", "ma", "tn", "dz", "afrique"}
+REGIONAL_FR_CODES = {"be", "ch", "ca", "global-fr"}
 
 NICHE_BLUE_OCEAN_TERMS = (
     "n8n",
@@ -38,22 +114,37 @@ NICHE_BLUE_OCEAN_TERMS = (
     "open webui",
     "coolify",
     "dify",
+    "flowise",
+    "librechat",
     "lovable",
     "bolt",
     "cursor",
     "v0",
+    "replit",
+    "windsurf",
+    "claude code",
+    "mcp",
+    "agent ia",
+    "llm local",
     "vercel",
     "supabase",
+    "docker",
     "orange money",
     "mobile money",
     "momo",
     "wave",
+    "moov",
+    "baridimob",
+    "edahabia",
+    "carte virtuelle",
     "fcfa",
+    "dirham",
     "sans carte",
     "renouvellement",
     "vrai cout",
     "quitter",
     "annuler",
+    "resilier",
     "migrer",
     "alternative",
     "black friday",
@@ -63,18 +154,22 @@ NICHE_BLUE_OCEAN_TERMS = (
     "spf",
     "dkim",
     "dmarc",
+    "zoho",
+    "google workspace",
     "en panne",
     "panne",
     "down",
+    "statut",
     "ecole",
-    "église",
     "eglise",
     "ong",
+    "restaurant",
     "agence",
     "multi-sites",
     "white label",
     "clients",
     "marge",
+    "revendeur",
     "vps",
     "hostinger",
     "ovh",
@@ -83,6 +178,65 @@ NICHE_BLUE_OCEAN_TERMS = (
     "cloudways",
     "kinsta",
     "nindohost",
+    "infomaniak",
+    "planethoster",
+    "hetzner",
+    "ionos",
+    "lws",
+    "ex2",
+    "whc",
+)
+
+OFF_TOPIC_HOUSING_SIGNALS = (
+    "attestation d'hebergement",
+    "attestation d hebergement",
+    "attestation hebergement",
+    "certificat d'hebergement",
+    "certificat d hebergement",
+    "hebergement touristique",
+    "hebergement insolite",
+    "hebergement temporaire",
+    "hebergement d'urgence",
+    "hebergement d urgence",
+    "hebergement hotel",
+    "hebergement airbnb",
+    "visa",
+    "airbnb",
+    "chambre",
+    "appartement",
+    "logement",
+    "vacances",
+    "marrakech",
+    "agadir",
+    "tourisme",
+    "residence permanente",
+    "titre de sejour",
+    "passeport",
+    "carte vitale",
+    "carte grise",
+    "permis de conduire",
+    "carte nationale",
+)
+
+WEB_TECH_ANCHORS = (
+    "web",
+    "site",
+    "vps",
+    "cloud",
+    "domaine",
+    "serveur",
+    "wordpress",
+    "n8n",
+    "ollama",
+    "docker",
+    "email",
+    "ssl",
+    "dns",
+    "hostinger",
+    "ovh",
+    "o2switch",
+    "nindohost",
+    "infomaniak",
 )
 
 AIO_RESISTANT_SIGNALS = (
@@ -163,9 +317,26 @@ def score_query(requete: str, angle: int, programme: str, variants_count: int) -
     words = [w for w in re.split(r"\s+", norm) if w]
     n_words = len(words)
 
-    pays_hits = sorted({code for term, code in AFRICA_PAYS_TERMS.items() if term in norm})
+    pays_hits = sorted({code for term, code in FRANCOPHONE_PAYS_TERMS.items() if term in norm})
     if not pays_hits:
         pays_hits = ["fr"]
+
+    has_web_anchor = any(a in norm for a in WEB_TECH_ANCHORS)
+    is_off_topic_housing = not has_web_anchor and any(
+        strip_accents(t) in norm for t in OFF_TOPIC_HOUSING_SIGNALS
+    )
+    if is_off_topic_housing:
+        return {
+            "requete": requete.strip().lower(),
+            "longueur_mots": n_words,
+            "pays_detectes": "|".join(pays_hits),
+            "nb_variantes": variants_count,
+            "classes_volume": "basse",
+            "score_difficulte": 80,
+            "resistance_aio": "faible",
+            "potentiel_affiliation": "faible",
+            "verdict": "IGNORER",
+        }
 
     # Score de difficulté proxy (0 = très facile, 100 = ultra compétitif)
     kd = 56
@@ -184,8 +355,10 @@ def score_query(requete: str, angle: int, programme: str, variants_count: int) -
     elif niche_matches == 1:
         kd -= 11
 
-    if any(c in pays_hits for c in ("cm", "ci", "sn", "afrique")):
+    if any(c in AFRICA_LOW_COMP_CODES for c in pays_hits):
         kd -= 10
+    elif any(c in REGIONAL_FR_CODES for c in pays_hits):
+        kd -= 6
     if any(q in norm for q in ("comment ", "pourquoi ", "combien ", "sans ")):
         kd -= 6
     if 1 <= angle <= 10 and niche_matches >= 1:
@@ -193,9 +366,9 @@ def score_query(requete: str, angle: int, programme: str, variants_count: int) -
 
     kd = max(8, min(92, kd))
 
-    # Résistance AI Overviews (tutos pas-à-pas, prix datés, outils, Afrique, pannes)
+    # Résistance AI Overviews (tutos pas-à-pas, prix datés, outils, géo francophone, pannes)
     aio_hits = sum(1 for t in AIO_RESISTANT_SIGNALS if strip_accents(t) in norm)
-    if aio_hits >= 1 or n_words >= 4 or any(c in pays_hits for c in ("cm", "ci", "sn", "afrique")):
+    if aio_hits >= 1 or n_words >= 4 or any(c in AFRICA_LOW_COMP_CODES or c in REGIONAL_FR_CODES for c in pays_hits):
         resistance_aio = "fort"
     elif n_words >= 2 and niche_matches >= 1:
         resistance_aio = "moyen"
@@ -212,7 +385,9 @@ def score_query(requete: str, angle: int, programme: str, variants_count: int) -
         potentiel = "faible"
 
     # Classe d'ordre de grandeur (jamais de volume exact inventé)
-    if n_words <= 2 and niche_matches >= 1:
+    # Une requête qui remonte dans >= 3 pays francophones simultanément a une
+    # demande transversale élevée sur Google Suggest.
+    if variants_count >= 3 or (n_words <= 3 and niche_matches >= 1 and variants_count >= 2):
         classe_volume = "élevée"
     elif n_words <= 4 or variants_count >= 2 or niche_matches >= 1:
         classe_volume = "moyenne"
@@ -286,7 +461,15 @@ def main() -> int:
 
     rows = [score_query(q, args.angle, args.programme, cnt) for q, cnt in queries.items()]
     order_rank = {"CIBLER": 0, "SURVEILLER": 1, "IGNORER": 2}
-    rows.sort(key=lambda r: (order_rank.get(r["verdict"], 9), r["score_difficulte"], r["requete"]))
+    volume_rank = {"élevée": 0, "moyenne": 1, "basse": 2}
+    rows.sort(
+        key=lambda r: (
+            order_rank.get(r["verdict"], 9),
+            volume_rank.get(r["classes_volume"], 9),
+            r["score_difficulte"],
+            r["requete"],
+        )
+    )
 
     out_path = Path(args.sortie)
     out_path.parent.mkdir(parents=True, exist_ok=True)
