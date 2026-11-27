@@ -11,9 +11,11 @@ import { isValidElement, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNav } from "@/lib/store";
 import { useToast } from "@/hooks/use-toast";
 import { buildNavHref, parseInternalHref, slugifyHeading } from "@/lib/nav";
+import { prefetchArticle } from "@/hooks/use-amens";
 
 function extractText(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
@@ -27,6 +29,7 @@ function extractText(node: ReactNode): string {
 export function Markdown({ content }: { content: string }) {
   const { navigate } = useNav();
   const { toast } = useToast();
+  const qc = useQueryClient();
 
   return (
     <div className="article-body">
@@ -89,9 +92,17 @@ export function Markdown({ content }: { content: string }) {
             }
             const cible = parseInternalHref(url);
             const hrefInterne = buildNavHref(cible);
+            const warm = () => {
+              if (cible.view === "article" && cible.slug) {
+                prefetchArticle(qc, cible.slug);
+              }
+            };
             return (
               <a
                 href={hrefInterne}
+                onMouseEnter={warm}
+                onFocus={warm}
+                onTouchStart={warm}
                 onClick={(e) => {
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();

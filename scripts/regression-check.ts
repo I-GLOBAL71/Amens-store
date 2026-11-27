@@ -485,6 +485,12 @@ async function main() {
   const latence0 = labo ? String(Math.round(Object.values(labo.kpi.latenceAfrique)[0] ?? 0)) : "";
 
   if (html.ok) {
+    ver(
+      "ssr",
+      "contenu principal visible dès le SSR (sans opacity:0)",
+      !/<main[^>]*id="contenu"[^>]*>[\s\S]{0,300}opacity\s*:\s*0/i.test(html.texte),
+      "le conteneur <main> est rendu à opacity:0 dans le HTML SSR (bug des 4/5 supérieurs vides)"
+    );
     for (const m of MARQUEURS_ACCUEIL) {
       ver("ssr", `marqueur « ${m.slice(0, 34)} »`, html.texte.includes(m), "absent du HTML SSR");
     }

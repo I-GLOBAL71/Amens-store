@@ -85,8 +85,8 @@ export function BlogView() {
           <NavLink
             key={a.id}
             target={{ view: "blog", silo: a.silo }}
-            ariaPressed={silo === a.silo}
-            className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-3.5 py-2 text-xs font-medium transition-colors ${
+            ariaCurrent={silo === a.silo ? "true" : undefined}
+            className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-3.5 py-2 text-xs font-medium transition-all active:scale-[0.97] ${
               silo === a.silo
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border text-muted-foreground hover:border-primary/50"
@@ -140,7 +140,7 @@ export function BlogView() {
               <NavLink
                 key={a.id}
                 target={{ view: "article", slug: a.slug }}
-                className="group block h-full min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group block h-full min-w-0 rounded-xl transition-transform duration-75 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <Card className="flex h-full min-w-0 cursor-pointer flex-col overflow-hidden transition-shadow hover:shadow-md">
                   <div className="w-full overflow-hidden border-b border-border bg-slate-950">

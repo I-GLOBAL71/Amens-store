@@ -18,36 +18,37 @@ export async function loadArticleDetail(
   if (!article) return null;
 
   if (opts.incrementViews) {
-    await db.article
+    // Non bloquant : l'incrément de vues ne doit pas retarder l'ouverture de l'article
+    void db.article
       .update({ where: { id: article.id }, data: { views: { increment: 1 } } })
       .catch(() => {});
   }
 
-  // Résolution des programmes (schéma affiliation) : primaire + alternatives
-  // du même contexte, géo-ciblage Afrique → programmes Mobile Money prioritaires.
-  const primary = article.primaryProgram
-    ? await db.affiliateProgram.findUnique({ where: { slug: article.primaryProgram } })
-    : null;
-  const alternatives = await db.affiliateProgram.findMany({
-    where: {
-      active: true,
-      ...(primary ? { context: primary.context, slug: { not: primary.slug } } : {}),
-    },
-    orderBy: { priorityScore: "desc" },
-    take: 2,
-  });
+  // Requêtes parallèles : programmes actifs + maillage même silo + inter-silos
+  // (réduit la latence de 4 allers-retours séquentiels à 1 seul en production).
+  const [allPrograms, sameSilo, interSilo] = await Promise.all([
+    db.affiliateProgram.findMany({
+      where: { active: true },
+      orderBy: { priorityScore: "desc" },
+    }),
+    db.article.findMany({
+      where: { silo: article.silo, status: "published", id: { not: article.id } },
+      orderBy: { views: "desc" },
+      take: 3,
+    }),
+    db.article.findMany({
+      where: { status: "published", silo: { not: article.silo } },
+      orderBy: { views: "desc" },
+      take: 3,
+    }),
+  ]);
 
-  // Maillage : articles du même silo + suggestions inter-silos
-  const sameSilo = await db.article.findMany({
-    where: { silo: article.silo, status: "published", id: { not: article.id } },
-    orderBy: { views: "desc" },
-    take: 3,
-  });
-  const interSilo = await db.article.findMany({
-    where: { status: "published", silo: { not: article.silo } },
-    orderBy: { views: "desc" },
-    take: 3,
-  });
+  const primary = article.primaryProgram
+    ? allPrograms.find((p) => p.slug === article.primaryProgram) ?? null
+    : null;
+  const alternatives = allPrograms
+    .filter((p) => (primary ? p.context === primary.context && p.slug !== primary.slug : true))
+    .slice(0, 2);
 
   return {
     article: serializeArticle(article),

@@ -42,7 +42,7 @@ function extraireToc(content: string) {
 
 export function ArticleView() {
   const { slug, navigate } = useNav();
-  const { data, isLoading, error } = useArticle(slug);
+  const { data, isLoading, isPlaceholderData, error } = useArticle(slug);
 
   const article = data?.article;
   const angle = article ? angleById(article.angle) : null;
@@ -139,11 +139,13 @@ export function ArticleView() {
     ];
   }, [article, angle, data]);
 
-  if (isLoading) {
+  if (isLoading && !article) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+      <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6" role="status" aria-live="polite">
+        <p className="mb-4 text-sm font-medium text-primary">Ouverture du guide en cours…</p>
         <Skeleton className="mb-4 h-10 w-2/3" />
-        <Skeleton className="mb-8 h-5 w-1/3" />
+        <Skeleton className="mb-6 h-5 w-1/3" />
+        <Skeleton className="mb-6 aspect-[1200/630] w-full rounded-xl" />
         <Skeleton className="mb-3 h-4 w-full" />
         <Skeleton className="mb-3 h-4 w-11/12" />
         <Skeleton className="h-4 w-4/5" />
@@ -314,6 +316,10 @@ export function ArticleView() {
                 {DISCLOSURE}
               </p>
             </>
+          ) : isPlaceholderData ? (
+            <p className="text-sm text-muted-foreground">
+              Chargement de l&apos;offre recommandée…
+            </p>
           ) : (
             <p className="text-sm text-muted-foreground">
               Programme partenaire en cours de sélection pour ce guide — contacte-nous sur
@@ -333,7 +339,7 @@ export function ArticleView() {
             <NavLink
               key={a.id}
               target={{ view: "article", slug: a.slug }}
-              className="group block h-full min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="group block h-full min-w-0 rounded-xl transition-transform duration-75 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <Card className="h-full min-w-0 cursor-pointer transition-shadow hover:shadow-md">
                 <CardContent className="p-4">

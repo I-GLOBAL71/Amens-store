@@ -87,7 +87,10 @@ export function createNavStore(initial?: NavPatch | null) {
         if (next.outil) params.set("outil", next.outil);
         const qs = params.toString();
         const url = `${window.location.pathname}${qs ? "?" + qs : ""}`;
-        window.history.pushState({}, "", url);
+        const currentUrl = `${window.location.pathname}${window.location.search}`;
+        if (url !== currentUrl) {
+          window.history.pushState({}, "", url);
+        }
         if (patch.anchor) {
           requestAnimationFrame(() => {
             document.getElementById(patch.anchor!)?.scrollIntoView({ behavior: "smooth" });

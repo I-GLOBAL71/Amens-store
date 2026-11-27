@@ -14,15 +14,16 @@
 // changement visible pour le visiteur.
 
 import { useEffect, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useIsFetching } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
-import { AnimatePresence, motion } from "framer-motion";
 import { NavProvider, useNav } from "@/lib/store";
-import type {
-  LaboFull,
-  InitialArticlesPayload,
-  ArticleDetailPayload,
-  ViewName,
+import {
+  buildAffiliateUrl,
+  type LaboFull,
+  type InitialArticlesPayload,
+  type ArticleDetailPayload,
+  type ProgramDTO,
+  type ViewName,
 } from "@/lib/pipeline/types";
 import { Header } from "./header";
 import { Footer } from "./footer";
@@ -44,6 +45,21 @@ export interface InitialNav {
   outil: string | null;
 }
 
+// Barre de progression discrète tout en haut si une requête réseau est active
+// (donne un retour visuel immédiat sur connexion lente si un contenu n'était pas encore en cache).
+function TopProgressBar() {
+  const isFetching = useIsFetching();
+  if (isFetching === 0) return null;
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none fixed top-0 left-0 right-0 z-50 h-0.5 overflow-hidden bg-primary/20"
+    >
+      <div className="h-full w-1/2 animate-pulse bg-primary" />
+    </div>
+  );
+}
+
 // Sous-arbre des vues — consomme le store de navigation fourni par
 // NavProvider (nécessaire : les vues appellent useNav()).
 function Views() {
@@ -58,27 +74,19 @@ function Views() {
 
   return (
     <>
+      <TopProgressBar />
       <Header />
       <main id="contenu" className="flex-1 flex flex-col w-full min-w-0">
         <ErrorBoundary view={view}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={view}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-              className="w-full min-w-0 flex-1 flex flex-col"
-            >
-              {view === "home" && <HomeView />}
-              {view === "blog" && <BlogView />}
-              {view === "article" && <ArticleView />}
-              {view === "studio" && <StudioView />}
-              {view === "labo" && <LaboView />}
-              {view === "outils" && <OutilsView />}
-              {view === "promos" && <PromosView />}
-            </motion.div>
-          </AnimatePresence>
+          <div className="w-full min-w-0 flex-1 flex flex-col">
+            {view === "home" && <HomeView />}
+            {view === "blog" && <BlogView />}
+            {view === "article" && <ArticleView />}
+            {view === "studio" && <StudioView />}
+            {view === "labo" && <LaboView />}
+            {view === "outils" && <OutilsView />}
+            {view === "promos" && <PromosView />}
+          </div>
         </ErrorBoundary>
       </main>
       <Footer />
@@ -90,11 +98,13 @@ function Views() {
 export function AmensApp({
   initialLabo = null,
   initialArticles = null,
+  initialPrograms = null,
   initialArticleDetail = null,
   initialNav = null,
 }: {
   initialLabo?: LaboFull | null;
   initialArticles?: InitialArticlesPayload | null;
+  initialPrograms?: ProgramDTO[] | null;
   initialArticleDetail?: ArticleDetailPayload | null;
   initialNav?: InitialNav | null;
 }) {
@@ -108,6 +118,15 @@ export function AmensApp({
     // ["articles","all","published"] à useArticles() sans filtre.
     if (initialLabo) qc.setQueryData(["labo"], initialLabo);
     if (initialArticles) qc.setQueryData(["articles", "all", "published"], initialArticles);
+    if (initialPrograms) {
+      qc.setQueryData(["programs", "raw"], initialPrograms);
+      qc.setQueryData(["programs", { angle: undefined, context: undefined, geo: undefined }], {
+        programs: initialPrograms.map((p) => ({
+          ...p,
+          trackingUrl: buildAffiliateUrl(p.affiliateUrl, ""),
+        })),
+      });
+    }
     // Vue filtrée par silo (?v=blog&silo=…) : la clé filtrée reçoit la
     // sous-liste dès la création du client (pas de rechargement visible).
     if (initialArticles && initialNav?.silo) {

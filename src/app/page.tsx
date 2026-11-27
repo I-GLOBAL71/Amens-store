@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { db } from "@/lib/db";
-import { serializeArticle } from "@/lib/serialize";
+import { serializeArticle, serializeProgram } from "@/lib/serialize";
 import { loadLaboData } from "@/lib/labo-data";
 import { loadArticleDetail } from "@/lib/article-data";
 import { SITE_URL } from "@/lib/site";
@@ -9,6 +9,7 @@ import {
   type LaboFull,
   type InitialArticlesPayload,
   type ArticleDetailPayload,
+  type ProgramDTO,
   type ViewName,
 } from "@/lib/pipeline/types";
 import { AmensApp } from "@/components/amens/amens-app";
@@ -179,17 +180,14 @@ export default async function Page({
 }) {
   const initialNav = parseNav(await searchParams);
 
-  let initialLabo: LaboFull | null = null;
-  let initialArticles: InitialArticlesPayload | null = null;
-  let initialArticleDetail: ArticleDetailPayload | null = null;
-
-  try {
-    initialLabo = await loadLaboData();
-  } catch {
-    initialLabo = null;
-  }
-  try {
-    const [articles, siloCounts] = await Promise.all([
+  const [initialLabo, initialArticles, initialPrograms, initialArticleDetail]: [
+    LaboFull | null,
+    InitialArticlesPayload | null,
+    ProgramDTO[] | null,
+    ArticleDetailPayload | null,
+  ] = await Promise.all([
+    loadLaboData().catch(() => null),
+    Promise.all([
       db.article.findMany({
         where: { status: "published" },
         orderBy: [{ publishedAt: "desc" }, { updatedAt: "desc" }],
@@ -200,29 +198,29 @@ export default async function Page({
         where: { status: "published" },
         _count: { id: true },
       }),
-    ]);
-    initialArticles = {
-      articles: articles.map(serializeArticle),
-      siloCounts: siloCounts.map((s) => ({ silo: s.silo, count: s._count.id })),
-    };
-  } catch {
-    initialArticles = null;
-  }
-  // Vue article → l'article complet est chargé côté serveur et injecté dans
-  // le cache TanStack (clé ["article", slug]) : le HTML servi contient le
-  // contenu réel, les crawlers sans JS le lisent.
-  if (initialNav.view === "article" && initialNav.slug) {
-    try {
-      initialArticleDetail = await loadArticleDetail(initialNav.slug);
-    } catch {
-      initialArticleDetail = null;
-    }
-  }
+    ])
+      .then(([articles, siloCounts]) => ({
+        articles: articles.map(serializeArticle),
+        siloCounts: siloCounts.map((s) => ({ silo: s.silo, count: s._count.id })),
+      }))
+      .catch(() => null),
+    db.affiliateProgram
+      .findMany({
+        where: { active: true },
+        orderBy: { priorityScore: "desc" },
+      })
+      .then((rows) => rows.map(serializeProgram))
+      .catch(() => null),
+    initialNav.view === "article" && initialNav.slug
+      ? loadArticleDetail(initialNav.slug).catch(() => null)
+      : Promise.resolve(null),
+  ]);
 
   return (
     <AmensApp
       initialLabo={initialLabo}
       initialArticles={initialArticles}
+      initialPrograms={initialPrograms}
       initialArticleDetail={initialArticleDetail}
       initialNav={initialNav}
     />

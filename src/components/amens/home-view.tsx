@@ -414,7 +414,7 @@ export function HomeView() {
               <NavLink
                 key={a.id}
                 target={{ view: "blog", silo: a.silo }}
-                className="group block h-full min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group block h-full min-w-0 rounded-xl transition-transform duration-75 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <Card className="h-full min-w-0 cursor-pointer transition-shadow hover:shadow-md">
                   <CardHeader className="flex flex-row items-center gap-3 space-y-0 pb-2">
